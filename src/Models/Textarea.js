@@ -1,1 +1,3 @@
-applr.Models.Textarea = Backbone.Model.extend({});
+applr.Models.Textarea = Backbone.Model.extend({
+
+});

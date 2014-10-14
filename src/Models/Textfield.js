@@ -1,1 +1,3 @@
-applr.Models.Textfield = Backbone.Model.extend({});
+applr.Models.Textfield = Backbone.Model.extend({
+
+});

@@ -1,1 +1,3 @@
-applr.Views.Textarea = Backbone.View.extend({}); 
+applr.Views.Textarea = Backbone.View.extend({
+
+});

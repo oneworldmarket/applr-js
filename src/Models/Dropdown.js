@@ -1,1 +1,3 @@
-applr.Models.Dropdown = Backbone.Model.extend({});
+applr.Models.Dropdown = Backbone.Model.extend({
+
+});

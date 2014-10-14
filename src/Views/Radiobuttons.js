@@ -1,1 +1,3 @@
-applr.Views.Radiobuttons = Backbone.View.extend({}); 
+applr.Views.Radiobuttons = Backbone.View.extend({
+
+});

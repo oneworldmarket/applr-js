@@ -1,1 +1,3 @@
-applr.Views.Dropdown = Backbone.View.extend({});
+applr.Views.Dropdown = Backbone.View.extend({
+
+});

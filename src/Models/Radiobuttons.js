@@ -1,1 +1,3 @@
-applr.Models.Radiobuttons = Backbone.Model.extend({});
+applr.Models.Radiobuttons = Backbone.Model.extend({
+
+});

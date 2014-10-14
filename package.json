@@ -11,7 +11,7 @@
     "applr",
     "cv",
     "recruiting",
-    "landing"
+    "landing page"
   ],
   "author": "dmitriy",
   "bugs": {
@@ -20,7 +20,8 @@
   "homepage": "http://applr.io",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-concat": "^0.5.0"
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "dependencies": {
     "backbone": "^1.1.2"

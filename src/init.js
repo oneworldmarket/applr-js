@@ -1,6 +1,7 @@
 var 
-	applr = {}
+	applr = {
+		Models: {},
+		Views: {},
+		Collections: {}
+	}
 ;
-
-applr.Models = [];
-applr.Views = [];
