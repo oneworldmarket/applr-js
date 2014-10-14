@@ -1,3 +1,5 @@
-applr.Models.Textfield = Backbone.Model.extend({
-
+applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
+	defaults: {
+		limit: textfieldDefaultLimit
+	}
 });

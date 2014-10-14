@@ -1,7 +1,10 @@
 var 
 	applr = {
-		Models: {},
+		Models: {
+			Base: {}
+		},
 		Views: {},
-		Collections: {}
+		Collections: {},
+		Templates: {}
 	}
 ;

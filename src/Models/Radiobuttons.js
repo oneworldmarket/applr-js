@@ -1,3 +1,3 @@
-applr.Models.Radiobuttons = Backbone.Model.extend({
+applr.Models.Radiobuttons = applr.Models.Base.CloseQuestion.extend({
 
 });

@@ -1,3 +1,5 @@
-applr.Models.Textarea = Backbone.Model.extend({
-
+applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
+	defaults: {
+		limit: textareaDefaultLimit
+	}
 });

@@ -1,3 +1,3 @@
-applr.Models.Dropdown = Backbone.Model.extend({
+applr.Models.Dropdown = applr.Models.Base.CloseQuestion.extend({
 
 });
