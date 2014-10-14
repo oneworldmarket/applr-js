@@ -1,5 +1,6 @@
-applr.Models.Dropdown = applr.Models.Base.CloseQuestion.extend({
+applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 	defaults: {
+		view: 'Dropdown',
 		options: {
 			style: 'dropdown'
 		}

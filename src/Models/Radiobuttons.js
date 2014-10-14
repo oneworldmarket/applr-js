@@ -1,5 +1,6 @@
-applr.Models.Radiobuttons = applr.Models.Base.CloseQuestion.extend({
+applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
 	defaults: {
+		view: 'Radiobuttons',
 		options: {
 			style: 'radiobuttons'
 		}

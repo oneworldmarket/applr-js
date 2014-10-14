@@ -5,7 +5,17 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		concat: {
 			dist: {
-				src: ['src/init.js', 'src/Templates/*.js', 'src/Models/Base/*.js', 'src/Models/*.js', 'src/Views/*.js', 'src/Collections/*.js', 'src/main.js'],
+				src: [
+					'src/init.js',
+					'src/Templates/Base/*.js',
+					'src/Templates/*.js',
+					'src/Models/Base/*.js',
+					'src/Models/*.js',
+					'src/Views/Base/*.js',
+					'src/Views/*.js',
+					'src/Collections/*.js',
+					'src/main.js'
+				],
 				dest: 'tmp/applr.js'
 			}
 		},
@@ -17,7 +27,7 @@ module.exports = function(grunt) {
 					wrapper: [';(function(){', '})();'],
 					indent: '\t'
 				}
-			},
+			}
 		},
 		watch: {
 			src: {

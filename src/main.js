@@ -1,4 +1,4 @@
-window.applr = (function(applr){
+window.applr = (function(applr, $){
 	//private variables and functions
 	var
 		_debug = true,
@@ -18,6 +18,9 @@ window.applr = (function(applr){
 		},
 		_DefaultQuestionCollection,
 		_OptionalQuestionsCollection,
+		_DefaultQuestionCollectionView,
+		_OptionalQuestionsCollectionView,
+		_containerObj,
 
 		_detectQuestionModel = function(el) {
 			var result = false;
@@ -28,7 +31,7 @@ window.applr = (function(applr){
 				} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
 					result = 'Textarea';
 				}
-			} else if (el.type == 'close') {
+			} else if (el.type == 'closed') {
 				if (el.options.style == 'dropdown') {
 					result = 'Dropdown';
 				} else if (el.options.style == 'radiobuttons') {
@@ -45,8 +48,13 @@ window.applr = (function(applr){
 		init: function(options) {
 			this.setOptions(options);
 
+			_containerObj = $(_options.container);
+
 			_DefaultQuestionCollection = new applr.Collections.DefaultQuestions;
 			_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+
+			_DefaultQuestionCollectionView = new applr.Views.DefaultQuestions({collection: _DefaultQuestionCollection});
+			_OptionalQuestionsCollectionView = new applr.Views.OptionalQuestions({collection: _OptionalQuestionsCollection});
 		},
 		getOptions: function() {
 			return _options;
@@ -73,6 +81,12 @@ window.applr = (function(applr){
 					}
 				});
 			}
+
+			_DefaultQuestionCollectionView.render();
+			_OptionalQuestionsCollectionView.render();
+
+			_containerObj.append(_DefaultQuestionCollectionView.$el.html());
+			_containerObj.append(_OptionalQuestionsCollectionView.$el.html());
 		}
 	};
 
@@ -89,4 +103,4 @@ window.applr = (function(applr){
 	}
 
 	return facade;
-})(applr);
+})(applr, jQuery);

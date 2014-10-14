@@ -1,0 +1,1 @@
+applr.Templates.Base.Question = '<a href="#"><%= ask %></a>';

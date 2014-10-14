@@ -3,9 +3,13 @@ var
 		Models: {
 			Base: {}
 		},
-		Views: {},
+		Views: {
+			Base: {}
+		},
 		Collections: {},
-		Templates: {},
+		Templates: {
+			Base: {}
+		},
 		Defaults: {
 			textfieldMaxLimit: 80,
 			textareaMaxLimit: 200,
