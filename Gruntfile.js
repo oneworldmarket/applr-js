@@ -6,8 +6,18 @@ module.exports = function(grunt) {
 		concat: {
 			dist: {
 				src: ['src/init.js', 'src/Templates/*.js', 'src/Models/Base/*.js', 'src/Models/*.js', 'src/Views/*.js', 'src/Collections/*.js', 'src/main.js'],
-				dest: 'applr.js'
+				dest: 'tmp/applr.js'
 			}
+		},
+		wrap: {
+			basic: {
+				src: 'tmp/applr.js',
+				dest: 'applr.js',
+				options: {
+					wrapper: [';(function(){', '})();'],
+					indent: '\t'
+				}
+			},
 		},
 		watch: {
 			src: {
@@ -19,7 +29,8 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-wrap');
 
 	// Default task(s).
-	grunt.registerTask('default', ['concat']);
+	grunt.registerTask('default', ['concat', 'wrap']);
 };

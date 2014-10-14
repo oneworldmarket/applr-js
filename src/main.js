@@ -1,6 +1,7 @@
-applr = (function(applr){
+window.applr = (function(applr){
 	//private variables and functions
 	var
+		_debug = true,
 		_field_types = [
 			'Textfield',
 			'Textarea',
@@ -17,13 +18,29 @@ applr = (function(applr){
 		},
 		_DefaultQuestionCollection,
 		_OptionalQuestionsCollection,
-		textfieldMaxLimit = 80,
-		textareaMaxLimit = 200,
-		textfieldDefaultLimit = 50,
-		textareaDefaultLimit = 150
+
+		_detectQuestionModel = function(el) {
+			var result = false;
+
+			if (el.type == 'open') {
+				if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+					result = 'Textfield';
+				} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+					result = 'Textarea';
+				}
+			} else if (el.type == 'close') {
+				if (el.options.style == 'dropdown') {
+					result = 'Dropdown';
+				} else if (el.options.style == 'radiobuttons') {
+					result = 'Radiobuttons';
+				}
+			}
+
+			return result;
+		}
 	;
 
-	return _.extend({
+	var facade = {
 		//public variables and functions
 		init: function(options) {
 			this.setOptions(options);
@@ -40,9 +57,36 @@ applr = (function(applr){
 		restoreFromJSON: function(JSON) {
 			if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 				_.each(JSON.default, function(el){
-					//console.log(el);
+					var modelName = _detectQuestionModel(el);
+					if (modelName) {
+						var model = new applr.Models[modelName](el);
+						_DefaultQuestionCollection.add(model);
+					}
+				});
+			}
+			if (typeof JSON.optional == 'object' && JSON.default.length > 0) {
+				_.each(JSON.optional, function(el){
+					var modelName = _detectQuestionModel(el);
+					if (modelName) {
+						var model = new applr.Models[modelName](el);
+						_OptionalQuestionsCollection.add(model);
+					}
 				});
 			}
 		}
-	}, applr);
+	};
+
+	//debug functions
+	if (_debug) {
+		_.extend(facade, applr, {
+			getDefaultQuestionCollection: function() {
+				return _DefaultQuestionCollection;
+			},
+			getOptionalQuestionsCollection: function() {
+				return _OptionalQuestionsCollection;
+			}
+		});
+	}
+
+	return facade;
 })(applr);
