@@ -8,7 +8,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#">' + ((__t = (ask)) == null ? '' : __t) + '</a>';
+	      __p += '';
+	      if (add_type == 'new_fields') {
+	        __p += '\n\t<a href="#">\n';
+	      }
+	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>';
 	    }
 	    return __p;
 	  };
@@ -259,6 +263,7 @@
 			restoreFromJSON: function(JSON) {
 				if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 					_.each(JSON.default, function(el){
+						el.add_type = _options.add_type;
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -268,6 +273,7 @@
 				}
 				if (typeof JSON.optional == 'object' && JSON.default.length > 0) {
 					_.each(JSON.optional, function(el){
+						el.add_type = _options.add_type;
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
