@@ -5,8 +5,8 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 		this.collection.each(function(questionMmodel){
 			var View = questionMmodel.get('view');
 			var questionView = new applr.Views[View]({ model: questionMmodel });
-			questionView.render();
-			this.$el.append(questionView.el);
+			this.$el.append(questionView.render().el);
 		}, this);
+		return this;
 	}
 });

@@ -1,4 +1,85 @@
 ;(function(){
+	var applrTemplates = (function () {
+	  this["Templates"] = this["Templates"] || {};
+	  this["Templates"]["Base.Question"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<a href="#">' + ((__t = (ask)) == null ? '' : __t) + '</a>';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["DefaultQuestions"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["Dropdown"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["OptionalQuestions"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["Radiobuttons"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["Textarea"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["Textfield"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
+	  return this["Templates"];
+	});
 	var
 		applr = {
 			Models: {
@@ -8,9 +89,7 @@
 				Base: {}
 			},
 			Collections: {},
-			Templates: {
-				Base: {}
-			},
+			Templates:  new applrTemplates(),
 			Defaults: {
 				textfieldMaxLimit: 80,
 				textareaMaxLimit: 200,
@@ -19,13 +98,6 @@
 			}
 		}
 	;
-	applr.Templates.Base.Question = '<a href="#"><%= ask %></a>';
-	applr.Templates.DefaultQuestions = '';
-	applr.Templates.Dropdown = '';
-	applr.Templates.OptionalQuestions = '';
-	applr.Templates.Radiobuttons = '';
-	applr.Templates.Textarea = '';
-	applr.Templates.Textfield = '';
 	applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 		defaults: {
 			type: 'close'
@@ -71,11 +143,11 @@
 	applr.Views.Base.Question = Backbone.View.extend({
 		tagName: 'li',
 	
-		defaultTemplate: applr.Templates.Base.Question,
+		defaultTemplate: applr.Templates['Base.Question'],
 	
 		render: function() {
-			var templateFunction = _.template(this.defaultTemplate + this.template);
-			this.$el.html( templateFunction(this.model.toJSON()));
+			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+			return this;
 		}
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
@@ -85,9 +157,9 @@
 			this.collection.each(function(questionMmodel){
 				var View = questionMmodel.get('view');
 				var questionView = new applr.Views[View]({ model: questionMmodel });
-				questionView.render();
-				this.$el.append(questionView.el);
+				this.$el.append(questionView.render().el);
 			}, this);
+			return this;
 		}
 	});
 	applr.Views.Dropdown = applr.Views.Base.Question.extend({
@@ -100,9 +172,9 @@
 			this.collection.each(function(questionMmodel){
 				var View = questionMmodel.get('view');
 				var questionView = new applr.Views[View]({ model: questionMmodel });
-				questionView.render();
-				this.$el.append(questionView.el);
+				this.$el.append(questionView.render().el);
 			}, this);
+			return this;
 		}
 	});
 	applr.Views.Radiobuttons = applr.Views.Base.Question.extend({
@@ -204,11 +276,8 @@
 					});
 				}
 	
-				_DefaultQuestionCollectionView.render();
-				_OptionalQuestionsCollectionView.render();
-	
-				_containerObj.append(_DefaultQuestionCollectionView.$el.html());
-				_containerObj.append(_OptionalQuestionsCollectionView.$el.html());
+				_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 			}
 		};
 	

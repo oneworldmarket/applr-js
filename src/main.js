@@ -82,11 +82,8 @@ window.applr = (function(applr, $){
 				});
 			}
 
-			_DefaultQuestionCollectionView.render();
-			_OptionalQuestionsCollectionView.render();
-
-			_containerObj.append(_DefaultQuestionCollectionView.$el.html());
-			_containerObj.append(_OptionalQuestionsCollectionView.$el.html());
+			_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+			_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 		}
 	};
 

@@ -7,9 +7,7 @@ var
 			Base: {}
 		},
 		Collections: {},
-		Templates: {
-			Base: {}
-		},
+		Templates:  new applrTemplates(),
 		Defaults: {
 			textfieldMaxLimit: 80,
 			textareaMaxLimit: 200,
