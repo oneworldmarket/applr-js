@@ -8,14 +8,6 @@ window.applr = (function(applr, $){
 			'Dropdown',
 			'Radiobuttons'
 		],
-		_options = {
-			//container for html
-			container: '#applr-container',
-			//is there will be 2 lists of questions (default+optional) or one list (default)
-			mode: 'default+optional',
-			//new_fields or optional_fields
-			add_type: 'new_fields'
-		},
 		_DefaultQuestionCollection,
 		_OptionalQuestionsCollection,
 		_DefaultQuestionCollectionView,
@@ -40,7 +32,11 @@ window.applr = (function(applr, $){
 			}
 
 			return result;
-		}
+		},
+
+		_initSortable = function() {
+
+		};
 	;
 
 	var facade = {

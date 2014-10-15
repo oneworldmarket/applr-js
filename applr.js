@@ -1,4 +1,17 @@
 ;(function(){
+	var _options = {
+		//container for html
+		container: '#applr-container',
+		//is there will be 2 lists of questions (default+optional) or one list (default)
+		mode: 'default+optional',
+		//new_fields or optional_fields
+		add_type: 'new_fields',
+		links_default_class: 'standard-blue-link',
+		text_default_class: 'standard-black',
+		title_default_class: 'black-title-large',
+		default_questions_class: 'applr-questions-wrapper applr-default-questions',
+		optional_questions_class: 'applr-questions-wrapper applr-optional-questions'
+	};
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
 	  this["Templates"]["Base.Question"] = function (obj) {
@@ -8,11 +21,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '';
-	      if (add_type == 'new_fields') {
-	        __p += '\n\t<a href="#">\n';
-	      }
-	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>';
+	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + '">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>';
 	    }
 	    return __p;
 	  };
@@ -23,7 +32,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Default questions</h2>';
 	    }
 	    return __p;
 	  };
@@ -45,7 +54,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Optional questions</h2>';
 	    }
 	    return __p;
 	  };
@@ -115,6 +124,7 @@
 	applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Dropdown',
+			type_title: 'Dropdown',
 			options: {
 				style: 'dropdown'
 			}
@@ -123,6 +133,7 @@
 	applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Radiobuttons',
+			type_title: 'Radio buttons',
 			options: {
 				style: 'radiobuttons'
 			}
@@ -131,6 +142,7 @@
 	applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
 		defaults: {
 			view: 'Textarea',
+			type_title: 'Textarea',
 			options: {
 				limit: applr.Defaults.textareaDefaultLimit
 			}
@@ -139,6 +151,7 @@
 	applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
 		defaults: {
 			view: 'Textfield',
+			type_title: 'Textfield',
 			options: {
 				limit: applr.Defaults.textfieldDefaultLimit
 			}
@@ -155,13 +168,21 @@
 		}
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
-		tagName: 'ul',
+		tagName: 'div',
+	
+		attributes: {
+			class: _options.optional_questions_class,
+			id: 'applr-default-questions-wrapper'
+		},
 	
 		render: function() {
-			this.collection.each(function(questionMmodel){
-				var View = questionMmodel.get('view');
-				var questionView = new applr.Views[View]({ model: questionMmodel });
-				this.$el.append(questionView.render().el);
+			this.$el.html(applr.Templates.DefaultQuestions);
+			this.$el.append('<ul></ul>');
+	
+			this.collection.each(function(questionModel){
+				var View = questionModel.get('view');
+				var questionView = new applr.Views[View]({ model: questionModel });
+				this.$el.find('ul').append(questionView.render().el);
 			}, this);
 			return this;
 		}
@@ -170,13 +191,21 @@
 		template: applr.Templates.Dropdown
 	});
 	applr.Views.OptionalQuestions = Backbone.View.extend({
-		tagName: 'ul',
+		tagName: 'div',
+	
+		attributes: {
+			class: _options.optional_questions_class,
+			id: 'applr-optional-questions-wrapper'
+		},
 	
 		render: function() {
-			this.collection.each(function(questionMmodel){
-				var View = questionMmodel.get('view');
-				var questionView = new applr.Views[View]({ model: questionMmodel });
-				this.$el.append(questionView.render().el);
+			this.$el.html(applr.Templates.OptionalQuestions);
+			this.$el.append('<ul></ul>');
+	
+			this.collection.each(function(questionModel){
+				var View = questionModel.get('view');
+				var questionView = new applr.Views[View]({ model: questionModel });
+				this.$el.find('ul').append(questionView.render().el);
 			}, this);
 			return this;
 		}
@@ -206,14 +235,6 @@
 				'Dropdown',
 				'Radiobuttons'
 			],
-			_options = {
-				//container for html
-				container: '#applr-container',
-				//is there will be 2 lists of questions (default+optional) or one list (default)
-				mode: 'default+optional',
-				//new_fields or optional_fields
-				add_type: 'new_fields'
-			},
 			_DefaultQuestionCollection,
 			_OptionalQuestionsCollection,
 			_DefaultQuestionCollectionView,
@@ -238,7 +259,11 @@
 				}
 	
 				return result;
-			}
+			},
+	
+			_initSortable = function() {
+	
+			};
 		;
 	
 		var facade = {

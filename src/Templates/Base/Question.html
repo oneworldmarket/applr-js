@@ -1,5 +1,4 @@
-<% if (add_type == 'new_fields') { %>
-	<a href="#" class="edit-question">
-<% } %>
+<a href="#" class="<%= _options.links_default_class %> edit-question">
 	<%= ask %>
 </a>
+<span class="<%= _options.text_default_class %>">(<%= type_title %>)</span>

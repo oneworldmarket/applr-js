@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 		concat: {
 			dist: {
 				src: [
+					'src/config.js',
 					'tmp/templates.js',
 					'src/init.js',
 					'src/Models/Base/*.js',
