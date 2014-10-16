@@ -1,17 +1,28 @@
 ;(function(){
-	var _options = {
-		//container for html
-		container: '#applr-container',
-		//is there will be 2 lists of questions (default+optional) or one list (default)
-		mode: 'default+optional',
-		//new_fields or optional_fields
-		add_type: 'new_fields',
-		links_default_class: 'standard-blue-link',
-		text_default_class: 'standard-black',
-		title_default_class: 'black-title-large',
-		default_questions_class: 'applr-questions-wrapper applr-default-questions',
-		optional_questions_class: 'applr-questions-wrapper applr-optional-questions'
-	};
+	var
+		_options = {
+			//container for html
+			container: '#applr-container',
+			//is there will be 2 lists of questions (default+optional) or one list (default)
+			mode: 'default+optional',
+			//new_fields or optional_fields
+			add_type: 'new_fields',
+			links_default_class: 'standard-blue-link',
+			text_default_class: 'standard-black',
+			title_default_class: 'black-title-large',
+			default_questions_class: 'applr-questions-wrapper applr-default-questions',
+			optional_questions_class: 'applr-questions-wrapper applr-optional-questions'
+		},
+		_field_types = [
+			'Textfield',
+			'Textarea',
+			'Dropdown',
+			'Radiobuttons'
+		]
+	;
+	
+	
+	
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
 	  this["Templates"]["Base.Question"] = function (obj) {
@@ -22,6 +33,17 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + '">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["AddNewField"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -121,6 +143,11 @@
 			type: 'open'
 		}
 	});
+	applr.Models.AddNewField = Backbone.Model.extend({
+		defaults: {
+			items: _field_types
+		}
+	});
 	applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Dropdown',
@@ -164,6 +191,21 @@
 	
 		render: function() {
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+			return this;
+		}
+	});
+	applr.Views.AddNewField = Backbone.View.extend({
+		tagName: 'div',
+	
+		template: applr.Templates.AddNewField,
+	
+		attributes: {
+			class: 'applr-add-new-field'
+		},
+	
+		render: function() {
+			var html = this.template(this.model.toJSON());
+			this.$el.html(html);
 			return this;
 		}
 	});
@@ -229,17 +271,13 @@
 		//private variables and functions
 		var
 			_debug = true,
-			_field_types = [
-				'Textfield',
-				'Textarea',
-				'Dropdown',
-				'Radiobuttons'
-			],
 			_DefaultQuestionCollection,
 			_OptionalQuestionsCollection,
 			_DefaultQuestionCollectionView,
 			_OptionalQuestionsCollectionView,
 			_containerObj,
+			_AddNewFieldModel,
+			_AddNewFieldView,
 	
 			_detectQuestionModel = function(el) {
 				var result = false;
@@ -263,7 +301,13 @@
 	
 			_initSortable = function() {
 	
-			};
+			},
+			_initAddNewField = function() {
+				_AddNewFieldModel = new applr.Model.AddNewField();
+				_AddNewFieldView = new applr.View.AddNewField({model:_AddNewFieldModel});
+	
+				_AddNewFieldView.render().$el.appendTo(_options.container);
+			}
 		;
 	
 		var facade = {
@@ -309,6 +353,8 @@
 	
 				_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
 				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+	
+				this._initAddNewField();
 			}
 		};
 	

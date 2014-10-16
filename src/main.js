@@ -2,17 +2,13 @@ window.applr = (function(applr, $){
 	//private variables and functions
 	var
 		_debug = true,
-		_field_types = [
-			'Textfield',
-			'Textarea',
-			'Dropdown',
-			'Radiobuttons'
-		],
 		_DefaultQuestionCollection,
 		_OptionalQuestionsCollection,
 		_DefaultQuestionCollectionView,
 		_OptionalQuestionsCollectionView,
 		_containerObj,
+		_AddNewFieldModel,
+		_AddNewFieldView,
 
 		_detectQuestionModel = function(el) {
 			var result = false;
@@ -36,7 +32,13 @@ window.applr = (function(applr, $){
 
 		_initSortable = function() {
 
-		};
+		},
+		_initAddNewField = function() {
+			_AddNewFieldModel = new applr.Model.AddNewField();
+			_AddNewFieldView = new applr.View.AddNewField({model:_AddNewFieldModel});
+
+			_AddNewFieldView.render().$el.appendTo(_options.container);
+		}
 	;
 
 	var facade = {
@@ -82,6 +84,8 @@ window.applr = (function(applr, $){
 
 			_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
 			_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+
+			this._initAddNewField();
 		}
 	};
 
