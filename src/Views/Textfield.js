@@ -1,3 +1,3 @@
-applr.Views.Textfield = applr.Views.Base.Question.extend({
-	template: applr.Templates.Textfield
+applr.Views.Textfield = applr.Views.Base.OpenQuestion.extend({
+
 });

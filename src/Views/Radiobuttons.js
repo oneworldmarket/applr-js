@@ -1,3 +1,3 @@
-applr.Views.Radiobuttons = applr.Views.Base.Question.extend({
-	template: applr.Templates.Radiobuttons
+applr.Views.Radiobuttons = applr.Views.Base.ClosedQuestion.extend({
+
 });

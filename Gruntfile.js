@@ -9,11 +9,13 @@ module.exports = function(grunt) {
 					'src/config.js',
 					'tmp/templates.js',
 					'src/init.js',
+					'src/Collections/*.js',
 					'src/Models/Base/*.js',
 					'src/Models/*.js',
-					'src/Views/Base/*.js',
+					'src/Views/Base/Question.js',
+					'src/Views/Base/OpenQuestion.js',
+					'src/Views/Base/ClosedQuestion.js',
 					'src/Views/*.js',
-					'src/Collections/*.js',
 					'src/main.js'
 				],
 				dest: 'tmp/applr.js'
@@ -53,9 +55,9 @@ module.exports = function(grunt) {
 			js: {
 				files: [
 					'src/*.js',
-					'src/Models/**.js',
-					'src/Views/**.js',
-					'src/Collections/**.js'
+					'src/Models/**',
+					'src/Views/**',
+					'src/Collections/**'
 				],
 				tasks: 'watch-js'
 			},

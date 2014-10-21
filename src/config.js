@@ -17,7 +17,8 @@ var
 		'Textarea',
 		'Dropdown',
 		'Radiobuttons'
-	]
+	],
+	_editMode = false
 ;
 
 

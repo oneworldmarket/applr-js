@@ -18,7 +18,8 @@
 			'Textarea',
 			'Dropdown',
 			'Radiobuttons'
-		]
+		],
+		_editMode = false
 	;
 	
 	
@@ -47,6 +48,17 @@
 	    }
 	    return __p;
 	  };
+	  this["Templates"]["CloseQuestion"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<div class="edit-mode display-none">\n\t<h2>' + ((__t = (ask)) == null ? '' : __t) + '</h2>\n\n\t<label>\n\t\tLabel\n\t</label>\n\n\t<input type="text" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\n\t<label>\n\t\tOptions (1 per line)\n\t</label>\n\t<div class="optional-questions">\n\n\t</div>\n</div>';
+	    }
+	    return __p;
+	  };
 	  this["Templates"]["DefaultQuestions"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -69,6 +81,17 @@
 	    }
 	    return __p;
 	  };
+	  this["Templates"]["OpenQuestion"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	    }
+	    return __p;
+	  };
 	  this["Templates"]["OptionalQuestions"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -77,6 +100,32 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Optional questions</h2>';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["QuestionOption"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<td><input type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answers[]"></td>\n<td><input type="checkbox" ';
+	      if (reject) {
+	        __p += ' checked=checked ';
+	      }
+	      __p += ' ></td>\n<td><a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-answer">remove</a></td>\n';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["QuestionOptions"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<thead>\n\t<td>Label</td>\n\t<td>Reject?</td>\n\t<td></td>\n</thead>\n<tbody class="option-contents">\n\n</tbody>\n<tr>\n<td colspan="3">\n\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' add-new-answer">add row</a>\n</td>\n</tr>';
 	    }
 	    return __p;
 	  };
@@ -133,9 +182,34 @@
 			}
 		}
 	;
+	applr.Collections.DefaultQuestions = Backbone.Collection.extend({
+	
+	});
+	applr.Collections.OptionalQuestions = Backbone.Collection.extend({
+	
+	});
+	applr.Collections.QuestionsOptions = Backbone.Collection.extend({
+	
+	});
 	applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 		defaults: {
 			type: 'close'
+		},
+	
+		answersCollection: {},
+	
+		initialize: function(attr) {
+			this.answersCollection = new applr.Collections.OptionalQuestions();
+	
+			if (attr.answers != null && attr.answers.length > 0) {
+				_.each(attr.answers, function(el) {
+					var model = new applr.Models.CloseQuestionItem(el);
+					this.answersCollection.add(model);
+				}, this);
+			} else {
+				var model = new applr.Models.CloseQuestionItem();
+				this.answersCollection.add(model);
+			}
 		}
 	});
 	applr.Models.Base.OpenQuestion = Backbone.Model.extend({
@@ -148,6 +222,16 @@
 			items: _field_types
 		}
 	});
+	applr.Models.CloseQuestionItem = Backbone.Model.extend({
+		defaults: {
+			ask: '',
+			reject: false
+		},
+	
+		render: function() {
+	
+		}
+	});
 	applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Dropdown',
@@ -157,6 +241,7 @@
 			}
 		}
 	});
+	
 	applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Radiobuttons',
@@ -191,6 +276,32 @@
 	
 		render: function() {
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+			return this;
+		},
+	
+		events: {
+			'click .edit-question' : 'toggleEdit'
+		},
+	
+		toggleEdit: function(e) {
+			e.preventDefault();
+	
+			_editMode = !_editMode;
+			this.$el.find('.edit-mode').toggleClass('display-none');
+		}
+	});
+	applr.Views.Base.OpenQuestion = applr.Views.Base.Question.extend({
+		template: applr.Templates.OpenQuestion
+	});
+	applr.Views.Base.ClosedQuestion = applr.Views.Base.Question.extend({
+		template: applr.Templates.CloseQuestion,
+	
+		render: function() {
+			//rendering question options (answers)
+			var QuestionOptionsView = new applr.Views.QuestionOptions({collection: this.model.answersCollection})
+	
+			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+			this.$el.find('.optional-questions').html(QuestionOptionsView.render().$el);
 			return this;
 		}
 	});
@@ -229,8 +340,8 @@
 			return this;
 		}
 	});
-	applr.Views.Dropdown = applr.Views.Base.Question.extend({
-		template: applr.Templates.Dropdown
+	applr.Views.Dropdown = applr.Views.Base.ClosedQuestion.extend({
+	
 	});
 	applr.Views.OptionalQuestions = Backbone.View.extend({
 		tagName: 'div',
@@ -252,19 +363,38 @@
 			return this;
 		}
 	});
-	applr.Views.Radiobuttons = applr.Views.Base.Question.extend({
-		template: applr.Templates.Radiobuttons
+	applr.Views.QuestionOption = Backbone.View.extend({
+		tagName: 'tr',
+	
+		template: applr.Templates.QuestionOption,
+	
+		render: function() {
+			this.$el.html(this.template(this.model.toJSON()));
+			return this;
+		}
 	});
-	applr.Views.Textarea = applr.Views.Base.Question.extend({
-		template: applr.Templates.Textarea
+	applr.Views.QuestionOptions = Backbone.View.extend({
+		tagName: 'table',
+	
+		template: applr.Templates.QuestionOptions,
+	
+		render: function() {
+			this.$el.html(this.template());
+	
+			this.collection.each(function(model){
+				var View = new applr.Views.QuestionOption({ model: model });
+				this.$el.find('.option-contents').append(View.render().el);
+			}, this);
+			return this;
+		}
 	});
-	applr.Views.Textfield = applr.Views.Base.Question.extend({
-		template: applr.Templates.Textfield
-	});
-	applr.Collections.DefaultQuestions = Backbone.Collection.extend({
+	applr.Views.Radiobuttons = applr.Views.Base.ClosedQuestion.extend({
 	
 	});
-	applr.Collections.OptionalQuestions = Backbone.Collection.extend({
+	applr.Views.Textarea = applr.Views.Base.OpenQuestion.extend({
+	
+	});
+	applr.Views.Textfield = applr.Views.Base.OpenQuestion.extend({
 	
 	});
 	window.applr = (function(applr, $){
@@ -303,8 +433,8 @@
 	
 			},
 			_initAddNewField = function() {
-				_AddNewFieldModel = new applr.Model.AddNewField();
-				_AddNewFieldView = new applr.View.AddNewField({model:_AddNewFieldModel});
+				_AddNewFieldModel = new applr.Models.AddNewField();
+				_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
 	
 				_AddNewFieldView.render().$el.appendTo(_options.container);
 			}
@@ -354,7 +484,7 @@
 				_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
 				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 	
-				this._initAddNewField();
+				_initAddNewField();
 			}
 		};
 	

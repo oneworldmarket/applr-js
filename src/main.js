@@ -34,8 +34,8 @@ window.applr = (function(applr, $){
 
 		},
 		_initAddNewField = function() {
-			_AddNewFieldModel = new applr.Model.AddNewField();
-			_AddNewFieldView = new applr.View.AddNewField({model:_AddNewFieldModel});
+			_AddNewFieldModel = new applr.Models.AddNewField();
+			_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
 
 			_AddNewFieldView.render().$el.appendTo(_options.container);
 		}
@@ -85,7 +85,7 @@ window.applr = (function(applr, $){
 			_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
 			_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 
-			this._initAddNewField();
+			_initAddNewField();
 		}
 	};
 
