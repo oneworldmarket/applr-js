@@ -23,7 +23,9 @@ window.applr = (function(applr, $){
 		},
 
 		_initSortable = function() {
-
+			$('#applr-optional-questions-list, #applr-default-questions-list').sortable({
+				connectWith: "." + _options.question_list_wrapper_class
+			}).disableSelection();
 		},
 		_initAddNewField = function() {
 			_AddNewFieldModel = new applr.Models.AddNewField();
@@ -82,6 +84,7 @@ window.applr = (function(applr, $){
 
 			_initAddNewField();
 			_initSaveSettings();
+			_initSortable();
 		},
 		getJSON: function() {
 			return _getJSON();

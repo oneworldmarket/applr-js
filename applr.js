@@ -10,8 +10,10 @@
 			links_default_class: 'standard-blue-link',
 			text_default_class: 'standard-black',
 			title_default_class: 'black-title-large',
-			default_questions_class: 'applr-questions-wrapper applr-default-questions',
-			optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
+			default_questions_class: 'applr-default-questions',
+			optional_questions_class: 'applr-optional-questions',
+			questions_wrapper_class: 'applr-questions-wrapper',
+			question_list_wrapper_class: 'applr-question-list-wrapper',
 			default_button_class: 'btn-standard btn-green',
 			save_endpoint: '/c/applr/save-settings'
 		},
@@ -52,7 +54,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>';
+	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight "></span>';
 	    }
 	    return __p;
 	  };
@@ -376,13 +378,13 @@
 		tagName: 'div',
 	
 		attributes: {
-			class: _options.optional_questions_class,
+			class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
 			id: 'applr-default-questions-wrapper'
 		},
 	
 		render: function() {
 			this.$el.html(applr.Templates.DefaultQuestions);
-			this.$el.append('<ul></ul>');
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-default-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');
@@ -403,13 +405,13 @@
 		tagName: 'div',
 	
 		attributes: {
-			class: _options.optional_questions_class,
+			class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
 			id: 'applr-optional-questions-wrapper'
 		},
 	
 		render: function() {
 			this.$el.html(applr.Templates.OptionalQuestions);
-			this.$el.append('<ul></ul>');
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');
@@ -541,7 +543,9 @@
 			},
 	
 			_initSortable = function() {
-	
+				$('#applr-optional-questions-list, #applr-default-questions-list').sortable({
+					connectWith: "." + _options.question_list_wrapper_class
+				}).disableSelection();
 			},
 			_initAddNewField = function() {
 				_AddNewFieldModel = new applr.Models.AddNewField();
@@ -600,6 +604,7 @@
 	
 				_initAddNewField();
 				_initSaveSettings();
+				_initSortable();
 			},
 			getJSON: function() {
 				return _getJSON();

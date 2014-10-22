@@ -9,8 +9,10 @@ var
 		links_default_class: 'standard-blue-link',
 		text_default_class: 'standard-black',
 		title_default_class: 'black-title-large',
-		default_questions_class: 'applr-questions-wrapper applr-default-questions',
-		optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
+		default_questions_class: 'applr-default-questions',
+		optional_questions_class: 'applr-optional-questions',
+		questions_wrapper_class: 'applr-questions-wrapper',
+		question_list_wrapper_class: 'applr-question-list-wrapper',
 		default_button_class: 'btn-standard btn-green',
 		save_endpoint: '/c/applr/save-settings'
 	},
