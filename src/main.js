@@ -30,6 +30,11 @@ window.applr = (function(applr, $){
 			_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
 
 			_AddNewFieldView.render().$el.appendTo(_options.container);
+		},
+
+		_initSaveSettings = function() {
+			_saveSettingsView = new applr.Views.SaveSettings();
+			_saveSettingsView.render().$el.appendTo(_options.container);
 		}
 	;
 
@@ -55,7 +60,6 @@ window.applr = (function(applr, $){
 		restoreFromJSON: function(JSON) {
 			if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 				_.each(JSON.default, function(el){
-					el.add_type = _options.add_type;
 					var modelName = _detectQuestionModel(el);
 					if (modelName) {
 						var model = new applr.Models[modelName](el);
@@ -65,7 +69,6 @@ window.applr = (function(applr, $){
 			}
 			if (typeof JSON.optional == 'object' && JSON.default.length > 0) {
 				_.each(JSON.optional, function(el){
-					el.add_type = _options.add_type;
 					var modelName = _detectQuestionModel(el);
 					if (modelName) {
 						var model = new applr.Models[modelName](el);
@@ -78,6 +81,13 @@ window.applr = (function(applr, $){
 			_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 
 			_initAddNewField();
+			_initSaveSettings();
+		},
+		getJSON: function() {
+			return _getJSON();
+		},
+		saveSettings: function() {
+			return _saveSettings();
 		}
 	};
 

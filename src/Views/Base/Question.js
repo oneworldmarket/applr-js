@@ -1,4 +1,8 @@
 applr.Views.Base.Question = Backbone.View.extend({
+	initialize: function() {
+		this.listenTo(this.model, 'destroy', this.removeQuestion);
+	},
+
 	tagName: 'li',
 
 	defaultTemplate: applr.Templates['Base.Question'],
@@ -12,14 +16,15 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'click .edit-question' : 'toggleEdit',
 		'click .save-candidate-filter' : 'saveFilter',
 		'change input[name="ask"]' : 'changeAsk',
-		'change input[name="limit"]' : 'changeLimit'
+		'change input[name="limit"]' : 'changeLimit',
+		'click .remove-question' : 'destroyQuestion'
 	},
 
 	toggleEdit: function(e) {
 		e.preventDefault();
 
 		_editMode = !_editMode;
-		$('.applr-container').find('.hide-toggle').toggleClass('display-none');
+		$(_options.container).find('.hide-toggle').toggleClass('display-none');
 		this.$el.find('.edit-mode').toggleClass('display-none');
 	},
 
@@ -40,5 +45,15 @@ applr.Views.Base.Question = Backbone.View.extend({
 		var options = this.model.get('options');
 		options.limit = value;
 		this.model.set('options', options);
+	},
+
+	destroyQuestion: function(e) {
+		e.preventDefault();
+
+		this.model.destroy();
+	},
+
+	removeQuestion: function() {
+		this.$el.remove();
 	}
 });

@@ -12,7 +12,8 @@
 			title_default_class: 'black-title-large',
 			default_questions_class: 'applr-questions-wrapper applr-default-questions',
 			optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
-			default_button_class: 'btn-standard btn-green'
+			default_button_class: 'btn-standard btn-green',
+			save_endpoint: '/c/applr/save-settings'
 		},
 		_field_types = {
 			'Textfield' : 'Text field',
@@ -27,8 +28,21 @@
 		_OptionalQuestionsCollectionView,
 		_containerObj,
 		_AddNewFieldModel,
-		_AddNewFieldView
+		_AddNewFieldView,
+		_saveSettingsView
 	;
+	
+	//some private functions
+	var _getJSON = function() {
+		return {
+			default: _DefaultQuestionCollection.toJSON(),
+			optional: _OptionalQuestionsCollection.toJSON()
+		}
+	};
+	
+	var _saveSettings = function() {
+		console.log(_getJSON());
+	};
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
 	  this["Templates"]["Base.Question"] = function (obj) {
@@ -38,7 +52,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>';
+	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>';
 	    }
 	    return __p;
 	  };
@@ -149,6 +163,17 @@
 	    }
 	    return __p;
 	  };
+	  this["Templates"]["SaveSettings"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' save-settings-button">Save settings</button>';
+	    }
+	    return __p;
+	  };
 	  this["Templates"]["Textarea"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -191,6 +216,18 @@
 			}
 		}
 	;
+	
+	//return models and collections also when using toJSON
+	Backbone.Model.prototype.toJSON = function() {
+		var json = _.clone(this.attributes);
+	
+		for(var attr in json) {
+			if((json[attr] instanceof Backbone.Model) || (json[attr] instanceof Backbone.Collection)) {
+				json[attr] = json[attr].toJSON();
+			}
+		}
+		return json;
+	};
 	applr.Collections.DefaultQuestions = Backbone.Collection.extend({
 	
 	});
@@ -206,20 +243,17 @@
 			ask: 'New question'
 		},
 	
-		answersCollection: {},
-	
 		initialize: function(attr) {
-			this.answersCollection = new applr.Collections.OptionalQuestions();
+			this.attributes.answers = new applr.Collections.OptionalQuestions();
 	
-			console.log(attr);
 			if (attr !== undefined && attr.answers !== undefined && attr.answers.length > 0) {
 				_.each(attr.answers, function(el) {
 					var model = new applr.Models.CloseQuestionItem(el);
-					this.answersCollection.add(model);
+					this.attributes.answers.add(model);
 				}, this);
 			} else {
 				var model = new applr.Models.CloseQuestionItem();
-				this.answersCollection.add(model);
+				this.attributes.answers.add(model);
 			}
 		}
 	});
@@ -282,6 +316,10 @@
 		}
 	});
 	applr.Views.Base.Question = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.model, 'destroy', this.removeQuestion);
+		},
+	
 		tagName: 'li',
 	
 		defaultTemplate: applr.Templates['Base.Question'],
@@ -295,14 +333,15 @@
 			'click .edit-question' : 'toggleEdit',
 			'click .save-candidate-filter' : 'saveFilter',
 			'change input[name="ask"]' : 'changeAsk',
-			'change input[name="limit"]' : 'changeLimit'
+			'change input[name="limit"]' : 'changeLimit',
+			'click .remove-question' : 'destroyQuestion'
 		},
 	
 		toggleEdit: function(e) {
 			e.preventDefault();
 	
 			_editMode = !_editMode;
-			$('.applr-container').find('.hide-toggle').toggleClass('display-none');
+			$(_options.container).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
 		},
 	
@@ -323,6 +362,16 @@
 			var options = this.model.get('options');
 			options.limit = value;
 			this.model.set('options', options);
+		},
+	
+		destroyQuestion: function(e) {
+			e.preventDefault();
+	
+			this.model.destroy();
+		},
+	
+		removeQuestion: function() {
+			this.$el.remove();
 		}
 	});
 	applr.Views.Base.OpenQuestion = applr.Views.Base.Question.extend({
@@ -333,7 +382,7 @@
 	
 		render: function() {
 			//rendering question options (answers)
-			var QuestionOptionsView = new applr.Views.QuestionOptions({collection: this.model.answersCollection})
+			var QuestionOptionsView = new applr.Views.QuestionOptions({collection: this.model.attributes.answers})
 	
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 			this.$el.find('.optional-questions').html(QuestionOptionsView.render().$el);
@@ -485,6 +534,27 @@
 	applr.Views.Radiobuttons = applr.Views.Base.ClosedQuestion.extend({
 	
 	});
+	applr.Views.SaveSettings =  Backbone.View.extend({
+		attributes: {
+			class: 'applr-save-settings hide-toggle goRight'
+		},
+	
+		template: applr.Templates.SaveSettings,
+	
+		render: function() {
+			this.$el.html(this.template());
+			return this;
+		},
+	
+		events: {
+			'click .save-settings-button' : 'saveSettings'
+		},
+	
+		saveSettings: function(e) {
+			e.preventDefault();
+			_saveSettings();
+		}
+	});
 	applr.Views.Textarea = applr.Views.Base.OpenQuestion.extend({
 	
 	});
@@ -523,6 +593,11 @@
 				_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
 	
 				_AddNewFieldView.render().$el.appendTo(_options.container);
+			},
+	
+			_initSaveSettings = function() {
+				_saveSettingsView = new applr.Views.SaveSettings();
+				_saveSettingsView.render().$el.appendTo(_options.container);
 			}
 		;
 	
@@ -548,7 +623,6 @@
 			restoreFromJSON: function(JSON) {
 				if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 					_.each(JSON.default, function(el){
-						el.add_type = _options.add_type;
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -558,7 +632,6 @@
 				}
 				if (typeof JSON.optional == 'object' && JSON.default.length > 0) {
 					_.each(JSON.optional, function(el){
-						el.add_type = _options.add_type;
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -571,6 +644,13 @@
 				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 	
 				_initAddNewField();
+				_initSaveSettings();
+			},
+			getJSON: function() {
+				return _getJSON();
+			},
+			saveSettings: function() {
+				return _saveSettings();
 			}
 		};
 	
