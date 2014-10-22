@@ -10,7 +10,8 @@ var
 		text_default_class: 'standard-black',
 		title_default_class: 'black-title-large',
 		default_questions_class: 'applr-questions-wrapper applr-default-questions',
-		optional_questions_class: 'applr-questions-wrapper applr-optional-questions'
+		optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
+		default_button_class: 'btn-standard btn-green'
 	},
 	_field_types = [
 		'Textfield',

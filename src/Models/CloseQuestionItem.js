@@ -1,10 +1,6 @@
 applr.Models.CloseQuestionItem = Backbone.Model.extend({
 	defaults: {
-		ask: '',
+		answer: '',
 		reject: false
-	},
-
-	render: function() {
-
 	}
 });
