@@ -74,6 +74,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-template-module');
 
 	// Default task(s).
-	grunt.registerTask('default', ['template-module', 'concat', 'wrap']);
+	grunt.registerTask('default', ['template-module', 'concat', 'wrap', 'watch']);
 	grunt.registerTask('watch-js', ['concat', 'wrap']);
 };
