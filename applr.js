@@ -93,17 +93,6 @@
 	    }
 	    return __p;
 	  };
-	  this["Templates"]["Dropdown"] = function (obj) {
-	    var __t, __p = '',
-	        __j = Array.prototype.join,
-	        print = function () {
-	        __p += __j.call(arguments, '');
-	        };
-	    with(obj || {}) {
-	      __p += '';
-	    }
-	    return __p;
-	  };
 	  this["Templates"]["OpenQuestion"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -152,17 +141,6 @@
 	    }
 	    return __p;
 	  };
-	  this["Templates"]["Radiobuttons"] = function (obj) {
-	    var __t, __p = '',
-	        __j = Array.prototype.join,
-	        print = function () {
-	        __p += __j.call(arguments, '');
-	        };
-	    with(obj || {}) {
-	      __p += '';
-	    }
-	    return __p;
-	  };
 	  this["Templates"]["SaveSettings"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -171,28 +149,6 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' save-settings-button">Save settings</button>';
-	    }
-	    return __p;
-	  };
-	  this["Templates"]["Textarea"] = function (obj) {
-	    var __t, __p = '',
-	        __j = Array.prototype.join,
-	        print = function () {
-	        __p += __j.call(arguments, '');
-	        };
-	    with(obj || {}) {
-	      __p += '';
-	    }
-	    return __p;
-	  };
-	  this["Templates"]["Textfield"] = function (obj) {
-	    var __t, __p = '',
-	        __j = Array.prototype.join,
-	        print = function () {
-	        __p += __j.call(arguments, '');
-	        };
-	    with(obj || {}) {
-	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -284,7 +240,6 @@
 			ask: 'New question'
 		}
 	});
-	
 	applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
 		defaults: {
 			view: 'Radiobuttons',
