@@ -2,14 +2,6 @@ window.applr = (function(applr, $){
 	//private variables and functions
 	var
 		_debug = true,
-		_DefaultQuestionCollection,
-		_OptionalQuestionsCollection,
-		_DefaultQuestionCollectionView,
-		_OptionalQuestionsCollectionView,
-		_containerObj,
-		_AddNewFieldModel,
-		_AddNewFieldView,
-
 		_detectQuestionModel = function(el) {
 			var result = false;
 

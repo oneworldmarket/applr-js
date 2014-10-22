@@ -1,6 +1,7 @@
 applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 	defaults: {
-		type: 'close'
+		type: 'close',
+		ask: 'New question'
 	},
 
 	answersCollection: {},
@@ -8,7 +9,8 @@ applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 	initialize: function(attr) {
 		this.answersCollection = new applr.Collections.OptionalQuestions();
 
-		if (attr.answers != null && attr.answers.length > 0) {
+		console.log(attr);
+		if (attr !== undefined && attr.answers !== undefined && attr.answers.length > 0) {
 			_.each(attr.answers, function(el) {
 				var model = new applr.Models.CloseQuestionItem(el);
 				this.answersCollection.add(model);

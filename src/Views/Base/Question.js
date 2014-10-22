@@ -10,7 +10,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 
 	events: {
 		'click .edit-question' : 'toggleEdit',
-		'click .save-candidate-filter' : 'toggleEdit',
+		'click .save-candidate-filter' : 'saveFilter',
 		'change input[name="ask"]' : 'changeAsk',
 		'change input[name="limit"]' : 'changeLimit'
 	},
@@ -29,11 +29,16 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.$el.find('.ask-val').html(this.model.get('ask'));
 	},
 
+	saveFilter: function(e) {
+		this.toggleEdit(e);
+		_DefaultQuestionCollectionView.render();
+		_OptionalQuestionsCollectionView.render();
+	},
+
 	changeLimit: function() {
 		var value = this.$el.find('input[name="limit"]').val();
 		var options = this.model.get('options');
 		options.limit = value;
 		this.model.set('options', options);
-		console.log(this.model.toJSON());
 	}
 });

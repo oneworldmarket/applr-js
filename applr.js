@@ -14,17 +14,21 @@
 			optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
 			default_button_class: 'btn-standard btn-green'
 		},
-		_field_types = [
-			'Textfield',
-			'Textarea',
-			'Dropdown',
-			'Radiobuttons'
-		],
-		_editMode = false
+		_field_types = {
+			'Textfield' : 'Text field',
+			'Textarea' : 'Textarea',
+			'Dropdown' : 'Dropdown',
+			'Radiobuttons' : 'Radio buttons'
+		},
+		_editMode = false,
+		_DefaultQuestionCollection,
+		_OptionalQuestionsCollection,
+		_DefaultQuestionCollectionView,
+		_OptionalQuestionsCollectionView,
+		_containerObj,
+		_AddNewFieldModel,
+		_AddNewFieldView
 	;
-	
-	
-	
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
 	  this["Templates"]["Base.Question"] = function (obj) {
@@ -45,7 +49,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '';
+	      __p += '<select name="add-new-field-select">\n\t<option value="0">Select field type</option>\n\t';
+	      _.each(items, function (item, item_key) {
+	        __p += '\n\t\t<option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n\t';
+	      });
+	      __p += '\n</select>\n<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>';
 	    }
 	    return __p;
 	  };
@@ -194,7 +202,8 @@
 	});
 	applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 		defaults: {
-			type: 'close'
+			type: 'close',
+			ask: 'New question'
 		},
 	
 		answersCollection: {},
@@ -202,7 +211,8 @@
 		initialize: function(attr) {
 			this.answersCollection = new applr.Collections.OptionalQuestions();
 	
-			if (attr.answers != null && attr.answers.length > 0) {
+			console.log(attr);
+			if (attr !== undefined && attr.answers !== undefined && attr.answers.length > 0) {
 				_.each(attr.answers, function(el) {
 					var model = new applr.Models.CloseQuestionItem(el);
 					this.answersCollection.add(model);
@@ -215,7 +225,8 @@
 	});
 	applr.Models.Base.OpenQuestion = Backbone.Model.extend({
 		defaults: {
-			type: 'open'
+			type: 'open',
+			ask: 'New question'
 		}
 	});
 	applr.Models.AddNewField = Backbone.Model.extend({
@@ -235,7 +246,8 @@
 			type_title: 'Dropdown',
 			options: {
 				style: 'dropdown'
-			}
+			},
+			ask: 'New question'
 		}
 	});
 	
@@ -245,7 +257,8 @@
 			type_title: 'Radio buttons',
 			options: {
 				style: 'radiobuttons'
-			}
+			},
+			ask: 'New question'
 		}
 	});
 	applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
@@ -254,7 +267,8 @@
 			type_title: 'Textarea',
 			options: {
 				limit: applr.Defaults.textareaDefaultLimit
-			}
+			},
+			ask: 'New question'
 		}
 	});
 	applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
@@ -263,7 +277,8 @@
 			type_title: 'Textfield',
 			options: {
 				limit: applr.Defaults.textfieldDefaultLimit
-			}
+			},
+			ask: 'New question'
 		}
 	});
 	applr.Views.Base.Question = Backbone.View.extend({
@@ -278,7 +293,7 @@
 	
 		events: {
 			'click .edit-question' : 'toggleEdit',
-			'click .save-candidate-filter' : 'toggleEdit',
+			'click .save-candidate-filter' : 'saveFilter',
 			'change input[name="ask"]' : 'changeAsk',
 			'change input[name="limit"]' : 'changeLimit'
 		},
@@ -297,12 +312,17 @@
 			this.$el.find('.ask-val').html(this.model.get('ask'));
 		},
 	
+		saveFilter: function(e) {
+			this.toggleEdit(e);
+			_DefaultQuestionCollectionView.render();
+			_OptionalQuestionsCollectionView.render();
+		},
+	
 		changeLimit: function() {
 			var value = this.$el.find('input[name="limit"]').val();
 			var options = this.model.get('options');
 			options.limit = value;
 			this.model.set('options', options);
-			console.log(this.model.toJSON());
 		}
 	});
 	applr.Views.Base.OpenQuestion = applr.Views.Base.Question.extend({
@@ -326,13 +346,26 @@
 		template: applr.Templates.AddNewField,
 	
 		attributes: {
-			class: 'applr-add-new-field'
+			class: 'applr-add-new-field hide-toggle'
 		},
 	
 		render: function() {
 			var html = this.template(this.model.toJSON());
 			this.$el.html(html);
 			return this;
+		},
+	
+		events: {
+			'click .add-new-field-button' : 'addNewField'
+		},
+	
+		addNewField: function() {
+			var field_type = this.$el.find('select[name="add-new-field-select"]').val();
+	
+			if (field_type != '0') {
+				var model = new applr.Models[field_type];
+				_OptionalQuestionsCollection.add(model);
+			}
 		}
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
@@ -359,6 +392,10 @@
 	
 	});
 	applr.Views.OptionalQuestions = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.collection, "add", this.addNewItem);
+		},
+	
 		tagName: 'div',
 	
 		attributes: {
@@ -376,6 +413,12 @@
 				this.$el.find('ul').append(questionView.render().el);
 			}, this);
 			return this;
+		},
+	
+		addNewItem: function(questionModel) {
+			var View = questionModel.get('view');
+			var questionView = new applr.Views[View]({ model: questionModel });
+			this.$el.find('ul').append(questionView.render().el);
 		}
 	});
 	applr.Views.QuestionOption = Backbone.View.extend({
@@ -452,14 +495,6 @@
 		//private variables and functions
 		var
 			_debug = true,
-			_DefaultQuestionCollection,
-			_OptionalQuestionsCollection,
-			_DefaultQuestionCollectionView,
-			_OptionalQuestionsCollectionView,
-			_containerObj,
-			_AddNewFieldModel,
-			_AddNewFieldView,
-	
 			_detectQuestionModel = function(el) {
 				var result = false;
 	

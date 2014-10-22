@@ -13,13 +13,18 @@ var
 		optional_questions_class: 'applr-questions-wrapper applr-optional-questions',
 		default_button_class: 'btn-standard btn-green'
 	},
-	_field_types = [
-		'Textfield',
-		'Textarea',
-		'Dropdown',
-		'Radiobuttons'
-	],
-	_editMode = false
+	_field_types = {
+		'Textfield' : 'Text field',
+		'Textarea' : 'Textarea',
+		'Dropdown' : 'Dropdown',
+		'Radiobuttons' : 'Radio buttons'
+	},
+	_editMode = false,
+	_DefaultQuestionCollection,
+	_OptionalQuestionsCollection,
+	_DefaultQuestionCollectionView,
+	_OptionalQuestionsCollectionView,
+	_containerObj,
+	_AddNewFieldModel,
+	_AddNewFieldView
 ;
-
-

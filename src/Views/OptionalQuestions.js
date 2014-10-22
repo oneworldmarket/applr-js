@@ -1,4 +1,8 @@
 applr.Views.OptionalQuestions = Backbone.View.extend({
+	initialize: function() {
+		this.listenTo(this.collection, "add", this.addNewItem);
+	},
+
 	tagName: 'div',
 
 	attributes: {
@@ -16,5 +20,11 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 			this.$el.find('ul').append(questionView.render().el);
 		}, this);
 		return this;
+	},
+
+	addNewItem: function(questionModel) {
+		var View = questionModel.get('view');
+		var questionView = new applr.Views[View]({ model: questionModel });
+		this.$el.find('ul').append(questionView.render().el);
 	}
 });

@@ -4,6 +4,7 @@ applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		type_title: 'Dropdown',
 		options: {
 			style: 'dropdown'
-		}
+		},
+		ask: 'New question'
 	}
 });
