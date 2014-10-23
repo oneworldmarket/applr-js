@@ -1,4 +1,7 @@
 var
+	//debug mode
+	_debug = true,
+	//configurable options
 	_options = {
 		//container for html
 		container: '#applr-container',
@@ -23,6 +26,8 @@ var
 		'Radiobuttons' : 'Radio buttons'
 	},
 	_editMode = false,
+	_sortableEnabled = false,
+
 	_DefaultQuestionCollection,
 	_OptionalQuestionsCollection,
 	_DefaultQuestionCollectionView,
@@ -30,17 +35,70 @@ var
 	_containerObj,
 	_AddNewFieldModel,
 	_AddNewFieldView,
-	_saveSettingsView
+	_saveSettingsView,
+	_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
 ;
 
 //some private functions
-var _getJSON = function() {
-	return {
-		default: _DefaultQuestionCollection.toJSON(),
-		optional: _OptionalQuestionsCollection.toJSON()
-	}
-};
+var
+	_detectQuestionModel = function(el) {
+		var result = false;
 
-var _saveSettings = function() {
-	console.log(_getJSON());
-};
+		if (el.type == 'open') {
+			if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+				result = 'Textfield';
+			} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+				result = 'Textarea';
+			}
+		} else if (el.type == 'closed') {
+			if (el.options.style == 'dropdown') {
+				result = 'Dropdown';
+			} else if (el.options.style == 'radiobuttons') {
+				result = 'Radiobuttons';
+			}
+		}
+
+		return result;
+	},
+
+	_initSortable = function() {
+		$(_sortableElements).sortable({
+			connectWith: "." + _options.question_list_wrapper_class,
+			handle: '.drag-icon',
+			stop: function(event, ui) {
+				ui.item.trigger('drop', ui.item.index());
+			}
+		}).disableSelection();
+		_sortableEnabled = true;
+	},
+
+	_disableSortable = function() {
+		if (_sortableEnabled) {
+			$(_sortableElements).sortable('destroy').enableSelection();
+		}
+		_sortableEnabled = false;
+	},
+
+	_initAddNewField = function() {
+		_AddNewFieldModel = new applr.Models.AddNewField();
+		_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
+
+		_AddNewFieldView.render().$el.appendTo(_options.container);
+	},
+
+	_initSaveSettings = function() {
+		_saveSettingsView = new applr.Views.SaveSettings();
+		_saveSettingsView.render().$el.appendTo(_options.container);
+	},
+
+	_getJSON = function() {
+		return {
+			default: _DefaultQuestionCollection.toJSON(),
+			optional: _OptionalQuestionsCollection.toJSON()
+		}
+	},
+
+	 _saveSettings = function() {
+		console.log(_getJSON());
+	 }
+;

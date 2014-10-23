@@ -3,6 +3,10 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 		this.listenTo(this.collection, "add", this.addNewItem);
 	},
 
+	events: {
+		'update-sort': 'updateSort'
+	},
+
 	tagName: 'div',
 
 	attributes: {
@@ -26,5 +30,22 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 		var View = questionModel.get('view');
 		var questionView = new applr.Views[View]({ model: questionModel });
 		this.$el.find('ul').append(questionView.render().el);
+	},
+
+	updateSort: function(event, model, position) {
+		this.collection.each(function (model, index) {
+			var ordinal = index;
+			if (index >= position) {
+				ordinal += 1;
+			}
+			model.set('ordinal', ordinal);
+		});
+
+		model.set('ordinal', position);
+		this.collection.add(model, {at: position});
+
+		_disableSortable();
+		this.render();
+		_initSortable();
 	}
 });

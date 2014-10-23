@@ -5,6 +5,10 @@ applr.Views.Base.Question = Backbone.View.extend({
 
 	tagName: 'li',
 
+	attributes: {
+		class: 'question-line compact'
+	},
+
 	defaultTemplate: applr.Templates['Base.Question'],
 
 	render: function() {
@@ -17,13 +21,15 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'click .save-candidate-filter' : 'saveFilter',
 		'change input[name="ask"]' : 'changeAsk',
 		'change input[name="limit"]' : 'changeLimit',
-		'click .remove-question' : 'destroyQuestion'
+		'click .remove-question' : 'destroyQuestion',
+		'drop' : 'dropItem'
 	},
 
 	toggleEdit: function(e) {
 		e.preventDefault();
 
 		_editMode = !_editMode;
+		_disableSortable();
 		$(_options.container).find('.hide-toggle').toggleClass('display-none');
 		this.$el.find('.edit-mode').toggleClass('display-none');
 	},
@@ -38,6 +44,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.toggleEdit(e);
 		_DefaultQuestionCollectionView.render();
 		_OptionalQuestionsCollectionView.render();
+		_initSortable();
 	},
 
 	changeLimit: function() {
@@ -53,7 +60,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.model.destroy();
 	},
 
-	removeQuestion: function() {
+	removeQuestion: function(event, index) {
 		this.$el.remove();
+	},
+
+	dropItem: function(event, index) {
+		_DefaultQuestionCollection.remove(this.model);
+		_OptionalQuestionsCollection.remove(this.model);
+		this.$el.trigger('update-sort', [this.model, index]);
 	}
 });

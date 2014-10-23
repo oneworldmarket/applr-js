@@ -1,5 +1,8 @@
 ;(function(){
 	var
+		//debug mode
+		_debug = true,
+		//configurable options
 		_options = {
 			//container for html
 			container: '#applr-container',
@@ -24,6 +27,8 @@
 			'Radiobuttons' : 'Radio buttons'
 		},
 		_editMode = false,
+		_sortableEnabled = false,
+	
 		_DefaultQuestionCollection,
 		_OptionalQuestionsCollection,
 		_DefaultQuestionCollectionView,
@@ -31,20 +36,73 @@
 		_containerObj,
 		_AddNewFieldModel,
 		_AddNewFieldView,
-		_saveSettingsView
+		_saveSettingsView,
+		_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
 	;
 	
 	//some private functions
-	var _getJSON = function() {
-		return {
-			default: _DefaultQuestionCollection.toJSON(),
-			optional: _OptionalQuestionsCollection.toJSON()
-		}
-	};
+	var
+		_detectQuestionModel = function(el) {
+			var result = false;
 	
-	var _saveSettings = function() {
-		console.log(_getJSON());
-	};
+			if (el.type == 'open') {
+				if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+					result = 'Textfield';
+				} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+					result = 'Textarea';
+				}
+			} else if (el.type == 'closed') {
+				if (el.options.style == 'dropdown') {
+					result = 'Dropdown';
+				} else if (el.options.style == 'radiobuttons') {
+					result = 'Radiobuttons';
+				}
+			}
+	
+			return result;
+		},
+	
+		_initSortable = function() {
+			$(_sortableElements).sortable({
+				connectWith: "." + _options.question_list_wrapper_class,
+				handle: '.drag-icon',
+				stop: function(event, ui) {
+					ui.item.trigger('drop', ui.item.index());
+				}
+			}).disableSelection();
+			_sortableEnabled = true;
+		},
+	
+		_disableSortable = function() {
+			if (_sortableEnabled) {
+				$(_sortableElements).sortable('destroy').enableSelection();
+			}
+			_sortableEnabled = false;
+		},
+	
+		_initAddNewField = function() {
+			_AddNewFieldModel = new applr.Models.AddNewField();
+			_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
+	
+			_AddNewFieldView.render().$el.appendTo(_options.container);
+		},
+	
+		_initSaveSettings = function() {
+			_saveSettingsView = new applr.Views.SaveSettings();
+			_saveSettingsView.render().$el.appendTo(_options.container);
+		},
+	
+		_getJSON = function() {
+			return {
+				default: _DefaultQuestionCollection.toJSON(),
+				optional: _OptionalQuestionsCollection.toJSON()
+			}
+		},
+	
+		 _saveSettings = function() {
+			console.log(_getJSON());
+		 }
+	;
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
 	  this["Templates"]["Base.Question"] = function (obj) {
@@ -54,7 +112,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight "></span>';
+	      __p += '<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -279,6 +337,10 @@
 	
 		tagName: 'li',
 	
+		attributes: {
+			class: 'question-line compact'
+		},
+	
 		defaultTemplate: applr.Templates['Base.Question'],
 	
 		render: function() {
@@ -291,13 +353,15 @@
 			'click .save-candidate-filter' : 'saveFilter',
 			'change input[name="ask"]' : 'changeAsk',
 			'change input[name="limit"]' : 'changeLimit',
-			'click .remove-question' : 'destroyQuestion'
+			'click .remove-question' : 'destroyQuestion',
+			'drop' : 'dropItem'
 		},
 	
 		toggleEdit: function(e) {
 			e.preventDefault();
 	
 			_editMode = !_editMode;
+			_disableSortable();
 			$(_options.container).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
 		},
@@ -312,6 +376,7 @@
 			this.toggleEdit(e);
 			_DefaultQuestionCollectionView.render();
 			_OptionalQuestionsCollectionView.render();
+			_initSortable();
 		},
 	
 		changeLimit: function() {
@@ -327,8 +392,14 @@
 			this.model.destroy();
 		},
 	
-		removeQuestion: function() {
+		removeQuestion: function(event, index) {
 			this.$el.remove();
+		},
+	
+		dropItem: function(event, index) {
+			_DefaultQuestionCollection.remove(this.model);
+			_OptionalQuestionsCollection.remove(this.model);
+			this.$el.trigger('update-sort', [this.model, index]);
 		}
 	});
 	applr.Views.Base.OpenQuestion = applr.Views.Base.Question.extend({
@@ -377,6 +448,10 @@
 	applr.Views.DefaultQuestions = Backbone.View.extend({
 		tagName: 'div',
 	
+		events: {
+			'update-sort': 'updateSort'
+		},
+	
 		attributes: {
 			class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
 			id: 'applr-default-questions-wrapper'
@@ -392,6 +467,23 @@
 				this.$el.find('ul').append(questionView.render().el);
 			}, this);
 			return this;
+		},
+	
+		updateSort: function(event, model, position) {
+			this.collection.each(function (model, index) {
+				var ordinal = index;
+				if (index >= position) {
+					ordinal += 1;
+				}
+				model.set('ordinal', ordinal);
+			});
+	
+			model.set('ordinal', position);
+			this.collection.add(model, {at: position});
+	
+			_disableSortable();
+			this.render();
+			_initSortable();
 		}
 	});
 	applr.Views.Dropdown = applr.Views.Base.ClosedQuestion.extend({
@@ -400,6 +492,10 @@
 	applr.Views.OptionalQuestions = Backbone.View.extend({
 		initialize: function() {
 			this.listenTo(this.collection, "add", this.addNewItem);
+		},
+	
+		events: {
+			'update-sort': 'updateSort'
 		},
 	
 		tagName: 'div',
@@ -425,6 +521,23 @@
 			var View = questionModel.get('view');
 			var questionView = new applr.Views[View]({ model: questionModel });
 			this.$el.find('ul').append(questionView.render().el);
+		},
+	
+		updateSort: function(event, model, position) {
+			this.collection.each(function (model, index) {
+				var ordinal = index;
+				if (index >= position) {
+					ordinal += 1;
+				}
+				model.set('ordinal', ordinal);
+			});
+	
+			model.set('ordinal', position);
+			this.collection.add(model, {at: position});
+	
+			_disableSortable();
+			this.render();
+			_initSortable();
 		}
 	});
 	applr.Views.QuestionOption = Backbone.View.extend({
@@ -519,47 +632,6 @@
 	
 	});
 	window.applr = (function(applr, $){
-		//private variables and functions
-		var
-			_debug = true,
-			_detectQuestionModel = function(el) {
-				var result = false;
-	
-				if (el.type == 'open') {
-					if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
-						result = 'Textfield';
-					} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
-						result = 'Textarea';
-					}
-				} else if (el.type == 'closed') {
-					if (el.options.style == 'dropdown') {
-						result = 'Dropdown';
-					} else if (el.options.style == 'radiobuttons') {
-						result = 'Radiobuttons';
-					}
-				}
-	
-				return result;
-			},
-	
-			_initSortable = function() {
-				$('#applr-optional-questions-list, #applr-default-questions-list').sortable({
-					connectWith: "." + _options.question_list_wrapper_class
-				}).disableSelection();
-			},
-			_initAddNewField = function() {
-				_AddNewFieldModel = new applr.Models.AddNewField();
-				_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
-	
-				_AddNewFieldView.render().$el.appendTo(_options.container);
-			},
-	
-			_initSaveSettings = function() {
-				_saveSettingsView = new applr.Views.SaveSettings();
-				_saveSettingsView.render().$el.appendTo(_options.container);
-			}
-		;
-	
 		var facade = {
 			//public variables and functions
 			init: function(options) {
