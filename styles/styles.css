@@ -1,0 +1,53 @@
+.display-none {
+	display: none !important;
+}
+
+.goRight {
+	float: right;
+}
+
+.goLeft {
+	float: left;
+}
+
+.noMB {
+	margin-bottom: 0px;
+}
+
+.drag-icon {
+	display: block;
+	width: 35px;
+	height: 33px;
+	background: url('../images/drag-ico.png') no-repeat;
+	cursor: pointer;
+}
+
+.applr-container ul {
+	min-height: 15px;
+	width: 100%;
+}
+
+.applr-container ul li {
+	list-style-type: none;
+}
+
+.applr-questions-wrapper h2 {
+	margin-bottom: 15px;
+}
+
+.applr-questions-wrapper ul {
+	margin-bottom: 15px;
+}
+
+.clearfix {
+	clear: both;
+	margin: 0;
+	padding: 0;
+	height: 0;
+	float: none !important;
+	display: block;
+}
+
+.question-line {
+	line-height: 35px;
+}
