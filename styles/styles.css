@@ -52,5 +52,24 @@
 	line-height: 22px;
 }
 
+.applr-add-new-field .select2-container {
+	width: 200px;
+	float: left;
+	margin-right: 20px;
+}
 
+.applr-save-settings {
+	margin-top: 75px;
+}
 
+.applr-optional-questions {
+	padding: 0px 0 30px 0;
+}
+
+.applr-add-new-field {
+	padding-top: 30px;
+}
+
+.open-quesion-fieild-wrapper label {
+	line-height: 37px;
+}

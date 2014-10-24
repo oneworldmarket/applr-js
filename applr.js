@@ -133,11 +133,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<select name="add-new-field-select">\n\t<option value="0">Select field type</option>\n\t';
+	      __p += '<div>\n<select name="add-new-field-select">\n\t<option value="0">Select field type</option>\n\t';
 	      _.each(items, function (item, item_key) {
 	        __p += '\n\t\t<option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n\t';
 	      });
-	      __p += '\n</select>\n<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>';
+	      __p += '\n</select>\n<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>\n</div>';
 	    }
 	    return __p;
 	  };
@@ -170,7 +170,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLimit\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
 	    }
 	    return __p;
 	  };
