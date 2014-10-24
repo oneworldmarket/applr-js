@@ -17,7 +17,8 @@ var
 		questions_wrapper_class: 'applr-questions-wrapper',
 		question_list_wrapper_class: 'applr-question-list-wrapper',
 		default_button_class: 'btn-standard btn-green',
-		save_endpoint: '/c/applr/save-settings'
+		save_endpoint: '/c/applr/save-settings',
+		on_save: function(result) {}
 	},
 	_field_types = {
 		'Textfield' : 'Text field',
@@ -99,6 +100,19 @@ var
 	},
 
 	 _saveSettings = function() {
-		console.log(_getJSON());
+		 $.ajax({
+			 url: _options.save_endpoint,
+			 dataType: 'json',
+			 type: 'post',
+			 data: _getJSON(),
+			 success:function (resp) {
+				 if (typeof _options.on_save == 'function') {
+					 return _options.on_save(resp);
+				 }
+			 },
+			 error: function() {
+				 console.log(arguments);
+			 }
+		 });
 	 }
 ;

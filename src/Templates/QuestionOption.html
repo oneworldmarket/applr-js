@@ -1,3 +1,3 @@
 <td><input type="text" value="<%= answer %>" name="answer"></td>
-<td><input type="checkbox" name="reject" value="1" <% if (reject) { %> checked=checked <% } %> ></td>
+<td><input type="checkbox" name="reject" value="1" <% if (reject && reject != '0') { %> checked=checked <% } %> ></td>
 <td><a href="#" class="<%= _options.links_default_class %> remove-answer">remove</a></td>

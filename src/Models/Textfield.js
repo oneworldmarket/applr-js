@@ -5,6 +5,7 @@ applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
 		options: {
 			limit: applr.Defaults.textfieldDefaultLimit
 		},
-		ask: 'New question'
+		ask: 'New question',
+		type: 'open'
 	}
 });
