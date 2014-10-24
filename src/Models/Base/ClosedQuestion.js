@@ -1,6 +1,6 @@
 applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 	defaults: {
-		type: 'close',
+		type: 'closed',
 		ask: 'New question'
 	},
 

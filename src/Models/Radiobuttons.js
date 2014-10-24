@@ -5,6 +5,7 @@ applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
 		options: {
 			style: 'radiobuttons'
 		},
-		ask: 'New question'
+		ask: 'New question',
+		type: 'closed'
 	}
 });

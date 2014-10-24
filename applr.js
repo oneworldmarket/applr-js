@@ -21,14 +21,15 @@
 			question_list_wrapper_class: 'applr-question-list-wrapper',
 			default_button_class: 'btn-standard btn-green',
 			save_button_class: 'btn-standard btn-blue',
-			save_endpoint: '/c/applr/save-settings',
 			input_container: 'input-form-container',
 			labels_style: 'bronze-info',
 			labels_large: 'bronze-info-large',
 			open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 			full_line_input: 'full-line-input',
 			applr_row : 'applr_row',
-			label_input_options : 'label_input_options'
+			label_input_options : 'label_input_options',
+			save_endpoint: '/c/applr/save-settings',
+			on_save: function(result) {}
 		},
 		_field_types = {
 			'Textfield' : 'Text field',
@@ -110,7 +111,20 @@
 		},
 	
 		 _saveSettings = function() {
-			console.log(_getJSON());
+			 $.ajax({
+				 url: _options.save_endpoint,
+				 dataType: 'json',
+				 type: 'post',
+				 data: _getJSON(),
+				 success:function (resp) {
+					 if (typeof _options.on_save == 'function') {
+						 return _options.on_save(resp);
+					 }
+				 },
+				 error: function() {
+					 console.log(arguments);
+				 }
+			 });
 		 }
 	;
 	var applrTemplates = (function () {
@@ -193,7 +207,7 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
-	      if (reject) {
+	      if (reject && reject != '0') {
 	        __p += ' checked=checked ';
 	      }
 	      __p += ' ></td>\n<td><a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-answer">(remove)</a></td>\n\n\n';
@@ -265,7 +279,7 @@
 	});
 	applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 		defaults: {
-			type: 'close',
+			type: 'closed',
 			ask: 'New question'
 		},
 	
@@ -307,7 +321,8 @@
 			options: {
 				style: 'dropdown'
 			},
-			ask: 'New question'
+			ask: 'New question',
+			type: 'closed'
 		}
 	});
 	applr.Models.Radiobuttons = applr.Models.Base.ClosedQuestion.extend({
@@ -317,7 +332,8 @@
 			options: {
 				style: 'radiobuttons'
 			},
-			ask: 'New question'
+			ask: 'New question',
+			type: 'closed'
 		}
 	});
 	applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
@@ -327,7 +343,8 @@
 			options: {
 				limit: applr.Defaults.textareaDefaultLimit
 			},
-			ask: 'New question'
+			ask: 'New question',
+			type: 'open'
 		}
 	});
 	applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
@@ -337,7 +354,8 @@
 			options: {
 				limit: applr.Defaults.textfieldDefaultLimit
 			},
-			ask: 'New question'
+			ask: 'New question',
+			type: 'open'
 		}
 	});
 	applr.Views.Base.Question = Backbone.View.extend({
