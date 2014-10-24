@@ -1,20 +1,19 @@
 <div class="edit-mode display-none">
-	<h2><span class="ask-val"><%= ask %></span> (edit)</h2>
+	<h2><span class="ask-val <%= _options.title_default_class %>"><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
 
-	<div>
-		<label>
+	<div class="<%= _options.applr_row %>">
+		<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">
 			Label
 		</label>
-
-		<input type="text" name="ask" value="<%= ask %>" />
+		<input type="text" class="<%= _options.input_class %> <%= _options.full_line_input %>" name="ask" value="<%= ask %>" />
 	</div>
 
-	<div>
-		<label>
+	<div class="<%= _options.applr_row %>">
+		<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">
 			Options
 		</label>
 		<div class="optional-questions"></div>
 	</div>
 
-	<button class="<%= _options.default_button_class %> save-candidate-filter">SAVE CANDIDATE FILTER</button>
+	<button class="<%= _options.save_button_class %> save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>
 </div>
