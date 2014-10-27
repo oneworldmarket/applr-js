@@ -232,7 +232,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-settings-button">Save settings</button>';
+	      __p += '<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-settings-button" id="applr-save-settings-button">Save settings</button>';
 	    }
 	    return __p;
 	  };
