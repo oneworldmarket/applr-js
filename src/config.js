@@ -64,7 +64,7 @@ var
 		} else if (el.type == 'closed') {
 			if (el.options.style == 'dropdown') {
 				result = 'Dropdown';
-			} else if (el.options.style == 'radiobuttons') {
+			} else if (el.options.style == 'radio button') {
 				result = 'Radiobuttons';
 			}
 		}
