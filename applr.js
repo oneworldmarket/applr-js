@@ -111,6 +111,7 @@
 		},
 	
 		 _saveSettings = function() {
+			 console.log(_getJSON());
 			 $.ajax({
 				 url: _options.save_endpoint,
 				 dataType: 'json',
@@ -126,6 +127,16 @@
 				 }
 			 });
 		 }
+	
+		_generateName = function() {
+			var text = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	
+			for( var i=0; i < 15; i++ )
+				text += possible.charAt(Math.floor(Math.random() * possible.length));
+	
+			return text;
+		}
 	;
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
@@ -277,7 +288,22 @@
 	applr.Collections.QuestionsOptions = Backbone.Collection.extend({
 	
 	});
-	applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
+	applr.Models.Base.Question = Backbone.Model.extend({
+	
+	});
+	applr.Models.Base.OpenQuestion = applr.Models.Base.Question.extend({
+		defaults: {
+			type: 'open',
+			ask: 'New question'
+		},
+	
+		initialize: function(attr) {
+			if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+				this.attributes.options.name = _generateName();
+			}
+		}
+	});
+	applr.Models.Base.ClosedQuestion = applr.Models.Base.Question.extend({
 		defaults: {
 			type: 'closed',
 			ask: 'New question'
@@ -295,12 +321,9 @@
 				var model = new applr.Models.CloseQuestionItem();
 				this.attributes.answers.add(model);
 			}
-		}
-	});
-	applr.Models.Base.OpenQuestion = Backbone.Model.extend({
-		defaults: {
-			type: 'open',
-			ask: 'New question'
+			if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+				this.attributes.options.name = _generateName();
+			}
 		}
 	});
 	applr.Models.AddNewField = Backbone.Model.extend({
@@ -319,7 +342,8 @@
 			view: 'Dropdown',
 			type_title: 'Dropdown',
 			options: {
-				style: 'dropdown'
+				style: 'dropdown',
+				name: _generateName()
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -330,7 +354,8 @@
 			view: 'Radiobuttons',
 			type_title: 'Radio buttons',
 			options: {
-				style: 'radio button'
+				style: 'radio button',
+				name: _generateName()
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -341,7 +366,8 @@
 			view: 'Textarea',
 			type_title: 'Textarea',
 			options: {
-				limit: applr.Defaults.textareaDefaultLimit
+				limit: applr.Defaults.textareaDefaultLimit,
+				name: _generateName()
 			},
 			ask: 'New question',
 			type: 'open'
@@ -352,7 +378,8 @@
 			view: 'Textfield',
 			type_title: 'Textfield',
 			options: {
-				limit: applr.Defaults.textfieldDefaultLimit
+				limit: applr.Defaults.textfieldDefaultLimit,
+				name: _generateName()
 			},
 			ask: 'New question',
 			type: 'open'
