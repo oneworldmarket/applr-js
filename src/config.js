@@ -64,7 +64,7 @@ var
 		} else if (el.type == 'closed') {
 			if (el.options.style == 'dropdown') {
 				result = 'Dropdown';
-			} else if (el.options.style == 'radiobuttons') {
+			} else if (el.options.style == 'radio button') {
 				result = 'Radiobuttons';
 			}
 		}
@@ -125,4 +125,14 @@ var
 			 }
 		 });
 	 }
+
+	_generateName = function() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for( var i=0; i < 15; i++ )
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+		return text;
+	}
 ;

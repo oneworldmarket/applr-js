@@ -1,4 +1,4 @@
-applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
+applr.Models.Base.ClosedQuestion = applr.Models.Base.Question.extend({
 	defaults: {
 		type: 'closed',
 		ask: 'New question'
@@ -15,6 +15,9 @@ applr.Models.Base.ClosedQuestion = Backbone.Model.extend({
 		} else {
 			var model = new applr.Models.CloseQuestionItem();
 			this.attributes.answers.add(model);
+		}
+		if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+			this.attributes.options.name = _generateName();
 		}
 	}
 });
