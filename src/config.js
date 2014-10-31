@@ -43,6 +43,11 @@ var
 	_OptionalQuestionsCollection,
 	_DefaultQuestionCollectionView,
 	_OptionalQuestionsCollectionView,
+
+	_OptionalQuestionsAddCollectionView,
+	_OptionalQuestionsSelectedCollection,
+	_OptionalQuestionsSelectedCollectionView,
+
 	_containerObj,
 	_AddNewFieldModel,
 	_AddNewFieldView,
