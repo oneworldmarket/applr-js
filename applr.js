@@ -170,17 +170,6 @@
 	    }
 	    return __p;
 	  };
-	  this["Templates"]["CandidateFilterQuestions"] = function (obj) {
-	    var __t, __p = '',
-	        __j = Array.prototype.join,
-	        print = function () {
-	        __p += __j.call(arguments, '');
-	        };
-	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Candidate filter Questions</h2>';
-	    }
-	    return __p;
-	  };
 	  this["Templates"]["CloseQuestion"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -244,6 +233,17 @@
 	        };
 	    with(obj || {}) {
 	      __p += '' + ((__t = (ask)) == null ? '' : __t) + '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["OptionalQuestionsSelected"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Candidate filter Questions</h2>';
 	    }
 	    return __p;
 	  };
@@ -667,7 +667,19 @@
 		}
 	});
 	applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
+		template: applr.Templates.OptionalQuestionsSelected,
 	
+		render: function() {
+			this.$el.html(this.template());
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-selected-questions-list"></ul>');
+	
+			this.collection.each(function(questionModel){
+				var View = questionModel.get('view');
+				var questionView = new applr.Views[View]({ model: questionModel });
+				this.$el.find('ul').append(questionView.render().el);
+			}, this);
+			return this;
+		}
 	});
 	applr.Views.QuestionOption = Backbone.View.extend({
 		initialize: function(){
