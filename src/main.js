@@ -9,6 +9,7 @@ window.applr = (function(applr, $){
 			if (_options.add_type == 'new_fields') {
 				_DefaultQuestionCollection = new applr.Collections.DefaultQuestions;
 				_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+				_removedQuestionsCollection = new applr.Collections.RemovedQuestions;
 
 				_DefaultQuestionCollectionView = new applr.Views.DefaultQuestions({collection: _DefaultQuestionCollection});
 				_OptionalQuestionsCollectionView = new applr.Views.OptionalQuestions({collection: _OptionalQuestionsCollection});

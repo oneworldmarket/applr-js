@@ -1,6 +1,10 @@
-<a href="#" class="<%= _options.links_medium_class %> edit-question hide-toggle">
+<% if (_options.add_type == 'new_fields') { %>
+	<a href="#" class="<%= _options.links_medium_class %> edit-question hide-toggle">
+<% } %>
 	<%= ask %>
-</a>
+<% if (_options.add_type == 'new_fields') { %>
+	</a>
+<% } %>
 <span class="<%= _options.text_default_class %> hide-toggle">(<%= type_title %>)</span>
 <a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
 <span class="goRight hide-toggle drag-icon"></span>

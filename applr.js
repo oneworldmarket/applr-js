@@ -44,6 +44,7 @@
 		_OptionalQuestionsCollection,
 		_DefaultQuestionCollectionView,
 		_OptionalQuestionsCollectionView,
+		_removedQuestionsCollection,
 	
 		_OptionalQuestionsAddCollectionView,
 		_OptionalQuestionsSelectedCollection,
@@ -111,7 +112,8 @@
 		_getJSON = function() {
 			return {
 				default: _DefaultQuestionCollection.toJSON(),
-				optional: _OptionalQuestionsCollection.toJSON()
+				optional: _OptionalQuestionsCollection.toJSON(),
+				removed: _removedQuestionsCollection.toJSON()
 			}
 		},
 	
@@ -151,7 +153,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+	      __p += '';
+	      if (_options.add_type == 'new_fields') {
+	        __p += '\n\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n';
+	      }
+	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n';
+	      if (_options.add_type == 'new_fields') {
+	        __p += '\n\t</a>\n';
+	      }
+	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -328,6 +338,9 @@
 	applr.Collections.QuestionsOptions = Backbone.Collection.extend({
 	
 	});
+	applr.Collections.RemovedQuestions = Backbone.Collection.extend({
+	
+	});
 	applr.Models.Base.Question = Backbone.Model.extend({
 	
 	});
@@ -426,10 +439,6 @@
 		}
 	});
 	applr.Views.Base.Question = Backbone.View.extend({
-		initialize: function() {
-			this.listenTo(this.model, 'destroy', this.removeQuestion);
-		},
-	
 		tagName: 'li',
 	
 		attributes: {
@@ -484,7 +493,13 @@
 		destroyQuestion: function(e) {
 			e.preventDefault();
 	
-			this.model.destroy();
+			this.model.collection.remove(this.model);
+			if (_options.add_type == 'new_fields') {
+				_removedQuestionsCollection.add(this.model);
+			} else if (_options.add_type == 'filter_questions') {
+				_OptionalQuestionsCollection.add(this.model);
+			}
+			this.removeQuestion(e);
 		},
 	
 		removeQuestion: function(event, index) {
@@ -636,6 +651,11 @@
 		}
 	});
 	applr.Views.OptionalQuestionsAdd = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.collection, "add", this.addItem);
+			this.listenTo(this.collection, "remove", this.removeItem);
+		},
+	
 		tagName: 'div',
 	
 		attributes: {
@@ -645,7 +665,7 @@
 		template: applr.Templates.OptionalQuestionsAdd,
 	
 		render: function() {
-			this.$el.append('<select></select>');
+			this.$el.append('<select id="applr-add-optional-field-select"></select>');
 			this.collection.each(function(questionModel){
 				var optionView = new applr.Views.OptionalQuestionsAddOption({ model: questionModel });
 				this.$el.find('select').append(optionView.render().el);
@@ -654,6 +674,32 @@
 			this.$el.append(this.template());
 	
 			return this;
+		},
+	
+		events: {
+			'click .add-optional-field-button' : 'addOptionalField'
+		},
+	
+		addOptionalField: function(e) {
+			e.preventDefault();
+	
+			var selected_id = $('#applr-add-optional-field-select').val();
+			if (selected_id) {
+				var model = _OptionalQuestionsCollection.findWhere({id : selected_id});
+				_OptionalQuestionsCollection.remove(model);
+				_OptionalQuestionsSelectedCollection.add(model);
+			}
+		},
+	
+		removeItem: function(model) {
+			var id = model.get('id');
+			this.$el.find('option[value="'+id+'"]').remove();
+			this.$el.find('.select2-chosen').html('Select filter question');
+		},
+	
+		addItem: function(questionModel) {
+			var optionView = new applr.Views.OptionalQuestionsAddOption({ model: questionModel });
+			this.$el.find('select').append(optionView.render().el);
 		}
 	});
 	applr.Views.OptionalQuestionsAddOption = Backbone.View.extend({
@@ -662,11 +708,16 @@
 		template: applr.Templates.OptionalQuestionsAddOption,
 	
 		render: function() {
+			this.$el.attr('value', this.model.get('id'));
 			this.$el.html(this.template(this.model.toJSON()));
 			return this;
 		}
 	});
 	applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.collection, "add", this.addNewItem);
+		},
+	
 		template: applr.Templates.OptionalQuestionsSelected,
 	
 		render: function() {
@@ -679,6 +730,12 @@
 				this.$el.find('ul').append(questionView.render().el);
 			}, this);
 			return this;
+		},
+	
+		addNewItem: function(questionModel) {
+			var View = questionModel.get('view');
+			var questionView = new applr.Views[View]({ model: questionModel });
+			this.$el.find('ul').append(questionView.render().el);
 		}
 	});
 	applr.Views.QuestionOption = Backbone.View.extend({
@@ -783,6 +840,7 @@
 				if (_options.add_type == 'new_fields') {
 					_DefaultQuestionCollection = new applr.Collections.DefaultQuestions;
 					_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+					_removedQuestionsCollection = new applr.Collections.RemovedQuestions;
 	
 					_DefaultQuestionCollectionView = new applr.Views.DefaultQuestions({collection: _DefaultQuestionCollection});
 					_OptionalQuestionsCollectionView = new applr.Views.OptionalQuestions({collection: _OptionalQuestionsCollection});

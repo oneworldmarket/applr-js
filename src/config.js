@@ -43,6 +43,7 @@ var
 	_OptionalQuestionsCollection,
 	_DefaultQuestionCollectionView,
 	_OptionalQuestionsCollectionView,
+	_removedQuestionsCollection,
 
 	_OptionalQuestionsAddCollectionView,
 	_OptionalQuestionsSelectedCollection,
@@ -110,7 +111,8 @@ var
 	_getJSON = function() {
 		return {
 			default: _DefaultQuestionCollection.toJSON(),
-			optional: _OptionalQuestionsCollection.toJSON()
+			optional: _OptionalQuestionsCollection.toJSON(),
+			removed: _removedQuestionsCollection.toJSON()
 		}
 	},
 
