@@ -617,7 +617,7 @@
 	
 		render: function() {
 			this.$el.html(applr.Templates.OptionalQuestions);
-			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-questions-list"></ul>');
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+' applr-optional-questions-list" id="applr-optional-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');

@@ -74,3 +74,8 @@
 .open-quesion-fieild-wrapper label {
 	line-height: 37px;
 }
+
+.applr-optional-questions-list .edit-mode {
+	position: relative;
+	top: -55px;
+}
