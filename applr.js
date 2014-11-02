@@ -8,7 +8,7 @@
 			container: '#applr-container',
 			//is there will be 2 lists of questions (default+optional) or one list (default)
 			mode: 'default+optional',
-			//new_fields or optional_fields
+			//new_fields or filter_questions
 			add_type: 'new_fields',
 			links_default_class: 'standard-blue-link',
 			links_medium_class: 'medium-blue-link',
@@ -37,6 +37,12 @@
 			'Dropdown' : 'Dropdown',
 			'Radiobuttons' : 'Radio buttons'
 		},
+	
+		_textfieldMaxLimit =  80,
+		_textareaMaxLimit =  200,
+		_textfieldDefaultLimit = 50,
+		_textareaDefaultLimit = 150,
+	
 		_editMode = false,
 		_sortableEnabled = false,
 	
@@ -44,11 +50,18 @@
 		_OptionalQuestionsCollection,
 		_DefaultQuestionCollectionView,
 		_OptionalQuestionsCollectionView,
+		_removedQuestionsCollection,
+	
+		_OptionalQuestionsAddCollectionView,
+		_OptionalQuestionsSelectedCollection,
+		_OptionalQuestionsSelectedCollectionView,
+	
 		_containerObj,
 		_AddNewFieldModel,
 		_AddNewFieldView,
 		_saveSettingsView,
-		_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
+		_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
+		_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
 	;
 	
 	//some private functions
@@ -57,9 +70,9 @@
 			var result = false;
 	
 			if (el.type == 'open') {
-				if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+				if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
 					result = 'Textfield';
-				} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+				} else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
 					result = 'Textarea';
 				}
 			} else if (el.type == 'closed') {
@@ -74,18 +87,33 @@
 		},
 	
 		_initSortable = function() {
-			$(_sortableElements).sortable({
-				connectWith: "." + _options.question_list_wrapper_class,
-				handle: '.drag-icon',
-				stop: function(event, ui) {
-					ui.item.trigger('drop', ui.item.index());
-				}
-			}).disableSelection();
+			if (_options.add_type == 'new_fields') {
+				$(_sortableElements_new_fields).sortable({
+					connectWith: "." + _options.question_list_wrapper_class,
+					handle: '.drag-icon',
+					stop: function(event, ui) {
+						ui.item.trigger('drop', ui.item.index());
+					}
+				}).disableSelection();
+			} else if (_options.add_type == 'filter_questions') {
+				$(_sortableElements_filter_questions).sortable({
+					handle: '.drag-icon',
+					stop: function(event, ui) {
+						ui.item.trigger('drop', ui.item.index());
+					}
+				}).disableSelection();
+			}
 			_sortableEnabled = true;
 		},
 	
 		_disableSortable = function() {
 			if (_sortableEnabled) {
+				var _sortableElements;
+				if (_options.add_type == 'new_fields') {
+					_sortableElements = _sortableElements_new_fields
+				} else if (_options.add_type == 'filter_questions') {
+					_sortableElements = _sortableElements_filter_questions;
+				}
 				$(_sortableElements).sortable('destroy').enableSelection();
 			}
 			_sortableEnabled = false;
@@ -104,14 +132,20 @@
 		},
 	
 		_getJSON = function() {
-			return {
-				default: _DefaultQuestionCollection.toJSON(),
-				optional: _OptionalQuestionsCollection.toJSON()
+			if (_options.add_type == 'new_fields') {
+				return {
+					default: _DefaultQuestionCollection.toJSON(),
+					optional: _OptionalQuestionsCollection.toJSON(),
+					removed: _removedQuestionsCollection.toJSON()
+				}
+			} else if (_options.add_type == 'filter_questions') {
+				return {
+					optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
+				}
 			}
 		},
 	
 		 _saveSettings = function() {
-			 console.log(_getJSON());
 			 $.ajax({
 				 url: _options.save_endpoint,
 				 dataType: 'json',
@@ -147,7 +181,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n</a>\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+	      __p += '';
+	      if (_options.add_type == 'new_fields') {
+	        __p += '\n\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n';
+	      }
+	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n';
+	      if (_options.add_type == 'new_fields') {
+	        __p += '\n\t</a>\n';
+	      }
+	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -195,7 +237,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t\t';
+	      if (view == 'Textfield') {
+	        __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
+	      }
+	      __p += '\n\t\t\t\t';
+	      if (view == 'Textarea') {
+	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
+	      }
+	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
 	    }
 	    return __p;
 	  };
@@ -207,6 +257,39 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["OptionalQuestionsAdd"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-optional-field-button">Add</button>';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["OptionalQuestionsAddOption"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '' + ((__t = (ask)) == null ? '' : __t) + '';
+	    }
+	    return __p;
+	  };
+	  this["Templates"]["OptionalQuestionsSelected"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">Candidate filter Questions</h2>';
 	    }
 	    return __p;
 	  };
@@ -260,10 +343,7 @@
 			Collections: {},
 			Templates:  new applrTemplates(),
 			Defaults: {
-				textfieldMaxLimit: 80,
-				textareaMaxLimit: 200,
-				textfieldDefaultLimit: 50,
-				textareaDefaultLimit: 150
+	
 			}
 		}
 	;
@@ -285,7 +365,13 @@
 	applr.Collections.OptionalQuestions = Backbone.Collection.extend({
 	
 	});
+	applr.Collections.OptionalQuestionsSelected = Backbone.Collection.extend({
+	
+	});
 	applr.Collections.QuestionsOptions = Backbone.Collection.extend({
+	
+	});
+	applr.Collections.RemovedQuestions = Backbone.Collection.extend({
 	
 	});
 	applr.Models.Base.Question = Backbone.Model.extend({
@@ -366,7 +452,7 @@
 			view: 'Textarea',
 			type_title: 'Textarea',
 			options: {
-				limit: applr.Defaults.textareaDefaultLimit,
+				limit: _textareaDefaultLimit,
 				name: _generateName()
 			},
 			ask: 'New question',
@@ -378,7 +464,7 @@
 			view: 'Textfield',
 			type_title: 'Textfield',
 			options: {
-				limit: applr.Defaults.textfieldDefaultLimit,
+				limit: _textfieldDefaultLimit,
 				name: _generateName()
 			},
 			ask: 'New question',
@@ -386,10 +472,6 @@
 		}
 	});
 	applr.Views.Base.Question = Backbone.View.extend({
-		initialize: function() {
-			this.listenTo(this.model, 'destroy', this.removeQuestion);
-		},
-	
 		tagName: 'li',
 	
 		attributes: {
@@ -444,7 +526,13 @@
 		destroyQuestion: function(e) {
 			e.preventDefault();
 	
-			this.model.destroy();
+			this.model.collection.remove(this.model);
+			if (_options.add_type == 'new_fields') {
+				_removedQuestionsCollection.add(this.model);
+			} else if (_options.add_type == 'filter_questions') {
+				_OptionalQuestionsCollection.add(this.model);
+			}
+			this.removeQuestion(e);
 		},
 	
 		removeQuestion: function(event, index) {
@@ -452,8 +540,11 @@
 		},
 	
 		dropItem: function(event, index) {
-			_DefaultQuestionCollection.remove(this.model);
-			_OptionalQuestionsCollection.remove(this.model);
+			if (_options.add_type == 'new_fields') {
+				_DefaultQuestionCollection.remove(this.model);
+				_OptionalQuestionsCollection.remove(this.model);
+			}
+	
 			this.$el.trigger('update-sort', [this.model, index]);
 		}
 	});
@@ -562,7 +653,7 @@
 	
 		render: function() {
 			this.$el.html(applr.Templates.OptionalQuestions);
-			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-questions-list"></ul>');
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+' applr-optional-questions-list" id="applr-optional-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');
@@ -579,6 +670,121 @@
 		},
 	
 		updateSort: function(event, model, position) {
+			this.collection.each(function (model, index) {
+				var ordinal = index;
+				if (index >= position) {
+					ordinal += 1;
+				}
+				model.set('ordinal', ordinal);
+			});
+	
+			model.set('ordinal', position);
+			this.collection.add(model, {at: position});
+	
+			_disableSortable();
+			this.render();
+			_initSortable();
+		}
+	});
+	applr.Views.OptionalQuestionsAdd = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.collection, "add", this.addItem);
+			this.listenTo(this.collection, "remove", this.removeItem);
+		},
+	
+		tagName: 'div',
+	
+		attributes: {
+			class: 'applr-add-optional-field'
+		},
+	
+		template: applr.Templates.OptionalQuestionsAdd,
+	
+		render: function() {
+			this.$el.append('<select id="applr-add-optional-field-select"></select>');
+			this.collection.each(function(questionModel){
+				var optionView = new applr.Views.OptionalQuestionsAddOption({ model: questionModel });
+				this.$el.find('select').append(optionView.render().el);
+			}, this);
+	
+			this.$el.append(this.template());
+	
+			return this;
+		},
+	
+		events: {
+			'click .add-optional-field-button' : 'addOptionalField'
+		},
+	
+		addOptionalField: function(e) {
+			e.preventDefault();
+	
+			var selected_id = $('#applr-add-optional-field-select').val();
+			if (selected_id) {
+				var model = _OptionalQuestionsCollection.findWhere({id : selected_id});
+				_OptionalQuestionsCollection.remove(model);
+				_OptionalQuestionsSelectedCollection.add(model);
+			}
+		},
+	
+		removeItem: function(model) {
+			var id = model.get('id');
+			this.$el.find('option[value="'+id+'"]').remove();
+			this.$el.find('.select2-chosen').html('Select filter question');
+		},
+	
+		addItem: function(questionModel) {
+			var optionView = new applr.Views.OptionalQuestionsAddOption({ model: questionModel });
+			this.$el.find('select').append(optionView.render().el);
+		}
+	});
+	applr.Views.OptionalQuestionsAddOption = Backbone.View.extend({
+		tagName: 'option',
+	
+		template: applr.Templates.OptionalQuestionsAddOption,
+	
+		render: function() {
+			this.$el.attr('value', this.model.get('id'));
+			this.$el.html(this.template(this.model.toJSON()));
+			return this;
+		}
+	});
+	applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
+		initialize: function() {
+			this.listenTo(this.collection, "add", this.addNewItem);
+		},
+	
+		attributes: {
+			class: 'applr-optional-questions-selected'
+		},
+	
+		events: {
+			'update-sort': 'updateSort'
+		},
+	
+		template: applr.Templates.OptionalQuestionsSelected,
+	
+		render: function() {
+			this.$el.html(this.template());
+			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-selected-questions-list"></ul>');
+	
+			this.collection.each(function(questionModel){
+				var View = questionModel.get('view');
+				var questionView = new applr.Views[View]({ model: questionModel });
+				this.$el.find('ul').append(questionView.render().el);
+			}, this);
+			return this;
+		},
+	
+		addNewItem: function(questionModel) {
+			var View = questionModel.get('view');
+			var questionView = new applr.Views[View]({ model: questionModel });
+			this.$el.find('ul').append(questionView.render().el);
+		},
+	
+		updateSort: function(event, model, position) {
+			this.collection.remove(model);
+	
 			this.collection.each(function (model, index) {
 				var ordinal = index;
 				if (index >= position) {
@@ -694,11 +900,20 @@
 	
 				_containerObj = $(_options.container);
 	
-				_DefaultQuestionCollection = new applr.Collections.DefaultQuestions;
-				_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+				if (_options.add_type == 'new_fields') {
+					_DefaultQuestionCollection = new applr.Collections.DefaultQuestions;
+					_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+					_removedQuestionsCollection = new applr.Collections.RemovedQuestions;
 	
-				_DefaultQuestionCollectionView = new applr.Views.DefaultQuestions({collection: _DefaultQuestionCollection});
-				_OptionalQuestionsCollectionView = new applr.Views.OptionalQuestions({collection: _OptionalQuestionsCollection});
+					_DefaultQuestionCollectionView = new applr.Views.DefaultQuestions({collection: _DefaultQuestionCollection});
+					_OptionalQuestionsCollectionView = new applr.Views.OptionalQuestions({collection: _OptionalQuestionsCollection});
+				} else if (_options.add_type == 'filter_questions') {
+					_OptionalQuestionsCollection = new applr.Collections.OptionalQuestions;
+					_OptionalQuestionsSelectedCollection = new applr.Collections.OptionalQuestionsSelected;
+	
+					_OptionalQuestionsAddCollectionView = new applr.Views.OptionalQuestionsAdd({collection: _OptionalQuestionsCollection});
+					_OptionalQuestionsSelectedCollectionView = new applr.Views.OptionalQuestionsSelected({collection: _OptionalQuestionsSelectedCollection});
+				}
 			},
 			getOptions: function() {
 				return _options;
@@ -707,30 +922,64 @@
 				_options = _.extend(_options, options)
 			},
 			restoreFromJSON: function(JSON) {
-				if (typeof JSON.default == 'object' && JSON.default.length > 0) {
-					_.each(JSON.default, function(el){
-						var modelName = _detectQuestionModel(el);
-						if (modelName) {
-							var model = new applr.Models[modelName](el);
-							_DefaultQuestionCollection.add(model);
-						}
-					});
-				}
-				if (typeof JSON.optional == 'object' && JSON.default.length > 0) {
-					_.each(JSON.optional, function(el){
-						var modelName = _detectQuestionModel(el);
-						if (modelName) {
-							var model = new applr.Models[modelName](el);
-							_OptionalQuestionsCollection.add(model);
-						}
-					});
+				if (_options.add_type == 'new_fields') {
+					if (typeof JSON.default == 'object' && JSON.default.length > 0) {
+						_.each(JSON.default, function(el){
+							var modelName = _detectQuestionModel(el);
+							if (modelName) {
+								var model = new applr.Models[modelName](el);
+								_DefaultQuestionCollection.add(model);
+							}
+						});
+					}
+					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
+						_.each(JSON.optional, function(el){
+							var modelName = _detectQuestionModel(el);
+							if (modelName) {
+								var model = new applr.Models[modelName](el);
+								_OptionalQuestionsCollection.add(model);
+							}
+						});
+					}
+	
+					_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+	
+					_initAddNewField();
+					_initSaveSettings();
+				} else if (_options.add_type == 'filter_questions') {
+					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
+						//first option
+						var model = new applr.Models.Base.Question({
+							ask: 'Select filter question',
+							id: 0
+						});
+						_OptionalQuestionsCollection.add(model);
+	
+						_.each(JSON.optional, function(el){
+							var modelName = _detectQuestionModel(el);
+							if (modelName) {
+								var model = new applr.Models[modelName](el);
+								_OptionalQuestionsCollection.add(model);
+							}
+						});
+					}
+	
+					if (typeof JSON.optional_selected == 'object' && JSON.optional_selected.length > 0) {
+						_.each(JSON.optional_selected, function(el){
+							var modelName = _detectQuestionModel(el);
+							if (modelName) {
+								var model = new applr.Models[modelName](el);
+								_OptionalQuestionsSelectedCollection.add(model);
+								_OptionalQuestionsCollection.remove(model);
+							}
+						});
+					}
+	
+					_OptionalQuestionsSelectedCollectionView.render().$el.appendTo(_options.container);
+					_OptionalQuestionsAddCollectionView.render().$el.appendTo(_options.container);
 				}
 	
-				_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
-				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
-	
-				_initAddNewField();
-				_initSaveSettings();
 				_initSortable();
 			},
 			getJSON: function() {

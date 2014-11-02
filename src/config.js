@@ -7,7 +7,7 @@ var
 		container: '#applr-container',
 		//is there will be 2 lists of questions (default+optional) or one list (default)
 		mode: 'default+optional',
-		//new_fields or optional_fields
+		//new_fields or filter_questions
 		add_type: 'new_fields',
 		links_default_class: 'standard-blue-link',
 		links_medium_class: 'medium-blue-link',
@@ -36,6 +36,12 @@ var
 		'Dropdown' : 'Dropdown',
 		'Radiobuttons' : 'Radio buttons'
 	},
+
+	_textfieldMaxLimit =  80,
+	_textareaMaxLimit =  200,
+	_textfieldDefaultLimit = 50,
+	_textareaDefaultLimit = 150,
+
 	_editMode = false,
 	_sortableEnabled = false,
 
@@ -43,11 +49,18 @@ var
 	_OptionalQuestionsCollection,
 	_DefaultQuestionCollectionView,
 	_OptionalQuestionsCollectionView,
+	_removedQuestionsCollection,
+
+	_OptionalQuestionsAddCollectionView,
+	_OptionalQuestionsSelectedCollection,
+	_OptionalQuestionsSelectedCollectionView,
+
 	_containerObj,
 	_AddNewFieldModel,
 	_AddNewFieldView,
 	_saveSettingsView,
-	_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
+	_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
+	_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
 ;
 
 //some private functions
@@ -56,9 +69,9 @@ var
 		var result = false;
 
 		if (el.type == 'open') {
-			if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+			if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
 				result = 'Textfield';
-			} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+			} else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
 				result = 'Textarea';
 			}
 		} else if (el.type == 'closed') {
@@ -73,18 +86,33 @@ var
 	},
 
 	_initSortable = function() {
-		$(_sortableElements).sortable({
-			connectWith: "." + _options.question_list_wrapper_class,
-			handle: '.drag-icon',
-			stop: function(event, ui) {
-				ui.item.trigger('drop', ui.item.index());
-			}
-		}).disableSelection();
+		if (_options.add_type == 'new_fields') {
+			$(_sortableElements_new_fields).sortable({
+				connectWith: "." + _options.question_list_wrapper_class,
+				handle: '.drag-icon',
+				stop: function(event, ui) {
+					ui.item.trigger('drop', ui.item.index());
+				}
+			}).disableSelection();
+		} else if (_options.add_type == 'filter_questions') {
+			$(_sortableElements_filter_questions).sortable({
+				handle: '.drag-icon',
+				stop: function(event, ui) {
+					ui.item.trigger('drop', ui.item.index());
+				}
+			}).disableSelection();
+		}
 		_sortableEnabled = true;
 	},
 
 	_disableSortable = function() {
 		if (_sortableEnabled) {
+			var _sortableElements;
+			if (_options.add_type == 'new_fields') {
+				_sortableElements = _sortableElements_new_fields
+			} else if (_options.add_type == 'filter_questions') {
+				_sortableElements = _sortableElements_filter_questions;
+			}
 			$(_sortableElements).sortable('destroy').enableSelection();
 		}
 		_sortableEnabled = false;
@@ -103,9 +131,16 @@ var
 	},
 
 	_getJSON = function() {
-		return {
-			default: _DefaultQuestionCollection.toJSON(),
-			optional: _OptionalQuestionsCollection.toJSON()
+		if (_options.add_type == 'new_fields') {
+			return {
+				default: _DefaultQuestionCollection.toJSON(),
+				optional: _OptionalQuestionsCollection.toJSON(),
+				removed: _removedQuestionsCollection.toJSON()
+			}
+		} else if (_options.add_type == 'filter_questions') {
+			return {
+				optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
+			}
 		}
 	},
 

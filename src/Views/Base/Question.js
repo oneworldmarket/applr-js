@@ -1,8 +1,4 @@
 applr.Views.Base.Question = Backbone.View.extend({
-	initialize: function() {
-		this.listenTo(this.model, 'destroy', this.removeQuestion);
-	},
-
 	tagName: 'li',
 
 	attributes: {
@@ -57,7 +53,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 	destroyQuestion: function(e) {
 		e.preventDefault();
 
-		this.model.destroy();
+		this.model.collection.remove(this.model);
+		if (_options.add_type == 'new_fields') {
+			_removedQuestionsCollection.add(this.model);
+		} else if (_options.add_type == 'filter_questions') {
+			_OptionalQuestionsCollection.add(this.model);
+		}
+		this.removeQuestion(e);
 	},
 
 	removeQuestion: function(event, index) {
@@ -65,8 +67,11 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	dropItem: function(event, index) {
-		_DefaultQuestionCollection.remove(this.model);
-		_OptionalQuestionsCollection.remove(this.model);
+		if (_options.add_type == 'new_fields') {
+			_DefaultQuestionCollection.remove(this.model);
+			_OptionalQuestionsCollection.remove(this.model);
+		}
+
 		this.$el.trigger('update-sort', [this.model, index]);
 	}
 });

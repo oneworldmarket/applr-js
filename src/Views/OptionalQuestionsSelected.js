@@ -1,22 +1,21 @@
-applr.Views.OptionalQuestions = Backbone.View.extend({
+applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.collection, "add", this.addNewItem);
+	},
+
+	attributes: {
+		class: 'applr-optional-questions-selected'
 	},
 
 	events: {
 		'update-sort': 'updateSort'
 	},
 
-	tagName: 'div',
-
-	attributes: {
-		class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
-		id: 'applr-optional-questions-wrapper'
-	},
+	template: applr.Templates.OptionalQuestionsSelected,
 
 	render: function() {
-		this.$el.html(applr.Templates.OptionalQuestions);
-		this.$el.append('<ul class="'+_options.question_list_wrapper_class+' applr-optional-questions-list" id="applr-optional-questions-list"></ul>');
+		this.$el.html(this.template());
+		this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-optional-selected-questions-list"></ul>');
 
 		this.collection.each(function(questionModel){
 			var View = questionModel.get('view');
@@ -33,6 +32,8 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 	},
 
 	updateSort: function(event, model, position) {
+		this.collection.remove(model);
+
 		this.collection.each(function (model, index) {
 			var ordinal = index;
 			if (index >= position) {
