@@ -7,7 +7,7 @@ var
 		container: '#applr-container',
 		//is there will be 2 lists of questions (default+optional) or one list (default)
 		mode: 'default+optional',
-		//new_fields or optional_fields
+		//new_fields or filter_questions
 		add_type: 'new_fields',
 		links_default_class: 'standard-blue-link',
 		links_medium_class: 'medium-blue-link',
@@ -53,7 +53,8 @@ var
 	_AddNewFieldModel,
 	_AddNewFieldView,
 	_saveSettingsView,
-	_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
+	_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
+	_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
 ;
 
 //some private functions
@@ -79,18 +80,33 @@ var
 	},
 
 	_initSortable = function() {
-		$(_sortableElements).sortable({
-			connectWith: "." + _options.question_list_wrapper_class,
-			handle: '.drag-icon',
-			stop: function(event, ui) {
-				ui.item.trigger('drop', ui.item.index());
-			}
-		}).disableSelection();
+		if (_options.add_type == 'new_fields') {
+			$(_sortableElements_new_fields).sortable({
+				connectWith: "." + _options.question_list_wrapper_class,
+				handle: '.drag-icon',
+				stop: function(event, ui) {
+					ui.item.trigger('drop', ui.item.index());
+				}
+			}).disableSelection();
+		} else if (_options.add_type == 'filter_questions') {
+			$(_sortableElements_filter_questions).sortable({
+				handle: '.drag-icon',
+				stop: function(event, ui) {
+					ui.item.trigger('drop', ui.item.index());
+				}
+			}).disableSelection();
+		}
 		_sortableEnabled = true;
 	},
 
 	_disableSortable = function() {
 		if (_sortableEnabled) {
+			var _sortableElements;
+			if (_options.add_type == 'new_fields') {
+				_sortableElements = _sortableElements_new_fields
+			} else if (_options.add_type == 'filter_questions') {
+				_sortableElements = _sortableElements_filter_questions;
+			}
 			$(_sortableElements).sortable('destroy').enableSelection();
 		}
 		_sortableEnabled = false;

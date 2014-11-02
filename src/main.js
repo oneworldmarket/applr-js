@@ -53,7 +53,6 @@ window.applr = (function(applr, $){
 
 				_initAddNewField();
 				_initSaveSettings();
-				_initSortable();
 			} else if (_options.add_type == 'filter_questions') {
 				if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 					//first option
@@ -75,6 +74,8 @@ window.applr = (function(applr, $){
 				_OptionalQuestionsSelectedCollectionView.render().$el.appendTo(_options.container);
 				_OptionalQuestionsAddCollectionView.render().$el.appendTo(_options.container);
 			}
+
+			_initSortable();
 		},
 		getJSON: function() {
 			return _getJSON();

@@ -8,7 +8,7 @@
 			container: '#applr-container',
 			//is there will be 2 lists of questions (default+optional) or one list (default)
 			mode: 'default+optional',
-			//new_fields or optional_fields
+			//new_fields or filter_questions
 			add_type: 'new_fields',
 			links_default_class: 'standard-blue-link',
 			links_medium_class: 'medium-blue-link',
@@ -54,7 +54,8 @@
 		_AddNewFieldModel,
 		_AddNewFieldView,
 		_saveSettingsView,
-		_sortableElements = '#applr-optional-questions-list, #applr-default-questions-list'
+		_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
+		_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
 	;
 	
 	//some private functions
@@ -80,18 +81,33 @@
 		},
 	
 		_initSortable = function() {
-			$(_sortableElements).sortable({
-				connectWith: "." + _options.question_list_wrapper_class,
-				handle: '.drag-icon',
-				stop: function(event, ui) {
-					ui.item.trigger('drop', ui.item.index());
-				}
-			}).disableSelection();
+			if (_options.add_type == 'new_fields') {
+				$(_sortableElements_new_fields).sortable({
+					connectWith: "." + _options.question_list_wrapper_class,
+					handle: '.drag-icon',
+					stop: function(event, ui) {
+						ui.item.trigger('drop', ui.item.index());
+					}
+				}).disableSelection();
+			} else if (_options.add_type == 'filter_questions') {
+				$(_sortableElements_filter_questions).sortable({
+					handle: '.drag-icon',
+					stop: function(event, ui) {
+						ui.item.trigger('drop', ui.item.index());
+					}
+				}).disableSelection();
+			}
 			_sortableEnabled = true;
 		},
 	
 		_disableSortable = function() {
 			if (_sortableEnabled) {
+				var _sortableElements;
+				if (_options.add_type == 'new_fields') {
+					_sortableElements = _sortableElements_new_fields
+				} else if (_options.add_type == 'filter_questions') {
+					_sortableElements = _sortableElements_filter_questions;
+				}
 				$(_sortableElements).sortable('destroy').enableSelection();
 			}
 			_sortableEnabled = false;
@@ -507,8 +523,11 @@
 		},
 	
 		dropItem: function(event, index) {
-			_DefaultQuestionCollection.remove(this.model);
-			_OptionalQuestionsCollection.remove(this.model);
+			if (_options.add_type == 'new_fields') {
+				_DefaultQuestionCollection.remove(this.model);
+				_OptionalQuestionsCollection.remove(this.model);
+			}
+	
 			this.$el.trigger('update-sort', [this.model, index]);
 		}
 	});
@@ -718,6 +737,10 @@
 			this.listenTo(this.collection, "add", this.addNewItem);
 		},
 	
+		events: {
+			'update-sort': 'updateSort'
+		},
+	
 		template: applr.Templates.OptionalQuestionsSelected,
 	
 		render: function() {
@@ -736,6 +759,25 @@
 			var View = questionModel.get('view');
 			var questionView = new applr.Views[View]({ model: questionModel });
 			this.$el.find('ul').append(questionView.render().el);
+		},
+	
+		updateSort: function(event, model, position) {
+			this.collection.remove(model);
+	
+			this.collection.each(function (model, index) {
+				var ordinal = index;
+				if (index >= position) {
+					ordinal += 1;
+				}
+				model.set('ordinal', ordinal);
+			});
+	
+			model.set('ordinal', position);
+			this.collection.add(model, {at: position});
+	
+			_disableSortable();
+			this.render();
+			_initSortable();
 		}
 	});
 	applr.Views.QuestionOption = Backbone.View.extend({
@@ -884,7 +926,6 @@
 	
 					_initAddNewField();
 					_initSaveSettings();
-					_initSortable();
 				} else if (_options.add_type == 'filter_questions') {
 					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 						//first option
@@ -906,6 +947,8 @@
 					_OptionalQuestionsSelectedCollectionView.render().$el.appendTo(_options.container);
 					_OptionalQuestionsAddCollectionView.render().$el.appendTo(_options.container);
 				}
+	
+				_initSortable();
 			},
 			getJSON: function() {
 				return _getJSON();
