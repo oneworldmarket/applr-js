@@ -125,10 +125,16 @@ var
 	},
 
 	_getJSON = function() {
-		return {
-			default: _DefaultQuestionCollection.toJSON(),
-			optional: _OptionalQuestionsCollection.toJSON(),
-			removed: _removedQuestionsCollection.toJSON()
+		if (_options.add_type == 'new_fields') {
+			return {
+				default: _DefaultQuestionCollection.toJSON(),
+				optional: _OptionalQuestionsCollection.toJSON(),
+				removed: _removedQuestionsCollection.toJSON()
+			}
+		} else if (_options.add_type == 'filter_questions') {
+			return {
+				optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
+			}
 		}
 	},
 

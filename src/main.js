@@ -71,6 +71,17 @@ window.applr = (function(applr, $){
 					});
 				}
 
+				if (typeof JSON.optional_selected == 'object' && JSON.optional_selected.length > 0) {
+					_.each(JSON.optional_selected, function(el){
+						var modelName = _detectQuestionModel(el);
+						if (modelName) {
+							var model = new applr.Models[modelName](el);
+							_OptionalQuestionsSelectedCollection.add(model);
+							_OptionalQuestionsCollection.remove(model);
+						}
+					});
+				}
+
 				_OptionalQuestionsSelectedCollectionView.render().$el.appendTo(_options.container);
 				_OptionalQuestionsAddCollectionView.render().$el.appendTo(_options.container);
 			}

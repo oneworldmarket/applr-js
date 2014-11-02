@@ -126,10 +126,16 @@
 		},
 	
 		_getJSON = function() {
-			return {
-				default: _DefaultQuestionCollection.toJSON(),
-				optional: _OptionalQuestionsCollection.toJSON(),
-				removed: _removedQuestionsCollection.toJSON()
+			if (_options.add_type == 'new_fields') {
+				return {
+					default: _DefaultQuestionCollection.toJSON(),
+					optional: _OptionalQuestionsCollection.toJSON(),
+					removed: _removedQuestionsCollection.toJSON()
+				}
+			} else if (_options.add_type == 'filter_questions') {
+				return {
+					optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
+				}
 			}
 		},
 	
@@ -940,6 +946,17 @@
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
 								_OptionalQuestionsCollection.add(model);
+							}
+						});
+					}
+	
+					if (typeof JSON.optional_selected == 'object' && JSON.optional_selected.length > 0) {
+						_.each(JSON.optional_selected, function(el){
+							var modelName = _detectQuestionModel(el);
+							if (modelName) {
+								var model = new applr.Models[modelName](el);
+								_OptionalQuestionsSelectedCollection.add(model);
+								_OptionalQuestionsCollection.remove(model);
 							}
 						});
 					}
