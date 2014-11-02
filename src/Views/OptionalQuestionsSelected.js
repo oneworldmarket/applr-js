@@ -3,6 +3,10 @@ applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
 		this.listenTo(this.collection, "add", this.addNewItem);
 	},
 
+	attributes: {
+		class: 'applr-optional-questions-selected'
+	},
+
 	events: {
 		'update-sort': 'updateSort'
 	},

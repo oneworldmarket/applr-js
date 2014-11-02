@@ -79,3 +79,7 @@
 	position: relative;
 	top: -55px;
 }
+
+.applr-optional-questions-selected h2 {
+	margin-bottom: 15px;
+}

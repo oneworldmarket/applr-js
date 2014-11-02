@@ -36,6 +36,12 @@ var
 		'Dropdown' : 'Dropdown',
 		'Radiobuttons' : 'Radio buttons'
 	},
+
+	_textfieldMaxLimit =  80,
+	_textareaMaxLimit =  200,
+	_textfieldDefaultLimit = 50,
+	_textareaDefaultLimit = 150,
+
 	_editMode = false,
 	_sortableEnabled = false,
 
@@ -63,9 +69,9 @@ var
 		var result = false;
 
 		if (el.type == 'open') {
-			if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+			if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
 				result = 'Textfield';
-			} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+			} else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
 				result = 'Textarea';
 			}
 		} else if (el.type == 'closed') {

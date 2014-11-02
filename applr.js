@@ -37,6 +37,12 @@
 			'Dropdown' : 'Dropdown',
 			'Radiobuttons' : 'Radio buttons'
 		},
+	
+		_textfieldMaxLimit =  80,
+		_textareaMaxLimit =  200,
+		_textfieldDefaultLimit = 50,
+		_textareaDefaultLimit = 150,
+	
 		_editMode = false,
 		_sortableEnabled = false,
 	
@@ -64,9 +70,9 @@
 			var result = false;
 	
 			if (el.type == 'open') {
-				if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textfieldMaxLimit) {
+				if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
 					result = 'Textfield';
-				} else if (el.options.limit > 0 && el.options.limit <= applr.Defaults.textareaMaxLimit && el.options.limit > applr.Defaults.textfieldMaxLimit) {
+				} else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
 					result = 'Textarea';
 				}
 			} else if (el.type == 'closed') {
@@ -231,7 +237,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t\t';
+	      if (view == 'Textfield') {
+	        __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
+	      }
+	      __p += '\n\t\t\t\t';
+	      if (view == 'Textarea') {
+	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
+	      }
+	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
 	    }
 	    return __p;
 	  };
@@ -329,10 +343,7 @@
 			Collections: {},
 			Templates:  new applrTemplates(),
 			Defaults: {
-				textfieldMaxLimit: 80,
-				textareaMaxLimit: 200,
-				textfieldDefaultLimit: 50,
-				textareaDefaultLimit: 150
+	
 			}
 		}
 	;
@@ -441,7 +452,7 @@
 			view: 'Textarea',
 			type_title: 'Textarea',
 			options: {
-				limit: applr.Defaults.textareaDefaultLimit,
+				limit: _textareaDefaultLimit,
 				name: _generateName()
 			},
 			ask: 'New question',
@@ -453,7 +464,7 @@
 			view: 'Textfield',
 			type_title: 'Textfield',
 			options: {
-				limit: applr.Defaults.textfieldDefaultLimit,
+				limit: _textfieldDefaultLimit,
 				name: _generateName()
 			},
 			ask: 'New question',
@@ -741,6 +752,10 @@
 	applr.Views.OptionalQuestionsSelected = Backbone.View.extend({
 		initialize: function() {
 			this.listenTo(this.collection, "add", this.addNewItem);
+		},
+	
+		attributes: {
+			class: 'applr-optional-questions-selected'
 		},
 	
 		events: {
