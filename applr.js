@@ -387,6 +387,25 @@
 			if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
 				this.attributes.options.name = _generateName();
 			}
+		},
+	
+		validate: function(attrs) {
+			//checking limit
+			var
+				min_limit,
+				max_limit
+			;
+			if (attrs.view == 'Textfield') {
+				min_limit = 1;
+				max_limit = _textfieldMaxLimit;
+			} else if (attrs.view == 'Textarea') {
+				min_limit = _textfieldMaxLimit + 1;
+				max_limit = _textareaMaxLimit;
+			}
+	
+			if (attrs.options.limit > max_limit || attr.options.limit < min_limit) {
+				return 'Incorrect value for limit field';
+			}
 		}
 	});
 	applr.Models.Base.ClosedQuestion = applr.Models.Base.Question.extend({
@@ -520,7 +539,7 @@
 			var value = this.$el.find('input[name="limit"]').val();
 			var options = this.model.get('options');
 			options.limit = value;
-			this.model.set('options', options);
+			this.model.set('options', options, {validate : true});
 		},
 	
 		destroyQuestion: function(e) {
@@ -549,7 +568,15 @@
 		}
 	});
 	applr.Views.Base.OpenQuestion = applr.Views.Base.Question.extend({
-		template: applr.Templates.OpenQuestion
+		template: applr.Templates.OpenQuestion,
+	
+		initialize: function() {
+			this.listenTo(this.model, 'invalid',  this.onInvalid)
+		},
+	
+		onInvalid: function(model, error) {
+			alert(error);
+		}
 	});
 	applr.Views.Base.ClosedQuestion = applr.Views.Base.Question.extend({
 		template: applr.Templates.CloseQuestion,

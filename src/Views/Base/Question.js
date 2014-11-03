@@ -47,7 +47,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		var value = this.$el.find('input[name="limit"]').val();
 		var options = this.model.get('options');
 		options.limit = value;
-		this.model.set('options', options);
+		this.model.set('options', options, {validate : true});
 	},
 
 	destroyQuestion: function(e) {
