@@ -524,7 +524,7 @@
 			_disableSortable();
 			$(_options.container).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
-			this.$el.toggleClass('compact');
+			$(_options.container).find('.question-line').toggleClass('compact');
 		},
 	
 		changeAsk: function() {
