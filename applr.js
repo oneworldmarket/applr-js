@@ -30,7 +30,8 @@
 			applr_row : 'applr_row',
 			label_input_options : 'label_input_options',
 			save_endpoint: '/c/applr/save-settings',
-			on_save: function(result) {}
+			on_save: function(result) {},
+			placeholder_class: 'item-placeholder'
 		},
 		_field_types = {
 			'Textfield' : 'Text field',
@@ -92,6 +93,7 @@
 				$(_sortableElements_new_fields).sortable({
 					connectWith: "." + _options.question_list_wrapper_class,
 					handle: '.drag-icon',
+					placeholder: _options.placeholder_class,
 					stop: function(event, ui) {
 						ui.item.trigger('drop', ui.item.index());
 					}
@@ -99,6 +101,7 @@
 			} else if (_options.add_type == 'filter_questions') {
 				$(_sortableElements_filter_questions).sortable({
 					handle: '.drag-icon',
+					placeholder: _options.placeholder_class,
 					stop: function(event, ui) {
 						ui.item.trigger('drop', ui.item.index());
 					}
@@ -521,6 +524,7 @@
 			_disableSortable();
 			$(_options.container).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
+			this.$el.toggleClass('compact');
 		},
 	
 		changeAsk: function() {

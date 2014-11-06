@@ -28,6 +28,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		_disableSortable();
 		$(_options.container).find('.hide-toggle').toggleClass('display-none');
 		this.$el.find('.edit-mode').toggleClass('display-none');
+		this.$el.toggleClass('compact');
 	},
 
 	changeAsk: function() {
