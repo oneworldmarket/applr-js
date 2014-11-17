@@ -52,16 +52,15 @@ window.applr = (function(applr, $){
 				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 
 				_initAddNewField();
-				_initSaveSettings();
+				//_initSaveSettings();
 			} else if (_options.add_type == 'filter_questions') {
+				//first option
+				var model = new applr.Models.Base.Question({
+					ask: 'Select filter question',
+					id: 0
+				});
+				_OptionalQuestionsCollection.add(model);
 				if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
-					//first option
-					var model = new applr.Models.Base.Question({
-						ask: 'Select filter question',
-						id: 0
-					});
-					_OptionalQuestionsCollection.add(model);
-
 					_.each(JSON.optional, function(el){
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {

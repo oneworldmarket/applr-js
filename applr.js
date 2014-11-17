@@ -31,7 +31,8 @@
 			label_input_options : 'label_input_options',
 			save_endpoint: '/c/applr/save-settings',
 			on_save: function(result) {},
-			placeholder_class: 'item-placeholder'
+			placeholder_class: 'item-placeholder',
+			wrapper: '#applr-wrapper'
 		},
 		_field_types = {
 			'Textfield' : 'Text field',
@@ -522,9 +523,9 @@
 	
 			_editMode = !_editMode;
 			_disableSortable();
-			$(_options.container).find('.hide-toggle').toggleClass('display-none');
+			$(_options.wrapper).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
-			$(_options.container).find('.question-line').toggleClass('compact');
+			$(_options.wrapper).find('.question-line').toggleClass('compact');
 		},
 	
 		changeAsk: function() {
@@ -978,16 +979,15 @@
 					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 	
 					_initAddNewField();
-					_initSaveSettings();
+					//_initSaveSettings();
 				} else if (_options.add_type == 'filter_questions') {
+					//first option
+					var model = new applr.Models.Base.Question({
+						ask: 'Select filter question',
+						id: 0
+					});
+					_OptionalQuestionsCollection.add(model);
 					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
-						//first option
-						var model = new applr.Models.Base.Question({
-							ask: 'Select filter question',
-							id: 0
-						});
-						_OptionalQuestionsCollection.add(model);
-	
 						_.each(JSON.optional, function(el){
 							var modelName = _detectQuestionModel(el);
 							if (modelName) {
