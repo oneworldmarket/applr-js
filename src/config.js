@@ -30,7 +30,8 @@ var
 		label_input_options : 'label_input_options',
 		save_endpoint: '/c/applr/save-settings',
 		on_save: function(result) {},
-		placeholder_class: 'item-placeholder'
+		placeholder_class: 'item-placeholder',
+		wrapper: '#applr-wrapper'
 	},
 	_field_types = {
 		'Textfield' : 'Text field',
