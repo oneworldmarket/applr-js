@@ -27,6 +27,8 @@
 			labels_large: 'bronze-info-large',
 			open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 			full_line_input: 'full-line-input',
+			standart_line_input: 'default-field',
+			small_line_input: 'small-field',
 			applr_row : 'applr_row',
 			label_input_options : 'label_input_options',
 			save_endpoint: '/c/applr/save-settings',
@@ -41,10 +43,10 @@
 			'Radiobuttons' : 'Radio buttons'
 		},
 	
-		_textfieldMaxLimit =  80,
-		_textareaMaxLimit =  200,
-		_textfieldDefaultLimit = 50,
-		_textareaDefaultLimit = 150,
+		_textfieldMaxLimit =  100,
+		_textareaMaxLimit =  5000,
+		_textfieldDefaultLimit = 80,
+		_textareaDefaultLimit = 800,
 	
 		_editMode = false,
 		_sortableEnabled = false,
@@ -194,7 +196,11 @@
 	      if (_options.add_type == 'new_fields') {
 	        __p += '\n\t</a>\n';
 	      }
-	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      if (_options.add_type == 'new_fields' && type == 'open') {
+	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
+	      }
+	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -231,7 +237,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Default questions</h2>';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Default questions</h2>\n';
+	      if (collection.length == 0) {
+	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	      }
+	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -242,7 +252,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t\t';
+	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t\t';
 	      if (view == 'Textfield') {
 	        __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
 	      }
@@ -261,7 +271,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>\n';
+	      if (collection.length == 0) {
+	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	      }
+	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -554,10 +568,14 @@
 			this.model.collection.remove(this.model);
 			if (_options.add_type == 'new_fields') {
 				_removedQuestionsCollection.add(this.model);
+				_disableSortable();
+				_OptionalQuestionsCollectionView.render();
+				_DefaultQuestionCollectionView.render();
+				_initSortable();
 			} else if (_options.add_type == 'filter_questions') {
 				_OptionalQuestionsCollection.add(this.model);
+				this.removeQuestion(e);
 			}
-			this.removeQuestion(e);
 		},
 	
 		removeQuestion: function(event, index) {
@@ -622,6 +640,11 @@
 				var model = new applr.Models[field_type];
 				_OptionalQuestionsCollection.add(model);
 			}
+	
+			_disableSortable();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
+			_initSortable();
 		}
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
@@ -637,7 +660,7 @@
 		},
 	
 		render: function() {
-			this.$el.html(applr.Templates.DefaultQuestions);
+			this.$el.html(applr.Templates.DefaultQuestions({collection: this.collection.toJSON()}));
 			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-default-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
@@ -661,7 +684,8 @@
 			this.collection.add(model, {at: position});
 	
 			_disableSortable();
-			this.render();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
 			_initSortable();
 		}
 	});
@@ -685,7 +709,7 @@
 		},
 	
 		render: function() {
-			this.$el.html(applr.Templates.OptionalQuestions);
+			this.$el.html(applr.Templates.OptionalQuestions({collection: this.collection.toJSON()}));
 			this.$el.append('<ul class="'+_options.question_list_wrapper_class+' applr-optional-questions-list" id="applr-optional-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
@@ -715,7 +739,8 @@
 			this.collection.add(model, {at: position});
 	
 			_disableSortable();
-			this.render();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
 			_initSortable();
 		}
 	});

@@ -26,6 +26,8 @@ var
 		labels_large: 'bronze-info-large',
 		open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 		full_line_input: 'full-line-input',
+		standart_line_input: 'default-field',
+		small_line_input: 'small-field',
 		applr_row : 'applr_row',
 		label_input_options : 'label_input_options',
 		save_endpoint: '/c/applr/save-settings',
@@ -40,10 +42,10 @@ var
 		'Radiobuttons' : 'Radio buttons'
 	},
 
-	_textfieldMaxLimit =  80,
-	_textareaMaxLimit =  200,
-	_textfieldDefaultLimit = 50,
-	_textareaDefaultLimit = 150,
+	_textfieldMaxLimit =  100,
+	_textareaMaxLimit =  5000,
+	_textfieldDefaultLimit = 80,
+	_textareaDefaultLimit = 800,
 
 	_editMode = false,
 	_sortableEnabled = false,

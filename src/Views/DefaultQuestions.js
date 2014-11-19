@@ -11,7 +11,7 @@ applr.Views.DefaultQuestions = Backbone.View.extend({
 	},
 
 	render: function() {
-		this.$el.html(applr.Templates.DefaultQuestions);
+		this.$el.html(applr.Templates.DefaultQuestions({collection: this.collection.toJSON()}));
 		this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-default-questions-list"></ul>');
 
 		this.collection.each(function(questionModel){
@@ -35,7 +35,8 @@ applr.Views.DefaultQuestions = Backbone.View.extend({
 		this.collection.add(model, {at: position});
 
 		_disableSortable();
-		this.render();
+		_OptionalQuestionsCollectionView.render();
+		_DefaultQuestionCollectionView.render();
 		_initSortable();
 	}
 });

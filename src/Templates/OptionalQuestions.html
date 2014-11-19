@@ -1,1 +1,4 @@
 <h2 class="<%= _options.title_default_class %> hide-toggle">Optional questions</h2>
+<% if (collection.length == 0) { %>
+	<span class="bronze">No questions to list here</span>
+<% } %>
