@@ -24,5 +24,10 @@ applr.Views.AddNewField = Backbone.View.extend({
 			var model = new applr.Models[field_type];
 			_OptionalQuestionsCollection.add(model);
 		}
+
+		_disableSortable();
+		_OptionalQuestionsCollectionView.render();
+		_DefaultQuestionCollectionView.render();
+		_initSortable();
 	}
 });

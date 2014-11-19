@@ -231,7 +231,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Default questions</h2>';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Default questions</h2>\n';
+	      if (collection.length == 0) {
+	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	      }
+	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -261,7 +265,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>\n';
+	      if (collection.length == 0) {
+	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	      }
+	      __p += '';
 	    }
 	    return __p;
 	  };
@@ -554,10 +562,14 @@
 			this.model.collection.remove(this.model);
 			if (_options.add_type == 'new_fields') {
 				_removedQuestionsCollection.add(this.model);
+				_disableSortable();
+				_OptionalQuestionsCollectionView.render();
+				_DefaultQuestionCollectionView.render();
+				_initSortable();
 			} else if (_options.add_type == 'filter_questions') {
 				_OptionalQuestionsCollection.add(this.model);
+				this.removeQuestion(e);
 			}
-			this.removeQuestion(e);
 		},
 	
 		removeQuestion: function(event, index) {
@@ -622,6 +634,11 @@
 				var model = new applr.Models[field_type];
 				_OptionalQuestionsCollection.add(model);
 			}
+	
+			_disableSortable();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
+			_initSortable();
 		}
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
@@ -637,7 +654,7 @@
 		},
 	
 		render: function() {
-			this.$el.html(applr.Templates.DefaultQuestions);
+			this.$el.html(applr.Templates.DefaultQuestions({collection: this.collection.toJSON()}));
 			this.$el.append('<ul class="'+_options.question_list_wrapper_class+'" id="applr-default-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
@@ -661,7 +678,8 @@
 			this.collection.add(model, {at: position});
 	
 			_disableSortable();
-			this.render();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
 			_initSortable();
 		}
 	});
@@ -685,7 +703,7 @@
 		},
 	
 		render: function() {
-			this.$el.html(applr.Templates.OptionalQuestions);
+			this.$el.html(applr.Templates.OptionalQuestions({collection: this.collection.toJSON()}));
 			this.$el.append('<ul class="'+_options.question_list_wrapper_class+' applr-optional-questions-list" id="applr-optional-questions-list"></ul>');
 	
 			this.collection.each(function(questionModel){
@@ -715,7 +733,8 @@
 			this.collection.add(model, {at: position});
 	
 			_disableSortable();
-			this.render();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
 			_initSortable();
 		}
 	});

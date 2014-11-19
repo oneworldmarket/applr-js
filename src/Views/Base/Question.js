@@ -57,10 +57,14 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.model.collection.remove(this.model);
 		if (_options.add_type == 'new_fields') {
 			_removedQuestionsCollection.add(this.model);
+			_disableSortable();
+			_OptionalQuestionsCollectionView.render();
+			_DefaultQuestionCollectionView.render();
+			_initSortable();
 		} else if (_options.add_type == 'filter_questions') {
 			_OptionalQuestionsCollection.add(this.model);
+			this.removeQuestion(e);
 		}
-		this.removeQuestion(e);
 	},
 
 	removeQuestion: function(event, index) {
