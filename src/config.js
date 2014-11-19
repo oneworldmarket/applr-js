@@ -42,10 +42,10 @@ var
 		'Radiobuttons' : 'Radio buttons'
 	},
 
-	_textfieldMaxLimit =  80,
-	_textareaMaxLimit =  200,
-	_textfieldDefaultLimit = 50,
-	_textareaDefaultLimit = 150,
+	_textfieldMaxLimit =  100,
+	_textareaMaxLimit =  5000,
+	_textfieldDefaultLimit = 80,
+	_textareaDefaultLimit = 800,
 
 	_editMode = false,
 	_sortableEnabled = false,
