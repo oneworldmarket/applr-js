@@ -196,7 +196,11 @@
 	      if (_options.add_type == 'new_fields') {
 	        __p += '\n\t</a>\n';
 	      }
-	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">(' + ((__t = (type_title)) == null ? '' : __t) + ')</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      if (_options.add_type == 'new_fields' && type == 'open') {
+	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
+	      }
+	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
