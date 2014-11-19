@@ -26,6 +26,8 @@ var
 		labels_large: 'bronze-info-large',
 		open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 		full_line_input: 'full-line-input',
+		standart_line_input: 'default-field',
+		small_line_input: 'small-field',
 		applr_row : 'applr_row',
 		label_input_options : 'label_input_options',
 		save_endpoint: '/c/applr/save-settings',
