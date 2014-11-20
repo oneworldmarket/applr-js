@@ -239,7 +239,7 @@
 	    with(obj || {}) {
 	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Default questions</h2>\n';
 	      if (collection.length == 0) {
-	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	        __p += '\n\t<span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">No questions to list here</span>\n';
 	      }
 	      __p += '';
 	    }
@@ -273,7 +273,7 @@
 	    with(obj || {}) {
 	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>\n';
 	      if (collection.length == 0) {
-	        __p += '\n\t<span class="bronze">No questions to list here</span>\n';
+	        __p += '\n\t<span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">No questions to list here</span>\n';
 	      }
 	      __p += '';
 	    }
