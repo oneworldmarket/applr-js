@@ -21,6 +21,7 @@ var
 		question_list_wrapper_class: 'applr-question-list-wrapper',
 		default_button_class: 'btn-standard btn-green',
 		save_button_class: 'btn-standard btn-blue',
+		cancel_button_class: 'btn-standard btn-red',
 		input_container: 'input-form-container',
 		labels_style: 'bronze-info',
 		labels_large: 'bronze-info-large',

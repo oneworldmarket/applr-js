@@ -1,6 +1,8 @@
 applr.Views.Base.Question = Backbone.View.extend({
 	tagName: 'li',
 
+	modelAttributes: {},
+
 	attributes: {
 		class: 'question-line compact'
 	},
@@ -13,8 +15,9 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	events: {
-		'click .edit-question' : 'toggleEdit',
+		'click .edit-question' : 'editQuestion',
 		'click .save-candidate-filter' : 'saveFilter',
+		'click .cancel-candidate-filter' : 'cancelFilter',
 		'change input[name="ask"]' : 'changeAsk',
 		'change input[name="limit"]' : 'changeLimit',
 		'click .remove-question' : 'destroyQuestion',
@@ -31,17 +34,44 @@ applr.Views.Base.Question = Backbone.View.extend({
 		$(_options.wrapper).find('.question-line').toggleClass('compact');
 	},
 
+	editQuestion: function(e) {
+		this.modelAttributes = _.clone(this.model.attributes);
+		this.modelAttributes.options = _.clone(this.modelAttributes.options);
+
+		if (typeof this.modelAttributes.answers != 'undefined') {
+			var clonedAnserwsCollection = new applr.Collections.OptionalQuestions();
+			this.modelAttributes.answers.each(function(model) {
+				clonedAnserwsCollection.add(new applr.Models.CloseQuestionItem(model.toJSON()));
+			});
+			this.modelAttributes.answers = clonedAnserwsCollection;
+		}
+
+		this.toggleEdit(e);
+	},
+
 	changeAsk: function() {
 		var value = this.$el.find('input[name="ask"]').val();
 		this.model.set('ask', value);
 		this.$el.find('.ask-val').html(this.model.get('ask'));
 	},
 
-	saveFilter: function(e) {
+	closeFilter: function(e) {
 		this.toggleEdit(e);
 		_DefaultQuestionCollectionView.render();
 		_OptionalQuestionsCollectionView.render();
 		_initSortable();
+	},
+
+	saveFilter: function(e) {
+		this.closeFilter(e);
+	},
+
+	cancelFilter: function(e) {
+		e.preventDefault();
+
+		this.model.attributes = this.modelAttributes;
+
+		this.closeFilter(e);
 	},
 
 	changeLimit: function() {

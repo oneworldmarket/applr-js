@@ -3,8 +3,7 @@ applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		view: 'Dropdown',
 		type_title: 'Dropdown',
 		options: {
-			style: 'dropdown',
-			name: _generateName()
+			style: 'dropdown'
 		},
 		ask: 'New question',
 		type: 'closed'

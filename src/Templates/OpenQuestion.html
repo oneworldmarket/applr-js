@@ -1,6 +1,6 @@
 <div class="edit-mode display-none">
 	<h2><span class="ask-val <%= _options.title_default_class %> "><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
-	<div>
+	<div class="question-settings">
 		<div class="<%= _options.open_quesion_fieild_wrapper %>">
 			<div class="goRight <%= _options.input_container %>">
 				<input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %>" name="ask" value="<%= ask %>" />
@@ -21,5 +21,7 @@
 		</div>
 		<span class="clearfix"></span>
 	</div>
+
+	<button class="<%= _options.cancel_button_class %> cancel-candidate-filter goLeft">CANCEL</button>
 	<button class="<%= _options.save_button_class %> save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>
 </div>
