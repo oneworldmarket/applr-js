@@ -35,7 +35,16 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	editQuestion: function(e) {
-		this.modelAttributes = JSON.parse(JSON.stringify(this.model.toJSON()));
+		this.modelAttributes = _.clone(this.model.attributes);
+		this.modelAttributes.options = _.clone(this.modelAttributes.options);
+
+		if (typeof this.modelAttributes.answers != 'undefined') {
+			var clonedAnserwsCollection = new applr.Collections.OptionalQuestions();
+			this.modelAttributes.answers.each(function(model) {
+				clonedAnserwsCollection.add(new applr.Models.CloseQuestionItem(model.toJSON()));
+			});
+			this.modelAttributes.answers = clonedAnserwsCollection;
+		}
 
 		this.toggleEdit(e);
 	},
@@ -60,9 +69,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 	cancelFilter: function(e) {
 		e.preventDefault();
 
-		_.each(this.modelAttributes, function(v, k) {
-			this.model.set(k, v);
-		}, this);
+		this.model.attributes = this.modelAttributes;
 
 		this.closeFilter(e);
 	},

@@ -5,7 +5,7 @@ applr.Models.Base.OpenQuestion = applr.Models.Base.Question.extend({
 	},
 
 	initialize: function(attr) {
-		if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+		if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
 			this.attributes.options.name = _generateName();
 		}
 	},

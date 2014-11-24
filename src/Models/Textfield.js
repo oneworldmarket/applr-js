@@ -3,8 +3,7 @@ applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
 		view: 'Textfield',
 		type_title: 'Textfield',
 		options: {
-			limit: _textfieldDefaultLimit,
-			name: _generateName()
+			limit: _textfieldDefaultLimit
 		},
 		ask: 'New question',
 		type: 'open'

@@ -16,7 +16,7 @@ applr.Models.Base.ClosedQuestion = applr.Models.Base.Question.extend({
 			var model = new applr.Models.CloseQuestionItem();
 			this.attributes.answers.add(model);
 		}
-		if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+		if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
 			this.attributes.options.name = _generateName();
 		}
 	}

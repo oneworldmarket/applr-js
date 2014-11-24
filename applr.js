@@ -404,7 +404,7 @@
 		},
 	
 		initialize: function(attr) {
-			if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+			if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
 				this.attributes.options.name = _generateName();
 			}
 		},
@@ -446,7 +446,7 @@
 				var model = new applr.Models.CloseQuestionItem();
 				this.attributes.answers.add(model);
 			}
-			if (attr !== undefined && attr.options !== undefined && attr.options.name == undefined) {
+			if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
 				this.attributes.options.name = _generateName();
 			}
 		}
@@ -467,8 +467,7 @@
 			view: 'Dropdown',
 			type_title: 'Dropdown',
 			options: {
-				style: 'dropdown',
-				name: _generateName()
+				style: 'dropdown'
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -479,8 +478,7 @@
 			view: 'Radiobuttons',
 			type_title: 'Radio buttons',
 			options: {
-				style: 'radio button',
-				name: _generateName()
+				style: 'radio button'
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -491,8 +489,7 @@
 			view: 'Textarea',
 			type_title: 'Textarea',
 			options: {
-				limit: _textareaDefaultLimit,
-				name: _generateName()
+				limit: _textareaDefaultLimit
 			},
 			ask: 'New question',
 			type: 'open'
@@ -503,8 +500,7 @@
 			view: 'Textfield',
 			type_title: 'Textfield',
 			options: {
-				limit: _textfieldDefaultLimit,
-				name: _generateName()
+				limit: _textfieldDefaultLimit
 			},
 			ask: 'New question',
 			type: 'open'
@@ -547,7 +543,16 @@
 		},
 	
 		editQuestion: function(e) {
-			this.modelAttributes = JSON.parse(JSON.stringify(this.model.toJSON()));
+			this.modelAttributes = _.clone(this.model.attributes);
+			this.modelAttributes.options = _.clone(this.modelAttributes.options);
+	
+			if (typeof this.modelAttributes.answers != 'undefined') {
+				var clonedAnserwsCollection = new applr.Collections.OptionalQuestions();
+				this.modelAttributes.answers.each(function(model) {
+					clonedAnserwsCollection.add(new applr.Models.CloseQuestionItem(model.toJSON()));
+				});
+				this.modelAttributes.answers = clonedAnserwsCollection;
+			}
 	
 			this.toggleEdit(e);
 		},
@@ -572,9 +577,7 @@
 		cancelFilter: function(e) {
 			e.preventDefault();
 	
-			_.each(this.modelAttributes, function(v, k) {
-				this.model.set(k, v);
-			}, this);
+			this.model.attributes = this.modelAttributes;
 	
 			this.closeFilter(e);
 		},
@@ -663,7 +666,11 @@
 			var field_type = this.$el.find('select[name="add-new-field-select"]').val();
 	
 			if (field_type != '0') {
-				var model = new applr.Models[field_type];
+				var model = new applr.Models[field_type]();
+				var json = model.toJSON();
+				var options = _.clone(json.options);
+				model.set('options', options);
+	
 				_OptionalQuestionsCollection.add(model);
 			}
 	
