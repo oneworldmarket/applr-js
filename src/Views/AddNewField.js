@@ -17,7 +17,9 @@ applr.Views.AddNewField = Backbone.View.extend({
 		'click .add-new-field-button' : 'addNewField'
 	},
 
-	addNewField: function() {
+	addNewField: function(e) {
+		e.preventDefault();
+
 		var field_type = this.$el.find('select[name="add-new-field-select"]').val();
 
 		if (field_type != '0') {

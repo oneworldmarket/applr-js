@@ -22,7 +22,9 @@ applr.Views.QuestionOption = Backbone.View.extend({
 		this.model.set('reject', this.$el.find('input[name="reject"]').is(':checked'));
 	},
 
-	removeAnswer: function() {
+	removeAnswer: function(e) {
+		e.preventDefault();
+
 		this.model.destroy();
 	},
 

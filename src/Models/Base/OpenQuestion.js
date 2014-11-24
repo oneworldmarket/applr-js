@@ -24,7 +24,7 @@ applr.Models.Base.OpenQuestion = applr.Models.Base.Question.extend({
 			max_limit = _textareaMaxLimit;
 		}
 
-		if (attrs.options.limit > max_limit || attr.options.limit < min_limit) {
+		if (attrs.options.limit > max_limit || attrs.options.limit < min_limit) {
 			return 'Incorrect value for limit field';
 		}
 	}
