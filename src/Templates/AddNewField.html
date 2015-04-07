@@ -1,7 +1,7 @@
 <div>
 <select name="add-new-field-select">
 	<option value="0">Select field type</option>
-	<% _.each(items, function(item, item_key) { %>
+	<% _.each(items(), function(item, item_key) { %>
 		<option value="<%= item_key %>"><%= item %></option>
 	<% }); %>
 </select>

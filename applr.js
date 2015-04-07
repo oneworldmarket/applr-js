@@ -35,8 +35,11 @@
 			save_endpoint: '/c/applr/save-settings',
 			on_save: function(result) {},
 			placeholder_class: 'item-placeholder',
-			wrapper: '#applr-wrapper'
+			wrapper: '#applr-wrapper',
+			video_enabled: false,
+			postInit: function() {}
 		},
+	
 		_field_types = {
 			'Textfield' : 'Text field',
 			'Textarea' : 'Textarea',
@@ -69,116 +72,115 @@
 		_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
 		_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
 	;
-	
 	//some private functions
 	var
-		_detectQuestionModel = function(el) {
-			var result = false;
+	    _detectQuestionModel = function(el) {
+	        var result = false;
 	
-			if (el.type == 'open') {
-				if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
-					result = 'Textfield';
-				} else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
-					result = 'Textarea';
-				}
-			} else if (el.type == 'closed') {
-				if (el.options.style == 'dropdown') {
-					result = 'Dropdown';
-				} else if (el.options.style == 'radio button') {
-					result = 'Radiobuttons';
-				}
-			}
+	        if (el.type == 'open') {
+	            if (el.options.limit > 0 && el.options.limit <= _textfieldMaxLimit) {
+	                result = 'Textfield';
+	            } else if (el.options.limit > 0 && el.options.limit <= _textareaMaxLimit && el.options.limit > _textfieldMaxLimit) {
+	                result = 'Textarea';
+	            }
+	        } else if (el.type == 'closed') {
+	            if (el.options.style == 'dropdown') {
+	                result = 'Dropdown';
+	            } else if (el.options.style == 'radio button') {
+	                result = 'Radiobuttons';
+	            }
+	        }
 	
-			return result;
-		},
+	        return result;
+	    },
 	
-		_initSortable = function() {
-			if (_options.add_type == 'new_fields') {
-				$(_sortableElements_new_fields).sortable({
-					connectWith: "." + _options.question_list_wrapper_class,
-					handle: '.drag-icon',
-					placeholder: _options.placeholder_class,
-					stop: function(event, ui) {
-						ui.item.trigger('drop', ui.item.index());
-					}
-				}).disableSelection();
-			} else if (_options.add_type == 'filter_questions') {
-				$(_sortableElements_filter_questions).sortable({
-					handle: '.drag-icon',
-					placeholder: _options.placeholder_class,
-					stop: function(event, ui) {
-						ui.item.trigger('drop', ui.item.index());
-					}
-				}).disableSelection();
-			}
-			_sortableEnabled = true;
-		},
+	    _initSortable = function() {
+	        if (_options.add_type == 'new_fields') {
+	            $(_sortableElements_new_fields).sortable({
+	                connectWith: "." + _options.question_list_wrapper_class,
+	                handle: '.drag-icon',
+	                placeholder: _options.placeholder_class,
+	                stop: function(event, ui) {
+	                    ui.item.trigger('drop', ui.item.index());
+	                }
+	            }).disableSelection();
+	        } else if (_options.add_type == 'filter_questions') {
+	            $(_sortableElements_filter_questions).sortable({
+	                handle: '.drag-icon',
+	                placeholder: _options.placeholder_class,
+	                stop: function(event, ui) {
+	                    ui.item.trigger('drop', ui.item.index());
+	                }
+	            }).disableSelection();
+	        }
+	        _sortableEnabled = true;
+	    },
 	
-		_disableSortable = function() {
-			if (_sortableEnabled) {
-				var _sortableElements;
-				if (_options.add_type == 'new_fields') {
-					_sortableElements = _sortableElements_new_fields
-				} else if (_options.add_type == 'filter_questions') {
-					_sortableElements = _sortableElements_filter_questions;
-				}
-				$(_sortableElements).sortable('destroy').enableSelection();
-			}
-			_sortableEnabled = false;
-		},
+	    _disableSortable = function() {
+	        if (_sortableEnabled) {
+	            var _sortableElements;
+	            if (_options.add_type == 'new_fields') {
+	                _sortableElements = _sortableElements_new_fields
+	            } else if (_options.add_type == 'filter_questions') {
+	                _sortableElements = _sortableElements_filter_questions;
+	            }
+	            $(_sortableElements).sortable('destroy').enableSelection();
+	        }
+	        _sortableEnabled = false;
+	    },
 	
-		_initAddNewField = function() {
-			_AddNewFieldModel = new applr.Models.AddNewField();
-			_AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
+	    _initAddNewField = function() {
+	        _AddNewFieldModel = new applr.Models.AddNewField();
+	        _AddNewFieldView = new applr.Views.AddNewField({model:_AddNewFieldModel});
 	
-			_AddNewFieldView.render().$el.appendTo(_options.container);
-		},
+	        _AddNewFieldView.render().$el.appendTo(_options.container);
+	    },
 	
-		_initSaveSettings = function() {
-			_saveSettingsView = new applr.Views.SaveSettings();
-			_saveSettingsView.render().$el.appendTo(_options.container);
-		},
+	    _initSaveSettings = function() {
+	        _saveSettingsView = new applr.Views.SaveSettings();
+	        _saveSettingsView.render().$el.appendTo(_options.container);
+	    },
 	
-		_getJSON = function() {
-			if (_options.add_type == 'new_fields') {
-				return {
-					default: _DefaultQuestionCollection.toJSON(),
-					optional: _OptionalQuestionsCollection.toJSON(),
-					removed: _removedQuestionsCollection.toJSON()
-				}
-			} else if (_options.add_type == 'filter_questions') {
-				return {
-					optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
-				}
-			}
-		},
+	    _getJSON = function() {
+	        if (_options.add_type == 'new_fields') {
+	            return {
+	                default: _DefaultQuestionCollection.toJSON(),
+	                optional: _OptionalQuestionsCollection.toJSON(),
+	                removed: _removedQuestionsCollection.toJSON()
+	            }
+	        } else if (_options.add_type == 'filter_questions') {
+	            return {
+	                optional_selected: _OptionalQuestionsSelectedCollection.toJSON()
+	            }
+	        }
+	    },
 	
-		 _saveSettings = function() {
-			 $.ajax({
-				 url: _options.save_endpoint,
-				 dataType: 'json',
-				 type: 'post',
-				 data: _getJSON(),
-				 success:function (resp) {
-					 if (typeof _options.on_save == 'function') {
-						 return _options.on_save(resp);
-					 }
-				 },
-				 error: function() {
-					 console.log(arguments);
-				 }
-			 });
-		 }
+	    _saveSettings = function() {
+	        $.ajax({
+	            url: _options.save_endpoint,
+	            dataType: 'json',
+	            type: 'post',
+	            data: _getJSON(),
+	            success:function (resp) {
+	                if (typeof _options.on_save == 'function') {
+	                    return _options.on_save(resp);
+	                }
+	            },
+	            error: function() {
+	                console.log(arguments);
+	            }
+	        });
+	    },
 	
-		_generateName = function() {
-			var text = "";
-			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    _generateName = function() {
+	        var text = "";
+	        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	
-			for( var i=0; i < 15; i++ )
-				text += possible.charAt(Math.floor(Math.random() * possible.length));
+	        for( var i=0; i < 15; i++ )
+	            text += possible.charAt(Math.floor(Math.random() * possible.length));
 	
-			return text;
-		}
+	        return text;
+	    }
 	;
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
@@ -213,7 +215,7 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<div>\n<select name="add-new-field-select">\n\t<option value="0">Select field type</option>\n\t';
-	      _.each(items, function (item, item_key) {
+	      _.each(items(), function (item, item_key) {
 	        __p += '\n\t\t<option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n\t';
 	      });
 	      __p += '\n</select>\n<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>\n</div>';
@@ -453,7 +455,14 @@
 	});
 	applr.Models.AddNewField = Backbone.Model.extend({
 		defaults: {
-			items: _field_types
+			items: function() {
+				if (_options.video_enabled) {
+					return _.extend(_field_types, {
+						'Video': 'Video'
+					});
+				}
+				return _field_types;
+			}
 		}
 	});
 	applr.Models.CloseQuestionItem = Backbone.Model.extend({
@@ -1007,6 +1016,8 @@
 					_OptionalQuestionsAddCollectionView = new applr.Views.OptionalQuestionsAdd({collection: _OptionalQuestionsCollection});
 					_OptionalQuestionsSelectedCollectionView = new applr.Views.OptionalQuestionsSelected({collection: _OptionalQuestionsSelectedCollection});
 				}
+	
+				return this;
 			},
 			getOptions: function() {
 				return _options;
@@ -1039,7 +1050,6 @@
 					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
 	
 					_initAddNewField();
-					//_initSaveSettings();
 				} else if (_options.add_type == 'filter_questions') {
 					//first option
 					var model = new applr.Models.Base.Question({
@@ -1079,6 +1089,14 @@
 			},
 			saveSettings: function() {
 				return _saveSettings();
+			},
+			enableVideo: function() {
+				_options.video_enabled = true;
+				_AddNewFieldView.render();
+			},
+			disableVideo: function() {
+				_options.video_enabled = false;
+				_AddNewFieldView.render();
 			}
 		};
 	
