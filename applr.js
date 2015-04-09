@@ -37,7 +37,15 @@
 			placeholder_class: 'item-placeholder',
 			wrapper: '#applr-wrapper',
 			video_enabled: false,
-			postInit: function() {}
+			on_select_render: function() {},
+	        video_limit_options: {
+	            15: '15 seconds',
+	            30: '30 seconds',
+	            45: '45 seconds',
+	            60: '1 minute',
+	            120: '2 minutes',
+	            180: '3 minutes'
+	        }
 		},
 	
 		_field_types = {
@@ -70,7 +78,9 @@
 		_AddNewFieldView,
 		_saveSettingsView,
 		_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
-		_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
+		_sortableElements_filter_questions = '#applr-optional-selected-questions-list',
+	
+	    _videofieldDefaultLimit = 60
 	;
 	//some private functions
 	var
@@ -202,6 +212,10 @@
 	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
+	      }
+	      __p += '';
+	      if (_options.add_type == 'new_fields' && type == 'video') {
+	        __p += ', Time limit: ' + ((__t = (options.maxtime)) == null ? '' : __t) + '';
 	      }
 	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
@@ -352,6 +366,25 @@
 	    }
 	    return __p;
 	  };
+	  this["Templates"]["Video"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<div class="edit-mode display-none">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="video-maxtime" value="' + ((__t = (options.maxtime)) == null ? '' : __t) + '">\n                    ';
+	      _.each(time_options, function (item, item_key) {
+	        __p += '\n                        <option value="' + ((__t = (item_key)) == null ? '' : __t) + '" ';
+	        if (item_key == options.maxtime) {
+	          __p += ' selected ';
+	        }
+	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
+	      });
+	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	    }
+	    return __p;
+	  };
 	  return this["Templates"];
 	});
 	var
@@ -456,12 +489,13 @@
 	applr.Models.AddNewField = Backbone.Model.extend({
 		defaults: {
 			items: function() {
+	            var result = _.clone(_field_types);
+	
 				if (_options.video_enabled) {
-					return _.extend(_field_types, {
-						'Video': 'Video'
-					});
+	                result['Video'] = 'Video';
 				}
-				return _field_types;
+	
+				return result;
 			}
 		}
 	});
@@ -515,6 +549,18 @@
 			type: 'open'
 		}
 	});
+	applr.Models.Video = applr.Models.Base.Question.extend({
+	    defaults: {
+	        view: 'Video',
+	        type_title: 'Video',
+	        options: {
+	            maxtime: _videofieldDefaultLimit
+	        },
+	        ask: 'New question',
+	        type: 'video',
+	        time_options: _options.video_limit_options
+	    }
+	})
 	applr.Views.Base.Question = Backbone.View.extend({
 		tagName: 'li',
 	
@@ -537,6 +583,7 @@
 			'click .cancel-candidate-filter' : 'cancelFilter',
 			'change input[name="ask"]' : 'changeAsk',
 			'change input[name="limit"]' : 'changeLimit',
+	        'change input[name="video-maxtime"]' : 'changeMaxTime',
 			'click .remove-question' : 'destroyQuestion',
 			'drop' : 'dropItem'
 		},
@@ -597,6 +644,13 @@
 			options.limit = value;
 			this.model.set('options', options, {validate : true});
 		},
+	
+	    changeMaxTime: function() {
+	        var value = this.$el.find('input[name="video-maxtime"]');
+	        var options = this.model.get('options');
+	        options.maxtime = value;
+	        this.model.set('options', options, {validate : true});
+	    },
 	
 		destroyQuestion: function(e) {
 			e.preventDefault();
@@ -662,6 +716,9 @@
 		render: function() {
 			var html = this.template(this.model.toJSON());
 			this.$el.html(html);
+	        if (typeof _options.on_select_render == 'function') {
+	            _options.on_select_render(this.$el.find('select'));
+	        }
 			return this;
 		},
 	
@@ -993,6 +1050,25 @@
 	});
 	applr.Views.Textfield = applr.Views.Base.OpenQuestion.extend({
 	
+	});
+	applr.Views.Video = applr.Views.Base.Question.extend({
+	    template: applr.Templates.Video,
+	
+	    initialize: function() {
+	        this.listenTo(this.model, 'invalid',  this.onInvalid)
+	    },
+	
+	    onInvalid: function(model, error) {
+	        alert(error);
+	    },
+	
+	    render: function() {
+	        this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+	        if (typeof _options.on_select_render == 'function') {
+	            _options.on_select_render(this.$el.find('select'));
+	        }
+	        return this;
+	    }
 	});
 	window.applr = (function(applr, $){
 		var facade = {

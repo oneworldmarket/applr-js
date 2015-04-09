@@ -20,6 +20,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'click .cancel-candidate-filter' : 'cancelFilter',
 		'change input[name="ask"]' : 'changeAsk',
 		'change input[name="limit"]' : 'changeLimit',
+        'change input[name="video-maxtime"]' : 'changeMaxTime',
 		'click .remove-question' : 'destroyQuestion',
 		'drop' : 'dropItem'
 	},
@@ -80,6 +81,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 		options.limit = value;
 		this.model.set('options', options, {validate : true});
 	},
+
+    changeMaxTime: function() {
+        var value = this.$el.find('input[name="video-maxtime"]');
+        var options = this.model.get('options');
+        options.maxtime = value;
+        this.model.set('options', options, {validate : true});
+    },
 
 	destroyQuestion: function(e) {
 		e.preventDefault();

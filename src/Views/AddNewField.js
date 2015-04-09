@@ -10,6 +10,9 @@ applr.Views.AddNewField = Backbone.View.extend({
 	render: function() {
 		var html = this.template(this.model.toJSON());
 		this.$el.html(html);
+        if (typeof _options.on_select_render == 'function') {
+            _options.on_select_render(this.$el.find('select'));
+        }
 		return this;
 	},
 

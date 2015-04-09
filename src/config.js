@@ -36,7 +36,15 @@ var
 		placeholder_class: 'item-placeholder',
 		wrapper: '#applr-wrapper',
 		video_enabled: false,
-		postInit: function() {}
+		on_select_render: function() {},
+        video_limit_options: {
+            15: '15 seconds',
+            30: '30 seconds',
+            45: '45 seconds',
+            60: '1 minute',
+            120: '2 minutes',
+            180: '3 minutes'
+        }
 	},
 
 	_field_types = {
@@ -69,5 +77,7 @@ var
 	_AddNewFieldView,
 	_saveSettingsView,
 	_sortableElements_new_fields = '#applr-optional-questions-list, #applr-default-questions-list',
-	_sortableElements_filter_questions = '#applr-optional-selected-questions-list'
+	_sortableElements_filter_questions = '#applr-optional-selected-questions-list',
+
+    _videofieldDefaultLimit = 60
 ;
