@@ -99,6 +99,8 @@
 	            } else if (el.options.style == 'radio button') {
 	                result = 'Radiobuttons';
 	            }
+	        } else if (el.type == 'video') {
+	            result = 'Video';
 	        }
 	
 	        return result;
@@ -215,7 +217,7 @@
 	      }
 	      __p += '';
 	      if (_options.add_type == 'new_fields' && type == 'video') {
-	        __p += ', Time limit: ' + ((__t = (options.maxtime)) == null ? '' : __t) + '';
+	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.maxtime])) == null ? '' : __t) + '';
 	      }
 	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
 	    }
@@ -373,7 +375,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="video-maxtime" value="' + ((__t = (options.maxtime)) == null ? '' : __t) + '">\n                    ';
+	      __p += '<div class="edit-mode display-none">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="video-maxtime" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.maxtime)) == null ? '' : __t) + '">\n                    ';
 	      _.each(time_options, function (item, item_key) {
 	        __p += '\n                        <option value="' + ((__t = (item_key)) == null ? '' : __t) + '" ';
 	        if (item_key == options.maxtime) {
@@ -583,7 +585,7 @@
 			'click .cancel-candidate-filter' : 'cancelFilter',
 			'change input[name="ask"]' : 'changeAsk',
 			'change input[name="limit"]' : 'changeLimit',
-	        'change input[name="video-maxtime"]' : 'changeMaxTime',
+	        'change select[name="video-maxtime"]' : 'changeMaxTime',
 			'click .remove-question' : 'destroyQuestion',
 			'drop' : 'dropItem'
 		},
@@ -596,6 +598,12 @@
 			$(_options.wrapper).find('.hide-toggle').toggleClass('display-none');
 			this.$el.find('.edit-mode').toggleClass('display-none');
 			$(_options.wrapper).find('.question-line').toggleClass('compact');
+	
+	        if (_editMode) {
+	            if (typeof _options.on_select_render == 'function') {
+	                _options.on_select_render(this.$el.find('select'));
+	            }
+	        }
 		},
 	
 		editQuestion: function(e) {
@@ -646,7 +654,7 @@
 		},
 	
 	    changeMaxTime: function() {
-	        var value = this.$el.find('input[name="video-maxtime"]');
+	        var value = this.$el.find('select[name="video-maxtime"]').val();
 	        var options = this.model.get('options');
 	        options.maxtime = value;
 	        this.model.set('options', options, {validate : true});
@@ -1064,9 +1072,6 @@
 	
 	    render: function() {
 	        this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
-	        if (typeof _options.on_select_render == 'function') {
-	            _options.on_select_render(this.$el.find('select'));
-	        }
 	        return this;
 	    }
 	});

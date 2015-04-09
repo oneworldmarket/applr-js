@@ -11,9 +11,6 @@ applr.Views.Video = applr.Views.Base.Question.extend({
 
     render: function() {
         this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
-        if (typeof _options.on_select_render == 'function') {
-            _options.on_select_render(this.$el.find('select'));
-        }
         return this;
     }
 });

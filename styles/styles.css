@@ -99,3 +99,7 @@
 .question-settings {
 	margin-bottom: 30px;
 }
+
+.input-form-container .select2-container {
+    width: 150px;
+}

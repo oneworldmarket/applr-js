@@ -15,6 +15,8 @@ var
             } else if (el.options.style == 'radio button') {
                 result = 'Radiobuttons';
             }
+        } else if (el.type == 'video') {
+            result = 'Video';
         }
 
         return result;

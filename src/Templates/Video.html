@@ -11,7 +11,7 @@
         </div>
         <div class="<%= _options.open_quesion_fieild_wrapper %>">
             <div class="goRight <%= _options.input_container %>">
-                <select name="video-maxtime" value="<%= options.maxtime %>">
+                <select name="video-maxtime" class="<%= _options.small_dropdown_class %>" value="<%= options.maxtime %>">
                     <% _.each(time_options, function(item, item_key) { %>
                         <option value="<%= item_key %>" <% if (item_key == options.maxtime) { %> selected <% } %> ><%= item %></option>
                     <% }); %>
