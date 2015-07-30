@@ -20,6 +20,8 @@ window.applr = (function(applr, $){
 				_OptionalQuestionsAddCollectionView = new applr.Views.OptionalQuestionsAdd({collection: _OptionalQuestionsCollection});
 				_OptionalQuestionsSelectedCollectionView = new applr.Views.OptionalQuestionsSelected({collection: _OptionalQuestionsSelectedCollection});
 			}
+
+			return this;
 		},
 		getOptions: function() {
 			return _options;
@@ -48,11 +50,16 @@ window.applr = (function(applr, $){
 					});
 				}
 
-				_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
-				_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+				if (_options.mode == 'default+optional') {
+					_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+				} else if (_options.mode == 'default') {
+					_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+				} else if (_options.mode == 'optional') {
+					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+				}
 
 				_initAddNewField();
-				//_initSaveSettings();
 			} else if (_options.add_type == 'filter_questions') {
 				//first option
 				var model = new applr.Models.Base.Question({
@@ -92,6 +99,14 @@ window.applr = (function(applr, $){
 		},
 		saveSettings: function() {
 			return _saveSettings();
+		},
+		enableVideo: function() {
+			_options.video_enabled = true;
+			_AddNewFieldView.render();
+		},
+		disableVideo: function() {
+			_options.video_enabled = false;
+			_AddNewFieldView.render();
 		}
 	};
 

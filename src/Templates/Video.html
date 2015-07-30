@@ -1,0 +1,29 @@
+<div class="edit-mode display-none">
+    <h2><span class="ask-val <%= _options.title_default_class %> "><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
+    <div class="question-settings">
+        <div class="<%= _options.open_quesion_fieild_wrapper %>">
+            <div class="goRight <%= _options.input_container %>">
+                <input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %>" name="ask" value="<%= ask %>" />
+            </div>
+            <label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+                Label
+            </label>
+        </div>
+        <div class="<%= _options.open_quesion_fieild_wrapper %>">
+            <div class="goRight <%= _options.input_container %>">
+                <select name="video-maxtime" class="<%= _options.small_dropdown_class %>" value="<%= options.maxtime %>">
+                    <% _.each(time_options, function(item, item_key) { %>
+                        <option value="<%= item_key %>" <% if (item_key == options.maxtime) { %> selected <% } %> ><%= item %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+                Video time limit
+            </label>
+        </div>
+        <span class="clearfix"></span>
+    </div>
+
+    <button class="<%= _options.cancel_button_class %> cancel-candidate-filter goLeft">CANCEL</button>
+    <button class="<%= _options.save_button_class %> save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>
+</div>
