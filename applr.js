@@ -1127,8 +1127,14 @@
 						});
 					}
 	
-					_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
-					_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+					if (_options.mode == 'default+optional') {
+						_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+						_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+					} else if (_options.mode == 'default') {
+						_DefaultQuestionCollectionView.render().$el.appendTo(_options.container);
+					} else if (_options.mode == 'optional') {
+						_OptionalQuestionsCollectionView.render().$el.appendTo(_options.container);
+					}
 	
 					_initAddNewField();
 				} else if (_options.add_type == 'filter_questions') {
