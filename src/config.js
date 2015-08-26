@@ -39,6 +39,7 @@ var
 		on_select_render: function() {},
 		text: {
 			fld_btn_save: 'SAVE CANDIDATE FILTER',
+			optional_head_title: 'Optional questions'
 		},
         video_limit_options: {
             15: '15 seconds',

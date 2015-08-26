@@ -40,6 +40,7 @@
 			on_select_render: function() {},
 			text: {
 				fld_btn_save: 'SAVE CANDIDATE FILTER',
+				optional_head_title: 'Optional questions'
 			},
 	        video_limit_options: {
 	            15: '15 seconds',
@@ -233,7 +234,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div>\n<select name="add-new-field-select">\n\t<option value="0">Select field type</option>\n\t';
+	      __p += '<div>\n<select name="add-new-field-select">\n\t<option></option>\n\t';
 	      _.each(items(), function (item, item_key) {
 	        __p += '\n\t\t<option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n\t';
 	      });
@@ -282,7 +283,7 @@
 	      if (view == 'Textarea') {
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
-	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>';
 	    }
 	    return __p;
 	  };
@@ -293,7 +294,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">Optional questions</h2>\n';
+	      __p += '<h2 class="' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' hide-toggle">' + ((__t = (_options.text.optional_head_title)) == null ? '' : __t) + '</h2>\n';
 	      if (collection.length == 0) {
 	        __p += '\n\t<span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' hide-toggle">No questions to list here</span>\n';
 	      }
@@ -386,7 +387,7 @@
 	        }
 	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
 	      });
-	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>';
 	    }
 	    return __p;
 	  };
