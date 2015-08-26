@@ -37,6 +37,9 @@ var
 		wrapper: '#applr-wrapper',
 		video_enabled: false,
 		on_select_render: function() {},
+		text: {
+			fld_btn_save: 'SAVE CANDIDATE FILTER',
+		},
         video_limit_options: {
             15: '15 seconds',
             30: '30 seconds',
