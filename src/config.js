@@ -29,6 +29,7 @@ var
 		full_line_input: 'full-line-input',
 		standart_line_input: 'default-field',
 		small_line_input: 'small-field',
+		add_new_field_wrapper_class: 'applr-add-new-field',
 		applr_row : 'applr_row',
 		label_input_options : 'label_input_options',
 		save_endpoint: '/c/applr/save-settings',
