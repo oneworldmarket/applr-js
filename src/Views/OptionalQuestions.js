@@ -9,9 +9,11 @@ applr.Views.OptionalQuestions = Backbone.View.extend({
 
 	tagName: 'div',
 
-	attributes: {
-		class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
-		id: 'applr-optional-questions-wrapper'
+	attributes: function() {
+		return {
+			class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
+			id: 'applr-optional-questions-wrapper'
+		};
 	},
 
 	render: function() {

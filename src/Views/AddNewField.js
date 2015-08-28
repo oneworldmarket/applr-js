@@ -3,8 +3,8 @@ applr.Views.AddNewField = Backbone.View.extend({
 
 	template: applr.Templates.AddNewField,
 
-	attributes: {
-		class: _options.add_new_field_wrapper_class + ' hide-toggle'
+	attributes: function() {
+		return {class: _options.add_new_field_wrapper_class + ' hide-toggle'};
 	},
 
 	render: function() {

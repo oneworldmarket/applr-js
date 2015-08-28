@@ -722,8 +722,8 @@
 	
 		template: applr.Templates.AddNewField,
 	
-		attributes: {
-			class: _options.add_new_field_wrapper_class + ' hide-toggle'
+		attributes: function() {
+			return {class: _options.add_new_field_wrapper_class + ' hide-toggle'};
 		},
 	
 		render: function() {
@@ -815,9 +815,11 @@
 	
 		tagName: 'div',
 	
-		attributes: {
-			class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
-			id: 'applr-optional-questions-wrapper'
+		attributes: function() {
+			return {
+				class: _options.optional_questions_class + ' ' + _options.questions_wrapper_class,
+				id: 'applr-optional-questions-wrapper'
+			};
 		},
 	
 		render: function() {
