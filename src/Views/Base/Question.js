@@ -10,6 +10,8 @@ applr.Views.Base.Question = Backbone.View.extend({
 	defaultTemplate: applr.Templates['Base.Question'],
 
 	render: function() {
+		this.model.set('domID', Math.random().toString(36).slice(2));
+
 		this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 		return this;
 	},
@@ -63,6 +65,8 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	closeFilter: function(e) {
+		$('#question-form-' + this.model.get('domID')).validationEngine('hide');
+
 		this.toggleEdit(e);
 		_DefaultQuestionCollectionView.render();
 		_OptionalQuestionsCollectionView.render();
@@ -70,7 +74,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	saveFilter: function(e) {
-		this.closeFilter(e);
+		e.preventDefault();
+
+		var validationResult = $('#question-form-' + this.model.get('domID')).validationEngine('validate');
+
+		if (validationResult) {
+			this.closeFilter(e);
+		}
 	},
 
 	cancelFilter: function(e) {

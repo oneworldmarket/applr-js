@@ -8,6 +8,8 @@ applr.Views.QuestionOption = Backbone.View.extend({
 	template: applr.Templates.QuestionOption,
 
 	render: function() {
+		this.model.set('domID', Math.random().toString(36).slice(2));
+
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	},

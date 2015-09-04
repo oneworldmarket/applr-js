@@ -1,4 +1,4 @@
-<td class="option-table-input"><input class="<%= _options.input_class %>" type="text" value="<%= answer %>" name="answer"></td>
+<td class="option-table-input"><input class="<%= _options.input_class %> <%= _options.required_class %>" type="text" value="<%= answer %>" name="answer" id="question-option-<%= domID %>"></td>
 <td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" <% if (reject && reject != '0') { %> checked=checked <% } %> ></td>
 <td><a href="#" class="<%= _options.links_default_class %> remove-answer">(remove)</a></td>
 

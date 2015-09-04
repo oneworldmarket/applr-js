@@ -14,6 +14,7 @@
 			links_medium_class: 'medium-blue-link',
 			text_default_class: 'standard-black',
 			input_class: 'input-standart',
+			required_class: 'validate[required]',
 			title_default_class: 'red-title',
 			filter_questions_title_class: 'key-contacts-list-title',
 			default_questions_class: 'applr-default-questions',
@@ -208,15 +209,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '';
+	      __p += '<form class="question-form" id="question-form-' + ((__t = (domID)) == null ? '' : __t) + '">\n\t';
 	      if (_options.add_type == 'new_fields') {
-	        __p += '\n\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n';
+	        __p += '\n\t\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t';
 	      }
-	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n';
+	      __p += '\n\t\t' + ((__t = (ask)) == null ? '' : __t) + '\n\t';
 	      if (_options.add_type == 'new_fields') {
-	        __p += '\n\t</a>\n';
+	        __p += '\n\t\t</a>\n\t';
 	      }
-	      __p += '\n<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      __p += '\n\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
 	      }
@@ -224,7 +225,7 @@
 	      if (_options.add_type == 'new_fields' && type == 'video') {
 	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.maxtime])) == null ? '' : __t) + '';
 	      }
-	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+	      __p += ')\n\t</span>\n\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t<span class="goRight hide-toggle drag-icon"></span>\n\t<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -250,7 +251,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tLabel\n\t\t</label>\n\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>';
+	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tLabel\n\t\t</label>\n\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -284,7 +285,7 @@
 	      if (view == 'Textarea') {
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
-	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>';
+	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -343,7 +344,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
+	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer" id="question-option-' + ((__t = (domID)) == null ? '' : __t) + '"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
 	      if (reject && reject != '0') {
 	        __p += ' checked=checked ';
 	      }
@@ -388,7 +389,7 @@
 	        }
 	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
 	      });
-	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>';
+	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -580,6 +581,8 @@
 		defaultTemplate: applr.Templates['Base.Question'],
 	
 		render: function() {
+			this.model.set('domID', Math.random().toString(36).slice(2));
+	
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 			return this;
 		},
@@ -633,6 +636,8 @@
 		},
 	
 		closeFilter: function(e) {
+			$('#question-form-' + this.model.get('domID')).validationEngine('hide');
+	
 			this.toggleEdit(e);
 			_DefaultQuestionCollectionView.render();
 			_OptionalQuestionsCollectionView.render();
@@ -640,7 +645,13 @@
 		},
 	
 		saveFilter: function(e) {
-			this.closeFilter(e);
+			e.preventDefault();
+	
+			var validationResult = $('#question-form-' + this.model.get('domID')).validationEngine('validate');
+	
+			if (validationResult) {
+				this.closeFilter(e);
+			}
 		},
 	
 		cancelFilter: function(e) {
@@ -710,7 +721,9 @@
 	
 		render: function() {
 			//rendering question options (answers)
-			var QuestionOptionsView = new applr.Views.QuestionOptions({collection: this.model.attributes.answers})
+			var QuestionOptionsView = new applr.Views.QuestionOptions({collection: this.model.attributes.answers});
+	
+			this.model.set('domID', Math.random().toString(36).slice(2));
 	
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 			this.$el.find('.optional-questions').html(QuestionOptionsView.render().$el);
@@ -983,6 +996,8 @@
 		template: applr.Templates.QuestionOption,
 	
 		render: function() {
+			this.model.set('domID', Math.random().toString(36).slice(2));
+	
 			this.$el.html(this.template(this.model.toJSON()));
 			return this;
 		},
@@ -1078,6 +1093,8 @@
 	    },
 	
 	    render: function() {
+	        this.model.set('domID', Math.random().toString(36).slice(2));
+	
 	        this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 	        return this;
 	    }
