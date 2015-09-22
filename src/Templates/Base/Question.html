@@ -1,14 +1,18 @@
-<form class="question-form" id="question-form-<%= domID %>">
-	<% if (_options.add_type == 'new_fields') { %>
-		<a href="#" class="<%= _options.links_medium_class %> edit-question hide-toggle">
-	<% } %>
-		<%= ask %>
-	<% if (_options.add_type == 'new_fields') { %>
-		</a>
-	<% } %>
-	<span class="<%= _options.text_default_class %> hide-toggle">
-		(<%= type_title %><% if (_options.add_type == 'new_fields' && type == 'open') { %>, Limit: <%= options.limit %><% } %><% if (_options.add_type == 'new_fields' && type == 'video') { %>, Time limit: <%= _options.video_limit_options[options.maxtime] %><% } %>)
-	</span>
-	<a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
-	<span class="goRight hide-toggle drag-icon"></span>
+<form class="question-form row" id="question-form-<%= domID %>">
+	<div class="col-xs-11">
+		<% if (_options.add_type == 'new_fields') { %>
+			<a href="#" class="<%= _options.links_medium_class %> edit-question hide-toggle">
+		<% } %>
+			<%= ask %>
+		<% if (_options.add_type == 'new_fields') { %>
+			</a>
+		<% } %>
+		<span class="<%= _options.text_default_class %> hide-toggle">
+			(<%= type_title %><% if (_options.add_type == 'new_fields' && type == 'open') { %>, Limit: <%= options.limit %><% } %><% if (_options.add_type == 'new_fields' && type == 'video') { %>, Time limit: <%= _options.video_limit_options[options.maxtime] %><% } %>)
+		</span>
+		<a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
+	</div>
+	<div class="col-xs-1">
+		<span class="goRight hide-toggle drag-icon"></span>
+	</div>
 	<div class="clearfix"></div>

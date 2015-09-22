@@ -209,15 +209,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<form class="question-form" id="question-form-' + ((__t = (domID)) == null ? '' : __t) + '">\n\t';
+	      __p += '<form class="question-form row" id="question-form-' + ((__t = (domID)) == null ? '' : __t) + '">\n\t<div class="col-xs-11">\n\t\t';
 	      if (_options.add_type == 'new_fields') {
-	        __p += '\n\t\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t';
+	        __p += '\n\t\t\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t\t';
 	      }
-	      __p += '\n\t\t' + ((__t = (ask)) == null ? '' : __t) + '\n\t';
+	      __p += '\n\t\t\t' + ((__t = (ask)) == null ? '' : __t) + '\n\t\t';
 	      if (_options.add_type == 'new_fields') {
-	        __p += '\n\t\t</a>\n\t';
+	        __p += '\n\t\t\t</a>\n\t\t';
 	      }
-	      __p += '\n\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      __p += '\n\t\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
 	      }
@@ -225,7 +225,7 @@
 	      if (_options.add_type == 'new_fields' && type == 'video') {
 	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.maxtime])) == null ? '' : __t) + '';
 	      }
-	      __p += ')\n\t</span>\n\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t<span class="goRight hide-toggle drag-icon"></span>\n\t<div class="clearfix"></div>';
+	      __p += ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
