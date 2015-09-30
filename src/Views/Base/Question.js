@@ -24,7 +24,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'change input[name="limit"]' : 'changeLimit',
         'change select[name="video-maxtime"]' : 'changeMaxTime',
 		'click .remove-question' : 'destroyQuestion',
-		'drop' : 'dropItem'
+		'drop' : 'dropItem',
 	},
 
 	toggleEdit: function(e) {
