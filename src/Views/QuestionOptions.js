@@ -14,7 +14,8 @@ applr.Views.QuestionOptions = Backbone.View.extend({
 	},
 
 	events: {
-		'click .add-new-answer': 'addNewAnswer'
+		'click .add-new-answer': 'addNewAnswer',
+		'keypress .question-option': 'keyPressOption'
 	},
 
 	addNewAnswer: function(e) {
@@ -25,5 +26,12 @@ applr.Views.QuestionOptions = Backbone.View.extend({
 
 		var View = new applr.Views.QuestionOption({ model: model });
 		this.$el.find('.option-contents').append(View.render().el);
+	},
+
+	keyPressOption: function(e) {
+		if (e.keyCode == 13) {
+			this.addNewAnswer(e);
+			return false;
+		}
 	}
 });

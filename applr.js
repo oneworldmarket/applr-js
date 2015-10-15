@@ -345,7 +345,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer" id="question-option-' + ((__t = (domID)) == null ? '' : __t) + '"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
+	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + ' question-option" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer" id="question-option-' + ((__t = (domID)) == null ? '' : __t) + '"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
 	      if (reject && reject != '0') {
 	        __p += ' checked=checked ';
 	      }
@@ -1039,7 +1039,8 @@
 		},
 	
 		events: {
-			'click .add-new-answer': 'addNewAnswer'
+			'click .add-new-answer': 'addNewAnswer',
+			'keypress .question-option': 'keyPressOption'
 		},
 	
 		addNewAnswer: function(e) {
@@ -1050,6 +1051,13 @@
 	
 			var View = new applr.Views.QuestionOption({ model: model });
 			this.$el.find('.option-contents').append(View.render().el);
+		},
+	
+		keyPressOption: function(e) {
+			if (e.keyCode == 13) {
+				this.addNewAnswer(e);
+				return false;
+			}
 		}
 	});
 	applr.Views.Radiobuttons = applr.Views.Base.ClosedQuestion.extend({
