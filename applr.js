@@ -1051,6 +1051,7 @@
 	
 			var View = new applr.Views.QuestionOption({ model: model });
 			this.$el.find('.option-contents').append(View.render().el);
+			$(View.render().el).find('.question-option').focus();
 		},
 	
 		keyPressOption: function(e) {
