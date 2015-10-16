@@ -25,7 +25,7 @@ var
 		cancel_button_class: 'btn-standard btn-red',
 		input_container: 'input-form-container',
 		labels_style: 'bronze-info',
-		labels_large: 'bronze-info-large',
+		labels_large: 'font-seventeen',
 		open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 		full_line_input: 'full-line-input',
 		standart_line_input: 'default-field',
