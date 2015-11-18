@@ -8,7 +8,7 @@
 			</a>
 		<% } %>
 		<span class="<%= _options.text_default_class %> hide-toggle">
-			(<%= type_title %><% if (_options.add_type == 'new_fields' && type == 'open') { %>, Limit: <%= options.limit %><% } %><% if (_options.add_type == 'new_fields' && type == 'video') { %>, Time limit: <%= _options.video_limit_options[options.maxtime] %><% } %>)
+			(<%= type_title %><% if (_options.add_type == 'new_fields' && type == 'open') { %>, Limit: <%= options.limit %><% } %><% if (_options.add_type == 'new_fields' && type == 'video') { %>, Time limit: <%= _options.video_limit_options[options.limit] %><% } %>)
 		</span>
 		<a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
 	</div>

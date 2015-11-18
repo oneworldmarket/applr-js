@@ -25,7 +25,7 @@ applr.Views.AddNewField = Backbone.View.extend({
 
 		var field_type = this.$el.find('select[name="add-new-field-select"]').val();
 
-		if (field_type != '0') {
+		if (field_type != '0' && field_type != '') {
 			var model = new applr.Models[field_type]();
 			var json = model.toJSON();
 			var options = _.clone(json.options);

@@ -224,7 +224,7 @@
 	      }
 	      __p += '';
 	      if (_options.add_type == 'new_fields' && type == 'video') {
-	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.maxtime])) == null ? '' : __t) + '';
+	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.limit])) == null ? '' : __t) + '';
 	      }
 	      __p += ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
 	    }
@@ -382,10 +382,10 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="video-maxtime" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.maxtime)) == null ? '' : __t) + '">\n                    ';
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="limit" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.limit)) == null ? '' : __t) + '">\n                    ';
 	      _.each(time_options, function (item, item_key) {
 	        __p += '\n                        <option value="' + ((__t = (item_key)) == null ? '' : __t) + '" ';
-	        if (item_key == options.maxtime) {
+	        if (item_key == options.limit) {
 	          __p += ' selected ';
 	        }
 	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
@@ -439,6 +439,11 @@
 	
 	});
 	applr.Models.Base.Question = Backbone.Model.extend({
+	    initialize: function(attr) {
+	        if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
+	            this.attributes.options.name = _generateName();
+	        }
+	    },
 	
 	});
 	applr.Models.Base.OpenQuestion = applr.Models.Base.Question.extend({
@@ -563,7 +568,7 @@
 	        view: 'Video',
 	        type_title: 'Video',
 	        options: {
-	            maxtime: _videofieldDefaultLimit
+	            limit: _videofieldDefaultLimit
 	        },
 	        ask: 'New question',
 	        type: 'video',
@@ -593,8 +598,7 @@
 			'click .save-candidate-filter' : 'saveFilter',
 			'click .cancel-candidate-filter' : 'cancelFilter',
 			'change input[name="ask"]' : 'changeAsk',
-			'change input[name="limit"]' : 'changeLimit',
-	        'change select[name="video-maxtime"]' : 'changeMaxTime',
+			'change [name="limit"]' : 'changeLimit',
 			'click .remove-question' : 'destroyQuestion',
 			'drop' : 'dropItem',
 		},
@@ -663,19 +667,12 @@
 			this.closeFilter(e);
 		},
 	
-		changeLimit: function() {
-			var value = this.$el.find('input[name="limit"]').val();
+		changeLimit: function() {;
+			var value = this.$el.find('[name="limit"]').val();
 			var options = this.model.get('options');
 			options.limit = value;
 			this.model.set('options', options, {validate : true});
 		},
-	
-	    changeMaxTime: function() {
-	        var value = this.$el.find('select[name="video-maxtime"]').val();
-	        var options = this.model.get('options');
-	        options.maxtime = value;
-	        this.model.set('options', options, {validate : true});
-	    },
 	
 		destroyQuestion: function(e) {
 			e.preventDefault();
@@ -758,7 +755,7 @@
 	
 			var field_type = this.$el.find('select[name="add-new-field-select"]').val();
 	
-			if (field_type != '0') {
+			if (field_type != '0' && field_type != '') {
 				var model = new applr.Models[field_type]();
 				var json = model.toJSON();
 				var options = _.clone(json.options);
