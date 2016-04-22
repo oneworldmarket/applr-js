@@ -863,7 +863,6 @@
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');
-				console.log(questionModel);
 				var questionView = new applr.Views[View]({ model: questionModel });
 				this.$el.find('ul').append(questionView.render().el);
 			}, this);
