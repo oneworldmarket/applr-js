@@ -26,7 +26,7 @@
 			cancel_button_class: 'btn-standard btn-red',
 			input_container: 'input-form-container',
 			labels_style: 'bronze-info',
-			labels_large: 'bronze-info-large',
+			labels_large: 'font-seventeen',
 			open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 			full_line_input: 'full-line-input',
 			standart_line_input: 'default-field',
@@ -103,7 +103,7 @@
 	        } else if (el.type == 'closed') {
 	            if (el.options.style == 'dropdown') {
 	                result = 'Dropdown';
-	            } else if (el.options.style == 'radio button') {
+	            } else if (el.options.style == 'radio') {
 	                result = 'Radiobuttons';
 	            }
 	        } else if (el.type == 'video') {
@@ -226,7 +226,7 @@
 	      if (_options.add_type == 'new_fields' && type == 'video') {
 	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.limit])) == null ? '' : __t) + '';
 	      }
-	      __p += ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
+	      __p += ', ' + ((__t = ((options.required) ? 'Required' : 'Non-required')) == null ? '' : __t) + ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -252,7 +252,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tLabel\n\t\t</label>\n\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<!--<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">-->\n\t\t\t<!--Label-->\n\t\t<!--</label>-->\n\t\t<!--<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />-->\n\n\n\n\n\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
+	      if (options.required) {
+	        __p += ' checked=checked ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -286,7 +290,11 @@
 	      if (view == 'Textarea') {
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
-	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
+	      if (options.required) {
+	        __p += ' checked=checked ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -390,7 +398,11 @@
 	        }
 	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
 	      });
-	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
+	      if (options.required) {
+	        __p += ' checked=checked ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Required\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
 	    }
 	    return __p;
 	  };
@@ -443,8 +455,7 @@
 	        if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
 	            this.attributes.options.name = _generateName();
 	        }
-	    },
-	
+	    }
 	});
 	applr.Models.Base.OpenQuestion = applr.Models.Base.Question.extend({
 		defaults: {
@@ -524,7 +535,8 @@
 			view: 'Dropdown',
 			type_title: 'Dropdown',
 			options: {
-				style: 'dropdown'
+				style: 'dropdown',
+				required: false
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -535,7 +547,8 @@
 			view: 'Radiobuttons',
 			type_title: 'Radio buttons',
 			options: {
-				style: 'radio button'
+				style: 'radio',
+				required: false
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -546,7 +559,8 @@
 			view: 'Textarea',
 			type_title: 'Textarea',
 			options: {
-				limit: _textareaDefaultLimit
+				limit: _textareaDefaultLimit,
+				required: false
 			},
 			ask: 'New question',
 			type: 'open'
@@ -557,7 +571,8 @@
 			view: 'Textfield',
 			type_title: 'Textfield',
 			options: {
-				limit: _textfieldDefaultLimit
+				limit: _textfieldDefaultLimit,
+				required: false
 			},
 			ask: 'New question',
 			type: 'open'
@@ -568,13 +583,14 @@
 	        view: 'Video',
 	        type_title: 'Video',
 	        options: {
-	            limit: _videofieldDefaultLimit
+	            limit: _videofieldDefaultLimit,
+	            required: false
 	        },
 	        ask: 'New question',
 	        type: 'video',
 	        time_options: _options.video_limit_options
 	    }
-	})
+	});
 	applr.Views.Base.Question = Backbone.View.extend({
 		tagName: 'li',
 	
@@ -599,8 +615,9 @@
 			'click .cancel-candidate-filter' : 'cancelFilter',
 			'change input[name="ask"]' : 'changeAsk',
 			'change [name="limit"]' : 'changeLimit',
+			'change [name="required"]': 'changeRequired',
 			'click .remove-question' : 'destroyQuestion',
-			'drop' : 'dropItem',
+			'drop' : 'dropItem'
 		},
 	
 		toggleEdit: function(e) {
@@ -640,6 +657,13 @@
 			this.$el.find('.ask-val').html(this.model.get('ask'));
 		},
 	
+		changeRequired: function() {
+			var value = this.$el.find('input[name="required"]').is(':checked');
+			var options = this.model.get('options');
+			options.required = value;
+			this.model.set('options', options, {validate : true});
+		},
+	
 		closeFilter: function(e) {
 			$('#question-form-' + this.model.get('domID')).validationEngine('hide');
 	
@@ -667,7 +691,7 @@
 			this.closeFilter(e);
 		},
 	
-		changeLimit: function() {;
+		changeLimit: function() {
 			var value = this.$el.find('[name="limit"]').val();
 			var options = this.model.get('options');
 			options.limit = value;
@@ -839,6 +863,7 @@
 	
 			this.collection.each(function(questionModel){
 				var View = questionModel.get('view');
+				console.log(questionModel);
 				var questionView = new applr.Views[View]({ model: questionModel });
 				this.$el.find('ul').append(questionView.render().el);
 			}, this);

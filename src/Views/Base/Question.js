@@ -22,8 +22,9 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'click .cancel-candidate-filter' : 'cancelFilter',
 		'change input[name="ask"]' : 'changeAsk',
 		'change [name="limit"]' : 'changeLimit',
+		'change [name="required"]': 'changeRequired',
 		'click .remove-question' : 'destroyQuestion',
-		'drop' : 'dropItem',
+		'drop' : 'dropItem'
 	},
 
 	toggleEdit: function(e) {
@@ -63,6 +64,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.$el.find('.ask-val').html(this.model.get('ask'));
 	},
 
+	changeRequired: function() {
+		var value = this.$el.find('input[name="required"]').is(':checked');
+		var options = this.model.get('options');
+		options.required = value;
+		this.model.set('options', options, {validate : true});
+	},
+
 	closeFilter: function(e) {
 		$('#question-form-' + this.model.get('domID')).validationEngine('hide');
 
@@ -90,7 +98,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.closeFilter(e);
 	},
 
-	changeLimit: function() {;
+	changeLimit: function() {
 		var value = this.$el.find('[name="limit"]').val();
 		var options = this.model.get('options');
 		options.limit = value;

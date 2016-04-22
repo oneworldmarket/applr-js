@@ -3,6 +3,5 @@ applr.Models.Base.Question = Backbone.Model.extend({
         if ((attr !== undefined && attr.options !== undefined && attr.options.name == undefined) || attr == undefined) {
             this.attributes.options.name = _generateName();
         }
-    },
-
+    }
 });

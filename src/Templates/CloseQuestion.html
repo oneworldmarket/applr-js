@@ -2,10 +2,31 @@
 	<h2><span class="ask-val <%= _options.title_default_class %>"><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
 
 	<div class="<%= _options.applr_row %>">
-		<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">
-			Label
-		</label>
-		<input type="text" class="<%= _options.input_class %> <%= _options.full_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+		<!--<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">-->
+			<!--Label-->
+		<!--</label>-->
+		<!--<input type="text" class="<%= _options.input_class %> <%= _options.full_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />-->
+
+
+
+
+
+		<div class="<%= _options.open_quesion_fieild_wrapper %>">
+			<div class="goRight <%= _options.input_container %>">
+				<input type="text" class="<%= _options.input_class %> <%= _options.full_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+			</div>
+			<label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+				Label
+			</label>
+		</div>
+		<div class="<%= _options.open_quesion_fieild_wrapper %>">
+			<div class="goRight <%= _options.input_container %>">
+				<input type="checkbox" class="<%=_options.input_class %> <%= _options.small_line_input %> noMT" name="required" <% if (options.required) { %> checked=checked <% } %> value="<%= options.required %>" />
+			</div>
+			<label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+				Required
+			</label>
+		</div>
 	</div>
 
 	<div class="<%= _options.applr_row %>">
