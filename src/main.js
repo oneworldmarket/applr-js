@@ -33,6 +33,10 @@ window.applr = (function(applr, $){
 			if (_options.add_type == 'new_fields') {
 				if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 					_.each(JSON.default, function(el){
+						// FIXME: dirty hack because it's Friday and I want home! : )
+						if(typeof el.options.required == 'undefined')
+							el.options['required'] = true;
+
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -42,6 +46,10 @@ window.applr = (function(applr, $){
 				}
 				if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 					_.each(JSON.optional, function(el){
+						// FIXME: dirty hack because it's Friday and I want home! : )
+						if(typeof el.options.required == 'undefined')
+							el.options['required'] = true;
+
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -62,6 +70,7 @@ window.applr = (function(applr, $){
 				_initAddNewField();
 			} else if (_options.add_type == 'filter_questions') {
 				//first option
+				console.log('filter_question');
 				var model = new applr.Models.Base.Question({
 					ask: 'Select filter question',
 					id: 0
@@ -69,6 +78,10 @@ window.applr = (function(applr, $){
 				_OptionalQuestionsCollection.add(model);
 				if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 					_.each(JSON.optional, function(el){
+						// FIXME: dirty hack because it's Friday and I want home! : )
+						if(typeof el.options.required == 'undefined')
+							el.options['required'] = true;
+
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
@@ -79,6 +92,10 @@ window.applr = (function(applr, $){
 
 				if (typeof JSON.optional_selected == 'object' && JSON.optional_selected.length > 0) {
 					_.each(JSON.optional_selected, function(el){
+						// FIXME: dirty hack because it's Friday and I want home! : )
+						if(typeof el.options.required == 'undefined')
+							el.options['required'] = true;
+
 						var modelName = _detectQuestionModel(el);
 						if (modelName) {
 							var model = new applr.Models[modelName](el);

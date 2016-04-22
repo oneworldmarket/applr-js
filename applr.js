@@ -218,7 +218,7 @@
 	      if (_options.add_type == 'new_fields') {
 	        __p += '\n\t\t\t</a>\n\t\t';
 	      }
-	      __p += '\n\t\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      __p += '\n\t\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t\t' + ((__t = (options.required)) == null ? '' : __t) + '\n\t\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
 	      }
@@ -226,7 +226,7 @@
 	      if (_options.add_type == 'new_fields' && type == 'video') {
 	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.limit])) == null ? '' : __t) + '';
 	      }
-	      __p += ', ' + ((__t = ((options.required == true) ? 'Required' : 'Non-required')) == null ? '' : __t) + ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
+	      __p += ', ' + ((__t = ((options.required == true || options.required == "true") ? 'Required' : 'Non-required')) == null ? '' : __t) + ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<span class="goRight hide-toggle drag-icon"></span>\n\t</div>\n\t<div class="clearfix"></div>';
 	    }
 	    return __p;
 	  };
@@ -253,7 +253,7 @@
 	        };
 	    with(obj || {}) {
 	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<!--<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">-->\n\t\t\t<!--Label-->\n\t\t<!--</label>-->\n\t\t<!--<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />-->\n\n\n\n\n\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
-	      if (options.required == true) {
+	      if (options.required == true || options.required == "true") {
 	        __p += ' checked="checked" ';
 	      }
 	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
@@ -291,7 +291,7 @@
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
 	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
-	      if (options.required == true) {
+	      if (options.required == true || options.required == "true") {
 	        __p += ' checked="checked" ';
 	      }
 	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
@@ -399,7 +399,7 @@
 	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
 	      });
 	      __p += '\n                </select>\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Video time limit\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + ' noMT" name="required" ';
-	      if (options.required == true) {
+	      if (options.required == true || options.required == "true") {
 	        __p += ' checked="checked" ';
 	      }
 	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n            </div>\n            <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n                Required\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
@@ -1165,6 +1165,10 @@
 				if (_options.add_type == 'new_fields') {
 					if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 						_.each(JSON.default, function(el){
+							// FIXME: dirty hack because it's Friday and I want home! : )
+							if(typeof el.options.required == 'undefined')
+								el.options['required'] = true;
+	
 							var modelName = _detectQuestionModel(el);
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
@@ -1174,6 +1178,10 @@
 					}
 					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 						_.each(JSON.optional, function(el){
+							// FIXME: dirty hack because it's Friday and I want home! : )
+							if(typeof el.options.required == 'undefined')
+								el.options['required'] = true;
+	
 							var modelName = _detectQuestionModel(el);
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
@@ -1194,6 +1202,7 @@
 					_initAddNewField();
 				} else if (_options.add_type == 'filter_questions') {
 					//first option
+					console.log('filter_question');
 					var model = new applr.Models.Base.Question({
 						ask: 'Select filter question',
 						id: 0
@@ -1201,6 +1210,10 @@
 					_OptionalQuestionsCollection.add(model);
 					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 						_.each(JSON.optional, function(el){
+							// FIXME: dirty hack because it's Friday and I want home! : )
+							if(typeof el.options.required == 'undefined')
+								el.options['required'] = true;
+	
 							var modelName = _detectQuestionModel(el);
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
@@ -1211,6 +1224,10 @@
 	
 					if (typeof JSON.optional_selected == 'object' && JSON.optional_selected.length > 0) {
 						_.each(JSON.optional_selected, function(el){
+							// FIXME: dirty hack because it's Friday and I want home! : )
+							if(typeof el.options.required == 'undefined')
+								el.options['required'] = true;
+	
 							var modelName = _detectQuestionModel(el);
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
