@@ -4,7 +4,7 @@ applr.Models.Textfield = applr.Models.Base.OpenQuestion.extend({
 		type_title: 'Textfield',
 		options: {
 			limit: _textfieldDefaultLimit,
-			required: false
+			required: true
 		},
 		ask: 'New question',
 		type: 'open'

@@ -4,7 +4,7 @@ applr.Models.Video = applr.Models.Base.Question.extend({
         type_title: 'Video',
         options: {
             limit: _videofieldDefaultLimit,
-            required: false
+            required: true
         },
         ask: 'New question',
         type: 'video',

@@ -4,7 +4,7 @@ applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
 		type_title: 'Textarea',
 		options: {
 			limit: _textareaDefaultLimit,
-			required: false
+			required: true
 		},
 		ask: 'New question',
 		type: 'open'

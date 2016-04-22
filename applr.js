@@ -536,7 +536,7 @@
 			type_title: 'Dropdown',
 			options: {
 				style: 'dropdown',
-				required: false
+				required: true
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -548,7 +548,7 @@
 			type_title: 'Radio buttons',
 			options: {
 				style: 'radio',
-				required: false
+				required: true
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -560,7 +560,7 @@
 			type_title: 'Textarea',
 			options: {
 				limit: _textareaDefaultLimit,
-				required: false
+				required: true
 			},
 			ask: 'New question',
 			type: 'open'
@@ -572,7 +572,7 @@
 			type_title: 'Textfield',
 			options: {
 				limit: _textfieldDefaultLimit,
-				required: false
+				required: true
 			},
 			ask: 'New question',
 			type: 'open'
@@ -584,7 +584,7 @@
 	        type_title: 'Video',
 	        options: {
 	            limit: _videofieldDefaultLimit,
-	            required: false
+	            required: true
 	        },
 	        ask: 'New question',
 	        type: 'video',

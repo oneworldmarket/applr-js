@@ -4,7 +4,7 @@ applr.Models.Dropdown = applr.Models.Base.ClosedQuestion.extend({
 		type_title: 'Dropdown',
 		options: {
 			style: 'dropdown',
-			required: false
+			required: true
 		},
 		ask: 'New question',
 		type: 'closed'
