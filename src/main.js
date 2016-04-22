@@ -70,7 +70,6 @@ window.applr = (function(applr, $){
 				_initAddNewField();
 			} else if (_options.add_type == 'filter_questions') {
 				//first option
-				console.log('filter_question');
 				var model = new applr.Models.Base.Question({
 					ask: 'Select filter question',
 					id: 0

@@ -218,7 +218,7 @@
 	      if (_options.add_type == 'new_fields') {
 	        __p += '\n\t\t\t</a>\n\t\t';
 	      }
-	      __p += '\n\t\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t\t' + ((__t = (options.required)) == null ? '' : __t) + '\n\t\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
+	      __p += '\n\t\t<span class="' + ((__t = (_options.text_default_class)) == null ? '' : __t) + ' hide-toggle">\n\t\t\t(' + ((__t = (type_title)) == null ? '' : __t) + '';
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
 	      }
@@ -1202,7 +1202,6 @@
 					_initAddNewField();
 				} else if (_options.add_type == 'filter_questions') {
 					//first option
-					console.log('filter_question');
 					var model = new applr.Models.Base.Question({
 						ask: 'Select filter question',
 						id: 0
