@@ -8,7 +8,6 @@
 			</a>
 		<% } %>
 		<span class="<%= _options.text_default_class %> hide-toggle">
-			<%= options.required %>
 			(<%= type_title %><% if (_options.add_type == 'new_fields' && type == 'open') { %>, Limit: <%= options.limit %><% } %><% if (_options.add_type == 'new_fields' && type == 'video') { %>, Time limit: <%= _options.video_limit_options[options.limit] %><% } %>, <%= (options.required == true || options.required == "true") ? 'Required' : 'Non-required' %>)
 		</span>
 		<a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
