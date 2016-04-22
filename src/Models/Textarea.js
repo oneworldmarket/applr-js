@@ -3,7 +3,8 @@ applr.Models.Textarea = applr.Models.Base.OpenQuestion.extend({
 		view: 'Textarea',
 		type_title: 'Textarea',
 		options: {
-			limit: _textareaDefaultLimit
+			limit: _textareaDefaultLimit,
+			required: false
 		},
 		ask: 'New question',
 		type: 'open'
