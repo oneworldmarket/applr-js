@@ -12,7 +12,7 @@ var
         } else if (el.type == 'closed') {
             if (el.options.style == 'dropdown') {
                 result = 'Dropdown';
-            } else if (el.options.style == 'radio button') {
+            } else if (el.options.style == 'radio') {
                 result = 'Radiobuttons';
             }
         } else if (el.type == 'video') {
