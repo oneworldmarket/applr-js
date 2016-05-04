@@ -14,7 +14,7 @@
 			links_medium_class: 'medium-blue-link',
 			text_default_class: 'standard-black',
 			input_class: 'input-standart',
-			required_class: 'validate[required]',
+			required_class: 'validate[required,maxSize[255]]',
 			title_default_class: 'red-title',
 			filter_questions_title_class: 'key-contacts-list-title',
 			default_questions_class: 'applr-default-questions',
