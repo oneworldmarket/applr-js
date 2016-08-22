@@ -237,11 +237,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="row">\n    <div class="col-sm-offset-4 col-xs-4 col-sm-4 col-lg-4">\n        <select name="add-new-field-select">\n            <option></option>\n            ';
+	      __p += '<div class="row">\n    <div class="col-sm-offset-4 col-xs-4 col-md-4 col-sm-4 col-lg-4 ">\n        <select name="add-new-field-select">\n            <option></option>\n            ';
 	      _.each(items(), function (item, item_key) {
-	        __p += '\n                <option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n            ';
+	        __p += '\n            <option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n            ';
 	      });
-	      __p += '\n        </select>\n    </div>\n\n\n    <div class="col-xs-4 col-sm-4 col-lg-4">\n        <button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>\n    </div>\n</div>';
+	      __p += '\n        </select>\n    </div>\n    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">\n        <button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>\n    </div>\n</div>';
 	    }
 	    return __p;
 	  };
