@@ -9,6 +9,7 @@ applr.Views.Base.ClosedQuestion = applr.Views.Base.Question.extend({
 
 		this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 		this.$el.find('.optional-questions').html(QuestionOptionsView.render().$el);
+		this.$el.find('.candidate-custom-fields').html(this.customFieldsTemplate(this.model.toJSON()));
 		return this;
 	}
 });

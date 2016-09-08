@@ -34,10 +34,16 @@ window.applr = (function(applr, $){
 				if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 					_.each(JSON.default, function(el){
 						// FIXME: dirty hack because it's Friday and I want home! : )
-						if(typeof el.options.required == 'undefined')
+						if(typeof el.options.required == 'undefined') {
 							el.options['required'] = true;
+						}
 
-						var modelName = _detectQuestionModel(el);
+                        var modelName = _detectQuestionModel(el);
+
+                        if(typeof el.options.profile_field_id == 'undefined' && modelName != 'Video') {
+                            el.options['profile_field_id'] = 0;
+                        }
+
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
 							_DefaultQuestionCollection.add(model);
@@ -47,10 +53,16 @@ window.applr = (function(applr, $){
 				if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 					_.each(JSON.optional, function(el){
 						// FIXME: dirty hack because it's Friday and I want home! : )
-						if(typeof el.options.required == 'undefined')
+						if(typeof el.options.required == 'undefined') {
 							el.options['required'] = true;
+						}
 
 						var modelName = _detectQuestionModel(el);
+
+                        if(typeof el.options.profile_field_id == 'undefined' && modelName != 'Video') {
+                            el.options['profile_field_id'] = 0;
+                        }
+
 						if (modelName) {
 							var model = new applr.Models[modelName](el);
 							_OptionalQuestionsCollection.add(model);

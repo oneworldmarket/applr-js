@@ -52,7 +52,9 @@
 	            60: '1 minute',
 	            120: '2 minutes',
 	            180: '3 minutes'
-	        }
+	        },
+			custom_fields_enabled: false,
+			custom_fields: []
 		},
 	
 		_field_types = {
@@ -203,6 +205,29 @@
 	;
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
+	  this["Templates"]["Base.CustomCandFields"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	      if (_options.custom_fields_enabled) {
+	        __p += '\n    <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n        <select name="custom_field" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '">\n            <option value="0">Not set</option>\n            ';
+	        _.each(_options.custom_fields, function (item, item_key) {
+	          __p += '\n                <option value="' + ((__t = (item.id)) == null ? '' : __t) + '" ';
+	          if (item.id == options.profile_field_id) {
+	            __p += ' selected ';
+	          }
+	          __p += ' >' + ((__t = (item.name)) == null ? '' : __t) + '</option>\n            ';
+	        });
+	        __p += '\n        </select>\n    </div>\n    <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n        Autopopulate\n    </label>\n';
+	      }
+	      __p += '\n';
+	    }
+	    return __p;
+	  };
 	  this["Templates"]["Base.Question"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -252,7 +277,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<!--<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">-->\n\t\t\t<!--Label-->\n\t\t<!--</label>-->\n\t\t<!--<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />-->\n\n\n\n\n\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<!--<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">-->\n\t\t\t<!--Label-->\n\t\t<!--</label>-->\n\t\t<!--<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />-->\n\n\n\n\n\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t\t<div class="candidate-custom-fields"></div>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
 	      if (options.required == true || options.required == "true") {
 	        __p += ' checked="checked" ';
 	      }
@@ -290,7 +315,7 @@
 	      if (view == 'Textarea') {
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
-	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
+	      __p += '\n\t\t\t</label>\n\t\t\t<div class="candidate-custom-fields"></div>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
 	      if (options.required == true || options.required == "true") {
 	        __p += ' checked="checked" ';
 	      }
@@ -536,7 +561,8 @@
 			type_title: 'Dropdown',
 			options: {
 				style: 'dropdown',
-				required: true
+				required: true,
+				profile_field_id: 0
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -548,7 +574,8 @@
 			type_title: 'Radio buttons',
 			options: {
 				style: 'radio',
-				required: true
+				required: true,
+				profile_field_id: 0
 			},
 			ask: 'New question',
 			type: 'closed'
@@ -560,7 +587,8 @@
 			type_title: 'Textarea',
 			options: {
 				limit: _textareaDefaultLimit,
-				required: true
+				required: true,
+				profile_field_id: 0
 			},
 			ask: 'New question',
 			type: 'open'
@@ -572,7 +600,8 @@
 			type_title: 'Textfield',
 			options: {
 				limit: _textfieldDefaultLimit,
-				required: true
+				required: true,
+				profile_field_id: 0
 			},
 			ask: 'New question',
 			type: 'open'
@@ -602,10 +631,13 @@
 	
 		defaultTemplate: applr.Templates['Base.Question'],
 	
+		customFieldsTemplate: applr.Templates['Base.CustomCandFields'],
+	
 		render: function() {
 			this.model.set('domID', Math.random().toString(36).slice(2));
 	
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+			this.$el.find('.candidate-custom-fields').html(this.customFieldsTemplate(this.model.toJSON()));
 			return this;
 		},
 	
@@ -616,6 +648,7 @@
 			'change input[name="ask"]' : 'changeAsk',
 			'change [name="limit"]' : 'changeLimit',
 			'change [name="required"]': 'changeRequired',
+			'change [name="custom_field"]': 'changeCustomField',
 			'click .remove-question' : 'destroyQuestion',
 			'drop' : 'dropItem'
 		},
@@ -661,6 +694,13 @@
 			var value = this.$el.find('input[name="required"]').is(':checked');
 			var options = this.model.get('options');
 			options.required = value;
+			this.model.set('options', options, {validate : true});
+		},
+	
+		changeCustomField: function() {
+			var value = this.$el.find('[name="custom_field"]').val();
+			var options = this.model.get('options');
+			options.profile_field_id = value;
 			this.model.set('options', options, {validate : true});
 		},
 	
@@ -749,6 +789,7 @@
 	
 			this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
 			this.$el.find('.optional-questions').html(QuestionOptionsView.render().$el);
+			this.$el.find('.candidate-custom-fields').html(this.customFieldsTemplate(this.model.toJSON()));
 			return this;
 		}
 	});
@@ -1127,6 +1168,7 @@
 	        this.model.set('domID', Math.random().toString(36).slice(2));
 	
 	        this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+	        this.$el.find('.candidate-custom-fields').html(this.customFieldsTemplate(this.model.toJSON()));
 	        return this;
 	    }
 	});
@@ -1166,10 +1208,16 @@
 					if (typeof JSON.default == 'object' && JSON.default.length > 0) {
 						_.each(JSON.default, function(el){
 							// FIXME: dirty hack because it's Friday and I want home! : )
-							if(typeof el.options.required == 'undefined')
+							if(typeof el.options.required == 'undefined') {
 								el.options['required'] = true;
+							}
 	
-							var modelName = _detectQuestionModel(el);
+	                        var modelName = _detectQuestionModel(el);
+	
+	                        if(typeof el.options.profile_field_id == 'undefined' && modelName != 'Video') {
+	                            el.options['profile_field_id'] = 0;
+	                        }
+	
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
 								_DefaultQuestionCollection.add(model);
@@ -1179,10 +1227,16 @@
 					if (typeof JSON.optional == 'object' && JSON.optional.length > 0) {
 						_.each(JSON.optional, function(el){
 							// FIXME: dirty hack because it's Friday and I want home! : )
-							if(typeof el.options.required == 'undefined')
+							if(typeof el.options.required == 'undefined') {
 								el.options['required'] = true;
+							}
 	
 							var modelName = _detectQuestionModel(el);
+	
+	                        if(typeof el.options.profile_field_id == 'undefined' && modelName != 'Video') {
+	                            el.options['profile_field_id'] = 0;
+	                        }
+	
 							if (modelName) {
 								var model = new applr.Models[modelName](el);
 								_OptionalQuestionsCollection.add(model);

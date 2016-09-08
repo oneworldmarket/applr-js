@@ -51,7 +51,9 @@ var
             60: '1 minute',
             120: '2 minutes',
             180: '3 minutes'
-        }
+        },
+		custom_fields_enabled: false,
+		custom_fields: []
 	},
 
 	_field_types = {

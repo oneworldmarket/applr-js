@@ -9,10 +9,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 
 	defaultTemplate: applr.Templates['Base.Question'],
 
+	customFieldsTemplate: applr.Templates['Base.CustomCandFields'],
+
 	render: function() {
 		this.model.set('domID', Math.random().toString(36).slice(2));
 
 		this.$el.html(this.defaultTemplate(this.model.toJSON()) + this.template(this.model.toJSON()));
+		this.$el.find('.candidate-custom-fields').html(this.customFieldsTemplate(this.model.toJSON()));
 		return this;
 	},
 
@@ -23,6 +26,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'change input[name="ask"]' : 'changeAsk',
 		'change [name="limit"]' : 'changeLimit',
 		'change [name="required"]': 'changeRequired',
+		'change [name="custom_field"]': 'changeCustomField',
 		'click .remove-question' : 'destroyQuestion',
 		'drop' : 'dropItem'
 	},
@@ -68,6 +72,13 @@ applr.Views.Base.Question = Backbone.View.extend({
 		var value = this.$el.find('input[name="required"]').is(':checked');
 		var options = this.model.get('options');
 		options.required = value;
+		this.model.set('options', options, {validate : true});
+	},
+
+	changeCustomField: function() {
+		var value = this.$el.find('[name="custom_field"]').val();
+		var options = this.model.get('options');
+		options.profile_field_id = value;
 		this.model.set('options', options, {validate : true});
 	},
 
