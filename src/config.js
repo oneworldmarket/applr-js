@@ -53,7 +53,8 @@ var
             180: '3 minutes'
         },
 		custom_fields_enabled: false,
-		custom_fields: []
+		custom_fields: [],
+		used_custom_fields: []
 	},
 
 	_field_types = {

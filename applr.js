@@ -54,7 +54,8 @@
 	            180: '3 minutes'
 	        },
 			custom_fields_enabled: false,
-			custom_fields: []
+			custom_fields: [],
+			used_custom_fields: []
 		},
 	
 		_field_types = {
@@ -214,15 +215,19 @@
 	    with(obj || {}) {
 	      __p += '';
 	      if (_options.custom_fields_enabled) {
-	        __p += '\n    <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n        <select name="custom_field" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '">\n            <option value="0">Not set</option>\n            ';
+	        __p += '\n    <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n        <select name="custom_field" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" data-oldvalue="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '" value="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '">\n            <option value="0">Not set</option>\n            ';
 	        _.each(_options.custom_fields, function (item, item_key) {
-	          __p += '\n                <option value="' + ((__t = (item.id)) == null ? '' : __t) + '" ';
-	          if (item.id == options.profile_field_id) {
-	            __p += ' selected ';
+	          __p += '\n                ';
+	          if ((_.indexOf(_options.used_custom_fields, parseInt(item.id)) == -1) || (item.id == options.profile_field_id)) {
+	            __p += '\n                    <option value="' + ((__t = (item.id)) == null ? '' : __t) + '" ';
+	            if (item.id == options.profile_field_id) {
+	              __p += ' selected ';
+	            }
+	            __p += ' >' + ((__t = (item.name)) == null ? '' : __t) + '</option>\n                ';
 	          }
-	          __p += ' >' + ((__t = (item.name)) == null ? '' : __t) + '</option>\n            ';
+	          __p += '\n            ';
 	        });
-	        __p += '\n        </select>\n    </div>\n    <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n        Autopopulate\n    </label>\n';
+	        __p += '\n        </select>\n    </div>\n    <label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight">\n        Candidate field map\n    </label>\n';
 	      }
 	      __p += '\n';
 	    }
@@ -648,6 +653,7 @@
 			'change input[name="ask"]' : 'changeAsk',
 			'change [name="limit"]' : 'changeLimit',
 			'change [name="required"]': 'changeRequired',
+			'focus [name="custom_field"] next': 'focusCustomField',
 			'change [name="custom_field"]': 'changeCustomField',
 			'click .remove-question' : 'destroyQuestion',
 			'drop' : 'dropItem'
@@ -698,10 +704,23 @@
 		},
 	
 		changeCustomField: function() {
-			var value = this.$el.find('[name="custom_field"]').val();
+			var field = this.$el.find('[name="custom_field"]');
+			var value = parseInt(field.val());
+			var oldValue = parseInt(field.data('oldvalue'));
+	
 			var options = this.model.get('options');
 			options.profile_field_id = value;
 			this.model.set('options', options, {validate : true});
+	
+			field.data('oldvalue', value);
+	
+			if (value) {
+				_options.used_custom_fields.push(value);
+			}
+	
+			if (oldValue) {
+				_options.used_custom_fields = _.without(_options.used_custom_fields, oldValue);
+			}
 		},
 	
 		closeFilter: function(e) {

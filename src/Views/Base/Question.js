@@ -26,6 +26,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'change input[name="ask"]' : 'changeAsk',
 		'change [name="limit"]' : 'changeLimit',
 		'change [name="required"]': 'changeRequired',
+		'focus [name="custom_field"] next': 'focusCustomField',
 		'change [name="custom_field"]': 'changeCustomField',
 		'click .remove-question' : 'destroyQuestion',
 		'drop' : 'dropItem'
@@ -76,10 +77,23 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	changeCustomField: function() {
-		var value = this.$el.find('[name="custom_field"]').val();
+		var field = this.$el.find('[name="custom_field"]');
+		var value = parseInt(field.val());
+		var oldValue = parseInt(field.data('oldvalue'));
+
 		var options = this.model.get('options');
 		options.profile_field_id = value;
 		this.model.set('options', options, {validate : true});
+
+		field.data('oldvalue', value);
+
+		if (value) {
+			_options.used_custom_fields.push(value);
+		}
+
+		if (oldValue) {
+			_options.used_custom_fields = _.without(_options.used_custom_fields, oldValue);
+		}
 	},
 
 	closeFilter: function(e) {
