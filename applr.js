@@ -595,6 +595,10 @@
 			this.model.collection.remove(this.model);
 			if (_options.add_type == 'new_fields') {
 				_removedQuestionsCollection.add(this.model);
+	
+	            // we should removed question id from used_custom_fields array, when user click to remove link
+	            _options.used_custom_fields = _.without(_options.used_custom_fields, parseInt(this.model.attributes.options.profile_field_id));
+	
 				_disableSortable();
 				_OptionalQuestionsCollectionView.render();
 				_DefaultQuestionCollectionView.render();
