@@ -10,7 +10,6 @@ var
 		//new_fields or filter_questions
 		add_type: 'new_fields',
 		links_default_class: 'standard-blue-link',
-		links_medium_class: 'medium-blue-link',
 		text_default_class: 'standard-black',
 		input_class: 'input-standart',
 		title_default_class: 'red-title',

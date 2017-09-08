@@ -11,7 +11,6 @@
 			//new_fields or filter_questions
 			add_type: 'new_fields',
 			links_default_class: 'standard-blue-link',
-			links_medium_class: 'medium-blue-link',
 			text_default_class: 'standard-black',
 			input_class: 'input-standart',
 			title_default_class: 'red-title',
@@ -182,6 +181,36 @@
 	;
 	var applrTemplates = (function () {
 	  this["Templates"] = this["Templates"] || {};
+<<<<<<< Updated upstream
+=======
+	  this["Templates"]["Base.CustomCandFields"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '';
+	      if (_options.custom_fields_enabled) {
+	        __p += '\n    <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n        <select name="custom_field" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" data-oldvalue="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '" value="' + ((__t = (options.profile_field_id)) == null ? '' : __t) + '">\n            <option value="0">Not set</option>\n            ';
+	        _.each(_options.custom_fields, function (item, item_key) {
+	          __p += '\n                ';
+	          if ((_.indexOf(_options.used_custom_fields, parseInt(item.id)) == -1) || (item.id == options.profile_field_id)) {
+	            __p += '\n                    <option value="' + ((__t = (item.id)) == null ? '' : __t) + '" ';
+	            if (item.id == options.profile_field_id) {
+	              __p += ' selected ';
+	            }
+	            __p += ' >' + ((__t = (item.name)) == null ? '' : __t) + '</option>\n                ';
+	          }
+	          __p += '\n            ';
+	        });
+	        __p += '\n        </select>\n    </div>\n    <label class="goRight">\n        Candidate field map\n    </label>\n';
+	      }
+	      __p += '\n';
+	    }
+	    return __p;
+	  };
+>>>>>>> Stashed changes
 	  this["Templates"]["Base.Question"] = function (obj) {
 	    var __t, __p = '',
 	        __j = Array.prototype.join,
@@ -191,7 +220,11 @@
 	    with(obj || {}) {
 	      __p += '';
 	      if (_options.add_type == 'new_fields') {
+<<<<<<< Updated upstream
 	        __p += '\n\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n';
+=======
+	        __p += '\n\t\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question hide-toggle">\n\t\t';
+>>>>>>> Stashed changes
 	      }
 	      __p += '\n\t' + ((__t = (ask)) == null ? '' : __t) + '\n';
 	      if (_options.add_type == 'new_fields') {
@@ -201,7 +234,15 @@
 	      if (_options.add_type == 'new_fields' && type == 'open') {
 	        __p += ', Limit: ' + ((__t = (options.limit)) == null ? '' : __t) + '';
 	      }
+<<<<<<< Updated upstream
 	      __p += ')\n</span>\n<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n<span class="goRight hide-toggle drag-icon"></span>\n<div class="clearfix"></div>';
+=======
+	      __p += '';
+	      if (_options.add_type == 'new_fields' && type == 'video') {
+	        __p += ', Time limit: ' + ((__t = (_options.video_limit_options[options.limit])) == null ? '' : __t) + '';
+	      }
+	      __p += ', ' + ((__t = ((options.required == true || options.required == "true") ? 'Required' : 'Non-required')) == null ? '' : __t) + ')\n\t\t</span>\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question hide-toggle">remove</a>\n\t</div>\n\t<div class="col-xs-1">\n\t\t<a class="goRight hide-toggle drag-icon" href="#" title="Drag">\n\t\t\t<i class="grey  icon-block-view"></i>\n\t\t</a>\n\t</div>\n\t<div class="clearfix"></div>';
+>>>>>>> Stashed changes
 	    }
 	    return __p;
 	  };
@@ -216,7 +257,11 @@
 	      _.each(items, function (item, item_key) {
 	        __p += '\n\t\t<option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n\t';
 	      });
+<<<<<<< Updated upstream
 	      __p += '\n</select>\n<button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button">Add new field</button>\n</div>';
+=======
+	      __p += '\n        </select>\n    </div>\n    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">\n        <button class="' + ((__t = (_options.default_button_class)) == null ? '' : __t) + ' add-new-field-button w100">Add new field</button>\n    </div>\n</div>';
+>>>>>>> Stashed changes
 	    }
 	    return __p;
 	  };
@@ -227,7 +272,15 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
+<<<<<<< Updated upstream
 	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tLabel\n\t\t</label>\n\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+=======
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<!--<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' ">-->\n\t\t\t<!--Label-->\n\t\t<!--</label>-->\n\t\t<!--<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />-->\n\n\n\n\n\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class=" ' + ((__t = (_options.full_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class=" goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t\t<div class="candidate-custom-fields"></div>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class=" noMT" name="required" ';
+	      if (options.required == true || options.required == "true") {
+	        __p += ' checked="checked" ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="line-h-normal goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t</div>\n\n\t<div class="' + ((__t = (_options.applr_row)) == null ? '' : __t) + '">\n\t\t<label class=" ">\n\t\t\tOptions\n\t\t</label>\n\t\t<div class="optional-questions"></div>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+>>>>>>> Stashed changes
 	    }
 	    return __p;
 	  };
@@ -253,7 +306,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
+<<<<<<< Updated upstream
 	      __p += '<div class="edit-mode display-none">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '">(edit)</span></h2>\n\t<div class="question-settings">\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + ' ' + ((__t = (_options.labels_large)) == null ? '' : __t) + ' goRight"> \n\t\t\t\tLimit\n\t\t\t\t';
+=======
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n\t<h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="bronze-info">(edit)</span></h2>\n\t<div class="question-settings">\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text"  class=" ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class=" goRight">\n\t\t\t\tLabel\n\t\t\t</label>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="goRight">\n\t\t\t\tLimit\n\t\t\t\t';
+>>>>>>> Stashed changes
 	      if (view == 'Textfield') {
 	        __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
 	      }
@@ -261,7 +318,15 @@
 	      if (view == 'Textarea') {
 	        __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	      }
+<<<<<<< Updated upstream
 	      __p += '\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">SAVE CANDIDATE FILTER</button>\n</div>';
+=======
+	      __p += '\n\t\t\t</label>\n\t\t\t<div class="candidate-custom-fields"></div>\n\t\t</div>\n\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t<input type="checkbox" class=" noMT" name="required" ';
+	      if (options.required == true || options.required == "true") {
+	        __p += ' checked="checked" ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t</div>\n\t\t\t<label class="line-h-normal goRight">\n\t\t\t\tRequired\n\t\t\t</label>\n\t\t</div>\n\t\t<span class="clearfix"></span>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+>>>>>>> Stashed changes
 	    }
 	    return __p;
 	  };
@@ -320,7 +385,11 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
+<<<<<<< Updated upstream
 	      __p += '<td class="option-table-input"><input class="' + ((__t = (_options.input_class)) == null ? '' : __t) + '" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
+=======
+	      __p += '<td class="option-table-input"><input class=" ' + ((__t = (_options.required_class)) == null ? '' : __t) + ' question-option" type="text" value="' + ((__t = (answer)) == null ? '' : __t) + '" name="answer" id="question-option-' + ((__t = (domID)) == null ? '' : __t) + '"></td>\n<td class="option-table-checkbox"><input type="checkbox" name="reject" value="1" ';
+>>>>>>> Stashed changes
 	      if (reject && reject != '0') {
 	        __p += ' checked=checked ';
 	      }
@@ -335,7 +404,7 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<thead>\n\t<td class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '" > Label</td>\n\t<td class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '" > Reject?</td>\n\t<td></td>\n</thead>\n<tbody class="option-contents">\n\n</tbody>\n<tr>\n\t<td colspan="3">\n\t\t<a href="#" class="' + ((__t = (_options.links_medium_class)) == null ? '' : __t) + ' add-new-answer">add row</a>\n\t</td>\n</tr>\n\n\n';
+	      __p += '<thead>\n\t<td class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '" > Label</td>\n\t<td class="' + ((__t = (_options.labels_style)) == null ? '' : __t) + '" > Reject?</td>\n\t<td></td>\n</thead>\n<tbody class="option-contents">\n\n</tbody>\n<tr>\n\t<td colspan="3">\n\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' add-new-answer">add row</a>\n\t</td>\n</tr>\n\n\n';
 	    }
 	    return __p;
 	  };
@@ -350,6 +419,32 @@
 	    }
 	    return __p;
 	  };
+<<<<<<< Updated upstream
+=======
+	  this["Templates"]["Video"] = function (obj) {
+	    var __t, __p = '',
+	        __j = Array.prototype.join,
+	        print = function () {
+	        __p += __j.call(arguments, '');
+	        };
+	    with(obj || {}) {
+	      __p += '<div class="edit-mode display-none ' + ((__t = (_options.edit_mode_wrapper_class)) == null ? '' : __t) + '">\n    <h2><span class="ask-val ' + ((__t = (_options.title_default_class)) == null ? '' : __t) + ' ">' + ((__t = (ask)) == null ? '' : __t) + '</span> <span class="">(edit)</span></h2>\n    <div class="question-settings">\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="text"  class=" ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n            </div>\n            <label class=" goRight">\n                Label\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <select name="limit" class="' + ((__t = (_options.small_dropdown_class)) == null ? '' : __t) + '" value="' + ((__t = (options.limit)) == null ? '' : __t) + '">\n                    ';
+	      _.each(time_options, function (item, item_key) {
+	        __p += '\n                        <option value="' + ((__t = (item_key)) == null ? '' : __t) + '" ';
+	        if (item_key == options.limit) {
+	          __p += ' selected ';
+	        }
+	        __p += ' >' + ((__t = (item)) == null ? '' : __t) + '</option>\n                    ';
+	      });
+	      __p += '\n                </select>\n            </div>\n            <label class="goRight">\n                Video time limit\n            </label>\n        </div>\n        <div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n            <div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n                <input type="checkbox" class=" noMT" name="required" ';
+	      if (options.required == true || options.required == "true") {
+	        __p += ' checked="checked" ';
+	      }
+	      __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n            </div>\n            <label class="line-h-normal goRight">\n                Required\n            </label>\n        </div>\n        <span class="clearfix"></span>\n    </div>\n\n\n    <button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n    <button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
+	    }
+	    return __p;
+	  };
+>>>>>>> Stashed changes
 	  return this["Templates"];
 	});
 	var

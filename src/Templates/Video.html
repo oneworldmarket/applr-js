@@ -1,0 +1,39 @@
+<div class="edit-mode display-none <%= _options.edit_mode_wrapper_class %>">
+    <h2><span class="ask-val <%= _options.title_default_class %> "><%= ask %></span> <span class="">(edit)</span></h2>
+    <div class="question-settings">
+        <div class="<%= _options.open_quesion_fieild_wrapper %>">
+            <div class="goRight <%= _options.input_container %>">
+                <input type="text"  class=" <%= _options.standart_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+            </div>
+            <label class=" goRight">
+                Label
+            </label>
+        </div>
+        <div class="<%= _options.open_quesion_fieild_wrapper %>">
+            <div class="goRight <%= _options.input_container %>">
+                <select name="limit" class="<%= _options.small_dropdown_class %>" value="<%= options.limit %>">
+                    <% _.each(time_options, function(item, item_key) { %>
+                        <option value="<%= item_key %>" <% if (item_key == options.limit) { %> selected <% } %> ><%= item %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <label class="goRight">
+                Video time limit
+            </label>
+        </div>
+        <div class="<%= _options.open_quesion_fieild_wrapper %>">
+            <div class="goRight <%= _options.input_container %>">
+                <input type="checkbox" class=" noMT" name="required" <% if (options.required == true || options.required == "true") { %> checked="checked" <% } %> value="<%= options.required %>" />
+            </div>
+            <label class="line-h-normal goRight">
+                Required
+            </label>
+        </div>
+        <span class="clearfix"></span>
+    </div>
+
+
+    <button class="<%= _options.save_button_class %> save-candidate-filter goRight"><%= _options.text.fld_btn_save %></button>
+    <button class="<%= _options.cancel_button_class %> cancel-candidate-filter goLeft">CANCEL</button>
+</div>
+</form>

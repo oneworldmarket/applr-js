@@ -1,0 +1,15 @@
+<% if (_options.custom_fields_enabled) { %>
+    <div class="goRight <%= _options.input_container %>">
+        <select name="custom_field" class="<%= _options.small_dropdown_class %>" data-oldvalue="<%= options.profile_field_id %>" value="<%= options.profile_field_id %>">
+            <option value="0">Not set</option>
+            <% _.each(_options.custom_fields, function(item, item_key) { %>
+                <% if ((_.indexOf(_options.used_custom_fields, parseInt(item.id)) == -1) || (item.id == options.profile_field_id)) { %>
+                    <option value="<%= item.id %>" <% if (item.id == options.profile_field_id) { %> selected <% } %> ><%= item.name %></option>
+                <% } %>
+            <% }); %>
+        </select>
+    </div>
+    <label class="goRight">
+        Candidate field map
+    </label>
+<% } %>
