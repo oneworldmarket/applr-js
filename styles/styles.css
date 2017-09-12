@@ -1,25 +1,16 @@
-.display-none {
-	display: none !important;
-}
 
-.goRight {
-	float: right;
-}
-
-.goLeft {
-	float: left;
-}
-
-.noMB {
-	margin-bottom: 0px;
+.open-quesion-fieild-wrapper {
+	padding-bottom: 15px;
 }
 
 .drag-icon {
-	display: block;
+	border: 1px solid #DEDEDE;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	text-align: center;
 	width: 35px;
-	height: 33px;
-	background: url('../images/drag-ico.png') no-repeat;
-	cursor: pointer;
+	height: 27px;
 }
 
 .applr-container ul {
@@ -39,22 +30,11 @@
 	padding-bottom: 35px;
 }
 
-.clearfix {
-	clear: both;
-	margin: 0;
-	padding: 0;
-	height: 0;
-	float: none !important;
-	display: block;
-}
 
 .question-line {
-	line-height: 22px;
+	margin-bottom: 5px;
 }
 
-.question-line.compact {
-	height: 40px;
-}
 
 .applr-add-new-field .select2-container,
 .applr-add-optional-field .select2-container {
