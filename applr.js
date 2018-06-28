@@ -552,6 +552,19 @@
 			}
 		}
 	});
+	applr.Models.Checkbox = applr.Models.Base.ClosedQuestion.extend({
+		defaults: {
+			view: 'Checkbox',
+			type_title: 'Checkbox',
+			options: {
+				style: 'checkbox',
+				required: true,
+				profile_field_id: 0
+			},
+			ask: 'New question',
+			type: 'closed'
+		}
+	});
 	applr.Models.CloseQuestionItem = Backbone.Model.extend({
 		defaults: {
 			answer: '',
@@ -855,6 +868,9 @@
 			_DefaultQuestionCollectionView.render();
 			_initSortable();
 		}
+	});
+	applr.Views.Checkbox = applr.Views.Base.ClosedQuestion.extend({
+	
 	});
 	applr.Views.DefaultQuestions = Backbone.View.extend({
 		tagName: 'div',
