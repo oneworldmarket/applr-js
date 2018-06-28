@@ -60,7 +60,8 @@
 			'Textfield' : 'Text field',
 			'Textarea' : 'Textarea',
 			'Dropdown' : 'Dropdown',
-			'Radiobuttons' : 'Radio buttons'
+			'Radiobuttons' : 'Radio buttons',
+			'Checkbox': 'Checkboxes'
 		},
 	
 		_textfieldMaxLimit =  100,
@@ -106,6 +107,8 @@
 	                result = 'Dropdown';
 	            } else if (el.options.style == 'radio') {
 	                result = 'Radiobuttons';
+	            } else if (el.options.style == 'checkbox') {
+	                result = 'Checkbox';
 	            }
 	        } else if (el.type == 'video') {
 	            result = 'Video';

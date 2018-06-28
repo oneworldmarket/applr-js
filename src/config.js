@@ -59,7 +59,8 @@ var
 		'Textfield' : 'Text field',
 		'Textarea' : 'Textarea',
 		'Dropdown' : 'Dropdown',
-		'Radiobuttons' : 'Radio buttons'
+		'Radiobuttons' : 'Radio buttons',
+		'Checkbox': 'Checkboxes'
 	},
 
 	_textfieldMaxLimit =  100,

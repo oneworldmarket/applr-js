@@ -14,6 +14,8 @@ var
                 result = 'Dropdown';
             } else if (el.options.style == 'radio') {
                 result = 'Radiobuttons';
+            } else if (el.options.style == 'checkbox') {
+                result = 'Checkbox';
             }
         } else if (el.type == 'video') {
             result = 'Video';
