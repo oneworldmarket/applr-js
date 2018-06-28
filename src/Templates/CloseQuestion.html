@@ -1,5 +1,5 @@
 <div class="edit-mode display-none <%= _options.edit_mode_wrapper_class %>">
-	<h2><span class="ask-val <%= _options.title_default_class %>"><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
+	<h2 class="bot10"><span class="ask-val <%= _options.title_default_class %>"><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
 
 	<div class="<%= _options.applr_row %>">
 		<!--<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">-->
@@ -15,23 +15,25 @@
 			<div class="goRight <%= _options.input_container %>">
 				<input type="text" class="<%= _options.input_class %> <%= _options.full_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
 			</div>
-			<label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+			<label class="goRight">
 				Label
 			</label>
 			<div class="candidate-custom-fields"></div>
+			<div class="clear"></div>
 		</div>
 		<div class="<%= _options.open_quesion_fieild_wrapper %>">
 			<div class="goRight <%= _options.input_container %>">
 				<input type="checkbox" class="<%=_options.input_class %> noMT" name="required" <% if (options.required == true || options.required == "true") { %> checked="checked" <% } %> value="<%= options.required %>" />
 			</div>
-			<label class="<%= _options.labels_style %> <%= _options.labels_large %> goRight">
+			<label class="line-h-normal goRight">
 				Required
 			</label>
+			<div class="clear"></div>
 		</div>
 	</div>
 
 	<div class="<%= _options.applr_row %>">
-		<label class="<%= _options.labels_style %> <%= _options.labels_large %> ">
+		<label class="">
 			Options
 		</label>
 		<div class="optional-questions"></div>

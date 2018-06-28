@@ -1,7 +1,7 @@
 <form class="question-form row" id="question-form-<%= domID %>">
 	<div class="col-xs-11">
 		<% if (_options.add_type == 'new_fields') { %>
-			<a href="#" class="<%= _options.links_medium_class %> edit-question hide-toggle">
+			<a href="#" class="<%= _options.links_default_class %> edit-question hide-toggle">
 		<% } %>
 			<%= ask %>
 		<% if (_options.add_type == 'new_fields') { %>
@@ -13,6 +13,8 @@
 		<a href="#" class="<%= _options.links_default_class %> remove-question hide-toggle">remove</a>
 	</div>
 	<div class="col-xs-1">
-		<span class="goRight hide-toggle drag-icon"></span>
+		<div class="goRight hide-toggle drag-icon">
+			<i class="grey icon-block-view"></i>
+		</div>
 	</div>
 	<div class="clearfix"></div>

@@ -10,7 +10,6 @@ var
 		//new_fields or filter_questions
 		add_type: 'new_fields',
 		links_default_class: 'standard-blue-link',
-		links_medium_class: 'medium-blue-link',
 		text_default_class: 'standard-black',
 		input_class: 'input-standart',
 		required_class: 'validate[required,maxSize[255]]',
@@ -25,7 +24,6 @@ var
 		cancel_button_class: 'btn-standard btn-red',
 		input_container: 'input-form-container',
 		labels_style: 'bronze-info',
-		labels_large: 'font-seventeen',
 		open_quesion_fieild_wrapper : 'open-quesion-fieild-wrapper',
 		full_line_input: 'full-line-input',
 		standart_line_input: 'default-field',
