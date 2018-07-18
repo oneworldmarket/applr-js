@@ -35,7 +35,7 @@
 			label_input_options : 'label_input_options',
 			save_endpoint: '/c/applr/save-settings',
 			on_save: function(result) {},
-			placeholder_class: 'item-placeholder',
+			placeholder_class: 'item-placeholder tmp1',
 			wrapper: '#applr-wrapper',
 			video_enabled: false,
 			on_select_render: function() {},
