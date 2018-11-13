@@ -1,0 +1,85 @@
+
+.open-quesion-fieild-wrapper {
+	padding-bottom: 15px;
+}
+
+.drag-icon {
+	border: 1px solid #DEDEDE;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	text-align: center;
+	width: 35px;
+	height: 27px;
+}
+
+.applr-container ul {
+	min-height: 15px;
+	width: 100%;
+}
+
+.applr-container ul li {
+	list-style-type: none;
+}
+
+.applr-questions-wrapper h2 {
+	margin-bottom: 15px;
+}
+
+.applr-questions-wrapper ul {
+	padding-bottom: 35px;
+}
+
+
+.question-line {
+	margin-bottom: 5px;
+}
+
+
+.applr-add-new-field .select2-container,
+.applr-add-optional-field .select2-container {
+	width: 200px;
+	float: left;
+	margin-right: 20px;
+}
+
+.applr-save-settings {
+	margin-top: 75px;
+}
+
+.applr-optional-questions {
+	padding: 0px 0 5px 0;
+}
+
+.applr-add-new-field {
+	padding-top: 30px;
+}
+
+.open-quesion-fieild-wrapper label {
+	line-height: 37px;
+}
+
+.applr-optional-questions-list .edit-mode {
+	position: relative;
+	top: -55px;
+}
+
+.applr-optional-questions-selected h2 {
+	margin-bottom: 15px;
+}
+
+.item-placeholder {
+	height: 35px;
+	width: 102%;
+	background: #F9F9F9;
+	position: relative;
+	left: -1%;
+}
+
+.question-settings {
+	margin-bottom: 30px;
+}
+
+.input-form-container .select2-container {
+    width: 150px;
+}

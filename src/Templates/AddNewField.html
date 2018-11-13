@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-sm-offset-4 col-xs-4 col-md-4 col-sm-4 col-lg-4 ">
+        <select name="add-new-field-select">
+            <option></option>
+            <% _.each(items(), function(item, item_key) { %>
+            <option value="<%= item_key %>"><%= item %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+        <button class="<%= _options.default_button_class %> w100 add-new-field-button">Add new field</button>
+    </div>
+</div>
