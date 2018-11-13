@@ -17,7 +17,7 @@ applr.Views.AddNewField = Backbone.View.extend({
 	},
 
 	events: {
-		'click .add-new-field-button' : 'addNewField'
+		'change .add-new-field-select' : 'addNewField'
 	},
 
 	addNewField: function(e) {
@@ -25,18 +25,27 @@ applr.Views.AddNewField = Backbone.View.extend({
 
 		var field_type = this.$el.find('select[name="add-new-field-select"]').val();
 
-		if (field_type != '0' && field_type != '') {
-			var model = new applr.Models[field_type]();
-			var json = model.toJSON();
-			var options = _.clone(json.options);
-			model.set('options', options);
+        if (field_type === '') {
+        	return false;
+        }
 
-			_OptionalQuestionsCollection.add(model);
-		}
+		var model = new applr.Models[field_type](),
+			json = model.toJSON(),
+			options = _.clone(json.options);
+
+		model.set('options', options);
+
+		_OptionalQuestionsCollection.add(model);
+
 
 		_disableSortable();
 		_OptionalQuestionsCollectionView.render();
 		_DefaultQuestionCollectionView.render();
 		_initSortable();
+
+		if(model !== false) {
+            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
+            this.$el.find('.add-new-field-select').val('').trigger('change');
+        }
 	}
 });
