@@ -13,6 +13,7 @@ var
 		text_default_class: 'standard-black',
 		input_class: 'input-standart',
 		required_class: 'validate[required,maxSize[255]]',
+		required_class_description: 'validate[required]',
 		title_default_class: 'red-title',
 		filter_questions_title_class: 'key-contacts-list-title',
 		default_questions_class: 'applr-default-questions',
@@ -55,13 +56,15 @@ var
 		used_custom_fields: []
 	},
 
-	_field_types = {
-		'Textfield' : 'Text field',
-		'Textarea' : 'Textarea',
-		'Dropdown' : 'Dropdown',
-		'Radiobuttons' : 'Radio buttons',
-		'Checkbox': 'Checkboxes'
-	},
+    _field_types = {
+        'Textfield' : 'Text field',
+        'Description' : 'Description field',
+        'Textarea' : 'Textarea',
+        'Dropdown' : 'Dropdown',
+        'Radiobuttons' : 'Radio buttons',
+        'Checkbox': 'Checkboxes',
+        'Uploadbutton': 'Additional document upload'
+    },
 
 	_textfieldMaxLimit =  100,
 	_textareaMaxLimit =  5000,
@@ -90,3 +93,5 @@ var
 
     _videofieldDefaultLimit = 60
 ;
+
+jQuery.fn.addBack = jQuery.fn.andSelf;
