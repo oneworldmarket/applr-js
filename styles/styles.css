@@ -129,3 +129,61 @@ table.k-editor {
 	left: 0;
 	position: absolute;
 }
+
+.k-widget.k-window,
+.k-widget.k-window .k-content .k-edit-label label,
+.k-widget.k-window .k-content .k-edit-field label {
+	color: #333;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+}
+.k-widget.k-window {
+	top: 150px!important;
+}
+.k-widget.k-window .k-header{
+	background: transparent;
+	border-bottom: 1px solid #c5c5c5;
+	font-weight: 900;
+}
+.k-widget.k-window .k-content .k-edit-label{
+	text-align: left;
+	margin-left: 20px;
+	width: calc(30% - 20px);
+}
+.k-widget.k-window .k-content .k-edit-field input{
+	border: 1px solid #c5c5c5;
+	border-radius: 0;
+	height: 28px;
+	padding: 0;
+}
+.k-widget.k-window .k-content .k-edit-field input:focus{
+	border-color: #3498db;
+	box-shadow: none;
+}
+.k-widget.k-window .k-content .k-edit-buttons {
+	padding-top: 0;
+	border: none;
+	background: transparent;
+}
+.k-widget.k-window .k-content .k-edit-buttons button {
+	padding: 4px 8px;
+	border-radius: 0;
+	border: 1px solid transparent;
+	background: #f0f0f0;
+	line-height: 20px;
+	cursor: pointer;
+	color: #333;
+}
+.k-widget.k-window .k-content .k-edit-buttons button:hover {
+	background-color: #e0e0e0;
+	border-color: #ccc;
+}
+.k-widget.k-window .k-content .k-edit-buttons button.k-primary {
+	color: #fff;
+	border: 1px solid transparent;
+	background-color: #2d8ac7;
+}
+.k-widget.k-window .k-content .k-edit-buttons button.k-primary:hover {
+	background-color: #206ea1;
+}
