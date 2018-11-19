@@ -10,20 +10,23 @@ applr.Views.AddNewField = Backbone.View.extend({
 	render: function() {
 		var html = this.template(this.model.toJSON());
 		this.$el.html(html);
-        if (typeof _options.on_select_render == 'function') {
-            _options.on_select_render(this.$el.find('select'));
-        }
+
+        $(document).on('click', '.dropdown-submenu a.item', function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).next('ul').toggle();
+        });
 		return this;
 	},
 
 	events: {
-		'change .add-new-field-select' : 'addNewField'
+		'click .add-new-field-select' : 'addNewField'
 	},
 
 	addNewField: function(e) {
 		e.preventDefault();
 
-		var field_type = this.$el.find('select[name="add-new-field-select"]').val();
+		var field_type = $(e.target).data('value');
 
         if (field_type === '') {
         	return false;
@@ -45,7 +48,7 @@ applr.Views.AddNewField = Backbone.View.extend({
 
 		if(model !== false) {
             $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
-            this.$el.find('.add-new-field-select').val('').trigger('change');
         }
+        $('.dropdown').removeClass('open');
 	}
 });

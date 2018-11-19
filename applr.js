@@ -57,15 +57,46 @@
 			used_custom_fields: []
 		},
 	
-	    _field_types = {
-	        'Textfield' : 'Text field',
-	        'Description' : 'Description field',
-	        'Textarea' : 'Textarea',
-	        'Dropdown' : 'Dropdown',
-	        'Radiobuttons' : 'Radio buttons',
-	        'Checkbox': 'Checkboxes',
-	        'Uploadbutton': 'Additional document upload'
-	    },
+	    _field_types = [
+	        {
+	            'label': 'Question field',
+	            'type': 'dropdown',
+	            'childs': [
+	                {
+	                    'label': 'Text field',
+	                    'key': 'Textfield'
+	                },
+	                {
+	                    'label': 'Text area',
+	                    'key': 'Textarea'
+	                },
+	                {
+	                    'label': 'Dropdown',
+	                    'key': 'Dropdown'
+	                },
+	                {
+	                    'label': 'Radio buttons',
+	                    'key': 'Radiobuttons'
+	                },
+	                {
+	                    'label': 'Checkboxes',
+	                    'key': 'Checkbox'
+	                },
+	                {
+	                    'label': 'Video',
+	                    'key': 'Video'
+	                }
+	            ]
+	        },
+	        {
+	            'label': 'Description field',
+	            'key': 'Description'
+	        },
+	        {
+	            'label': 'Document upload',
+	            'key': 'Uploadbutton'
+	        }
+	    ],
 	
 		_textfieldMaxLimit =  100,
 		_textareaMaxLimit =  5000,
@@ -260,7 +291,7 @@
 	    with(obj || {}) {
 	      __p += '<form class="question-form row" id="question-form-' + ((__t = (domID)) == null ? '' : __t) + '">\n\t<div class="col-xs-11">\n\t\t';
 	      if (type == 'description') {
-	        __p += '\n\t\t\t<div class="description-question-wrap hide-toggle">\n\t\t\t\t<span class="standard-black short-text right5 display-inline-block">' + ((__t = (options.ask_html)) == null ? '' : __t) + '</span>\n\t\t\t\t<span class="right5">\n\t\t\t\t\t[<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question">Edit</a>]\n\t\t\t\t</span>\n\t\t\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question">remove</a>\n\t\t\t</div>\n\t\t';
+	        __p += '\n\t\t\t<div class="description-question-wrap hide-toggle">\n\t\t\t\t<span class="standard-black short-text right5 display-inline-block">' + ((__t = (options.ask_text)) == null ? '' : __t) + '</span>\n\t\t\t\t<span class="right5">\n\t\t\t\t\t[<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' edit-question">Edit</a>]\n\t\t\t\t</span>\n\t\t\t\t<a href="#" class="' + ((__t = (_options.links_default_class)) == null ? '' : __t) + ' remove-question">remove</a>\n\t\t\t</div>\n\t\t';
 	      } else {
 	        __p += '\n\t\t\t';
 	        if (_options.add_type == 'new_fields') {
@@ -295,11 +326,21 @@
 	        __p += __j.call(arguments, '');
 	        };
 	    with(obj || {}) {
-	      __p += '<div class="row">\n    <div class="col-sm-offset-8 col-xs-4 col-md-4 col-sm-4 col-lg-4 ">\n        <select name="add-new-field-select" class="add-new-field-select">\n            <option></option>\n            ';
-	      _.each(items(), function (item, item_key) {
-	        __p += '\n            <option value="' + ((__t = (item_key)) == null ? '' : __t) + '">' + ((__t = (item)) == null ? '' : __t) + '</option>\n            ';
+	      __p += '<div class="row">\n    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4 ">\n        <div class="dropdown">\n            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add new field\n                <span class="caret"></span></button>\n            <ul class="dropdown-menu">\n                ';
+	      _.each(items(), function (item) {
+	        __p += '\n                    ';
+	        if (item.type == 'dropdown') {
+	          __p += '\n                        <li class="dropdown-submenu">\n                            <a class="item" tabindex="-1" href="#">' + ((__t = (item.label)) == null ? '' : __t) + ' <span class="caret"></span></a>\n                            <ul class="dropdown-menu">\n                                ';
+	          _.each(item.childs, function (child) {
+	            __p += '\n                                    <li><a tabindex="-1" href="#" data-value="' + ((__t = (child.key)) == null ? '' : __t) + '" class="add-new-field-select">' + ((__t = (child.label)) == null ? '' : __t) + '</a></li>\n                                ';
+	          });
+	          __p += '\n                            </ul>\n                        </li>\n                    ';
+	        } else {
+	          __p += '\n                        <li><a tabindex="-1" href="#" data-value="' + ((__t = (item.key)) == null ? '' : __t) + '" class="add-new-field-select">' + ((__t = (item.label)) == null ? '' : __t) + '</a></li>\n                    ';
+	        }
+	        __p += '\n                ';
 	      });
-	      __p += '\n        </select>\n    </div>\n</div>';
+	      __p += '\n            </ul>\n        </div>\n    </div>\n</div>';
 	    }
 	    return __p;
 	  };
@@ -350,7 +391,7 @@
 	      }
 	      __p += '\n\t</h2>\n\t<div class="question-settings">\n\t\t';
 	      if (type == 'description') {
-	        __p += '\n\t\t\t<textarea name="ask" cols="30" rows="10" class="' + ((__t = (_options.required_class_description)) == null ? '' : __t) + '" id="description-field-' + ((__t = (domID)) == null ? '' : __t) + '">' + ((__t = (ask)) == null ? '' : __t) + '</textarea>\n\t\t';
+	        __p += '\n\t\t\t<textarea name="ask" cols="30" rows="10" class="' + ((__t = (_options.required_class_description)) == null ? '' : __t) + '" id="description-field-' + ((__t = (domID)) == null ? '' : __t) + '">' + ((__t = (options.ask_html)) == null ? '' : __t) + '</textarea>\n\t\t';
 	      } else {
 	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">\n\t\t\t\t\t';
 	        if (type == 'uploadbutton') {
@@ -596,13 +637,20 @@
 	applr.Models.AddNewField = Backbone.Model.extend({
 		defaults: {
 			items: function() {
-	            var result = _.clone(_field_types);
+	            var types = _.clone(_field_types);
 	
-				if (_options.video_enabled) {
-	                result['Video'] = 'Video';
+				if (!_options.video_enabled) {
+	                types = _.filter(types, function(item){
+	                    if(item.type === "dropdown") {
+	                        item.childs = _.filter(item.childs, function(child){
+	                            return child.key !== 'Video';
+	                        });
+	                    }
+	                    return item.key !== 'Video';
+	                });
 				}
 	
-				return result;
+				return types;
 			}
 		}
 	});
@@ -767,16 +815,7 @@
 	
 		editQuestion: function(e) {
 	        $("#description-field-"+this.model.get('domID')).kendoEditor({
-	            deserialization: {
-	                custom: function(html) {
-	                    return markdown.toHTML(html, "Maruku");
-	                }
-	            },
-	            serialization: {
-	                custom: function(html) {
-	                    return md(html);
-	                }
-	            },
+	            encoded: false,
 	            tools: [
 	                "createLink",
 	                "bold",
@@ -803,7 +842,9 @@
 			this.model.set('ask', value);
 			if(this.model.attributes.type === 'description') {
 	            var options = this.model.get('options');
-	            options.ask_html = _strip_html_tags(markdown.toHTML(this.model.get('ask'), "Maruku"));
+	            options.ask_text = _strip_html_tags(this.model.get('ask'));
+	            options.ask_html = this.model.get('ask');
+	            this.model.set('ask', (new TurndownService()).turndown(value));
 	            this.model.set('options', options);
 			}
 			this.$el.find('.ask-val').html(this.model.get('ask'));
@@ -941,20 +982,23 @@
 		render: function() {
 			var html = this.template(this.model.toJSON());
 			this.$el.html(html);
-	        if (typeof _options.on_select_render == 'function') {
-	            _options.on_select_render(this.$el.find('select'));
-	        }
+	
+	        $(document).on('click', '.dropdown-submenu a.item', function(e){
+	            e.stopPropagation();
+	            e.preventDefault();
+	            $(this).next('ul').toggle();
+	        });
 			return this;
 		},
 	
 		events: {
-			'change .add-new-field-select' : 'addNewField'
+			'click .add-new-field-select' : 'addNewField'
 		},
 	
 		addNewField: function(e) {
 			e.preventDefault();
 	
-			var field_type = this.$el.find('select[name="add-new-field-select"]').val();
+			var field_type = $(e.target).data('value');
 	
 	        if (field_type === '') {
 	        	return false;
@@ -976,8 +1020,8 @@
 	
 			if(model !== false) {
 	            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
-	            this.$el.find('.add-new-field-select').val('').trigger('change');
 	        }
+	        $('.dropdown').removeClass('open');
 		}
 	});
 	applr.Views.Checkbox = applr.Views.Base.ClosedQuestion.extend({

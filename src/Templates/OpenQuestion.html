@@ -10,7 +10,7 @@
 	</h2>
 	<div class="question-settings">
 		<% if (type == 'description') { %>
-			<textarea name="ask" cols="30" rows="10" class="<%= _options.required_class_description %>" id="description-field-<%= domID %>"><%= ask %></textarea>
+			<textarea name="ask" cols="30" rows="10" class="<%= _options.required_class_description %>" id="description-field-<%= domID %>"><%= options.ask_html %></textarea>
 		<% } else { %>
 			<div class="<%= _options.open_quesion_fieild_wrapper %>">
 				<div class="goRight <%= _options.input_container %>">

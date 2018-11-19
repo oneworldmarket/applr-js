@@ -56,15 +56,46 @@ var
 		used_custom_fields: []
 	},
 
-    _field_types = {
-        'Textfield' : 'Text field',
-        'Description' : 'Description field',
-        'Textarea' : 'Textarea',
-        'Dropdown' : 'Dropdown',
-        'Radiobuttons' : 'Radio buttons',
-        'Checkbox': 'Checkboxes',
-        'Uploadbutton': 'Additional document upload'
-    },
+    _field_types = [
+        {
+            'label': 'Question field',
+            'type': 'dropdown',
+            'childs': [
+                {
+                    'label': 'Text field',
+                    'key': 'Textfield'
+                },
+                {
+                    'label': 'Text area',
+                    'key': 'Textarea'
+                },
+                {
+                    'label': 'Dropdown',
+                    'key': 'Dropdown'
+                },
+                {
+                    'label': 'Radio buttons',
+                    'key': 'Radiobuttons'
+                },
+                {
+                    'label': 'Checkboxes',
+                    'key': 'Checkbox'
+                },
+                {
+                    'label': 'Video',
+                    'key': 'Video'
+                }
+            ]
+        },
+        {
+            'label': 'Description field',
+            'key': 'Description'
+        },
+        {
+            'label': 'Document upload',
+            'key': 'Uploadbutton'
+        }
+    ],
 
 	_textfieldMaxLimit =  100,
 	_textareaMaxLimit =  5000,

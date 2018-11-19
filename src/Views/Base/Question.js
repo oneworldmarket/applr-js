@@ -51,16 +51,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 
 	editQuestion: function(e) {
         $("#description-field-"+this.model.get('domID')).kendoEditor({
-            deserialization: {
-                custom: function(html) {
-                    return markdown.toHTML(html, "Maruku");
-                }
-            },
-            serialization: {
-                custom: function(html) {
-                    return md(html);
-                }
-            },
+            encoded: false,
             tools: [
                 "createLink",
                 "bold",
@@ -87,7 +78,9 @@ applr.Views.Base.Question = Backbone.View.extend({
 		this.model.set('ask', value);
 		if(this.model.attributes.type === 'description') {
             var options = this.model.get('options');
-            options.ask_html = _strip_html_tags(markdown.toHTML(this.model.get('ask'), "Maruku"));
+            options.ask_text = _strip_html_tags(this.model.get('ask'));
+            options.ask_html = this.model.get('ask');
+            this.model.set('ask', (new TurndownService()).turndown(value));
             this.model.set('options', options);
 		}
 		this.$el.find('.ask-val').html(this.model.get('ask'));

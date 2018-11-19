@@ -187,3 +187,54 @@ table.k-editor {
 .k-widget.k-window .k-content .k-edit-buttons button.k-primary:hover {
 	background-color: #206ea1;
 }
+.dropdown .btn {
+	border-color: #0081B9!important;
+	display: flex!important;
+	justify-content: space-between;
+	align-items: center;
+	color: #444!important;
+	font-weight: 400;
+	font-size: 14px;
+	font-family: OpenSansRegular;
+	background: #FFF!important;
+	text-transform: unset;
+	padding: 6px 12px!important;
+	margin: 0!important;
+	width: 100%!important;
+	text-align: left;
+}
+.dropdown.open .btn {
+	border-bottom: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.dropdown.open .dropdown-menu {
+	border:1px solid #0081B9;
+	padding: 6px 12px;
+}
+.dropdown.open .dropdown-menu a{
+	padding: 3px 0;
+}
+.dropdown.open .dropdown-menu a.item{
+	display: flex!important;
+	justify-content: space-between;
+	align-items: center;
+}
+.dropdown.open>.dropdown-menu {
+	border-top: none;
+}
+/*.dropdown .caret{*/
+	/*transform: rotate(270deg);*/
+/*}*/
+/*.dropdown.open .caret{*/
+	/*transform: rotate(0deg);*/
+/*}*/
+.dropdown-submenu {
+	position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+	top: 0;
+	left: 100%;
+	margin-top: -1px;
+}
