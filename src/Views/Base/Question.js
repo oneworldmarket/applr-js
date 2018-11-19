@@ -24,6 +24,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		'click .save-candidate-filter' : 'saveFilter',
 		'click .cancel-candidate-filter' : 'cancelFilter',
 		'change input[name="ask"]' : 'changeAsk',
+		'change textarea[name="ask"]' : 'changeAsk',
 		'change [name="limit"]' : 'changeLimit',
 		'change [name="required"]': 'changeRequired',
 		'focus [name="custom_field"] next': 'focusCustomField',
@@ -49,6 +50,15 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	editQuestion: function(e) {
+        $("#description-field-"+this.model.get('domID')).kendoEditor({
+            encoded: false,
+            tools: [
+                "createLink",
+                "bold",
+                "italic",
+                "underline"
+            ]
+        });
 		this.modelAttributes = _.clone(this.model.attributes);
 		this.modelAttributes.options = _.clone(this.modelAttributes.options);
 
@@ -64,8 +74,15 @@ applr.Views.Base.Question = Backbone.View.extend({
 	},
 
 	changeAsk: function() {
-		var value = this.$el.find('input[name="ask"]').val();
+		var value = this.$el.find('[name="ask"]').val();
 		this.model.set('ask', value);
+		if(this.model.attributes.type === 'description') {
+            var options = this.model.get('options');
+            options.ask_text = _strip_html_tags(this.model.get('ask'));
+            options.ask_html = this.model.get('ask');
+            this.model.set('ask', (new TurndownService()).turndown(value));
+            this.model.set('options', options);
+		}
 		this.$el.find('.ask-val').html(this.model.get('ask'));
 	},
 
@@ -108,10 +125,9 @@ applr.Views.Base.Question = Backbone.View.extend({
 	saveFilter: function(e) {
 		e.preventDefault();
 
-		var validationResult = $('#question-form-' + this.model.get('domID')).validationEngine('validate');
-
-		if (validationResult) {
+		if ($('#question-form-' + this.model.get('domID')).validationEngine('validate')) {
 			this.closeFilter(e);
+            $('.question-form').removeClass('new');
 		}
 	},
 
@@ -119,6 +135,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		e.preventDefault();
 
 		this.model.attributes = this.modelAttributes;
+		$('#question-form-' + this.model.get('domID') + '.new').find('.remove-question').trigger('click');
 
 		this.closeFilter(e);
 	},

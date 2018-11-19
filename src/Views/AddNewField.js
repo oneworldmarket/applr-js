@@ -10,33 +10,45 @@ applr.Views.AddNewField = Backbone.View.extend({
 	render: function() {
 		var html = this.template(this.model.toJSON());
 		this.$el.html(html);
-        if (typeof _options.on_select_render == 'function') {
-            _options.on_select_render(this.$el.find('select'));
-        }
+
+        $(document).on('click', '.dropdown-submenu a.item', function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).next('ul').toggle();
+        });
 		return this;
 	},
 
 	events: {
-		'click .add-new-field-button' : 'addNewField'
+		'click .add-new-field-select' : 'addNewField'
 	},
 
 	addNewField: function(e) {
 		e.preventDefault();
 
-		var field_type = this.$el.find('select[name="add-new-field-select"]').val();
+		var field_type = $(e.target).data('value');
 
-		if (field_type != '0' && field_type != '') {
-			var model = new applr.Models[field_type]();
-			var json = model.toJSON();
-			var options = _.clone(json.options);
-			model.set('options', options);
+        if (field_type === '') {
+        	return false;
+        }
 
-			_OptionalQuestionsCollection.add(model);
-		}
+		var model = new applr.Models[field_type](),
+			json = model.toJSON(),
+			options = _.clone(json.options);
+
+		model.set('options', options);
+
+		_OptionalQuestionsCollection.add(model);
+
 
 		_disableSortable();
 		_OptionalQuestionsCollectionView.render();
 		_DefaultQuestionCollectionView.render();
 		_initSortable();
+
+		if(model !== false) {
+            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
+        }
+        $('.dropdown').removeClass('open');
 	}
 });

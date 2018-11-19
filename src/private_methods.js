@@ -19,6 +19,10 @@ var
             }
         } else if (el.type == 'video') {
             result = 'Video';
+        } else if (el.type == 'description') {
+            result = 'Description';
+        } else if (el.type == 'uploadbutton') {
+            result = 'Uploadbutton';
         }
 
         return result;
@@ -110,5 +114,13 @@ var
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
+    },
+
+    _strip_html_tags = function (str) {
+        if ((str === null) || (str === ''))
+            return false;
+        else
+            str = str.toString();
+        return str.replace(/<[^>]*>/g, '');
     }
 ;
