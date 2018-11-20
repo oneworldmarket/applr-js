@@ -11,7 +11,7 @@ applr.Views.AddNewField = Backbone.View.extend({
 		var html = this.template(this.model.toJSON());
 		this.$el.html(html);
 
-        $(document).on('click', '.dropdown-submenu a.item', function(e){
+        this.$el.on('click', '.dropdown-submenu a.item', function(e){
             e.stopPropagation();
             e.preventDefault();
             $(this).next('ul').toggle();
