@@ -97,6 +97,11 @@
 	background: url('/static/images/profile/ajax-loader.gif') no-repeat scroll center center #FFFFFF;
 }
 
+div[class*="description-field-"] {
+	top: 35px!important;
+	left: 30px!important;
+}
+
 table.k-editor {
 	background: transparent;
 	border: none;
