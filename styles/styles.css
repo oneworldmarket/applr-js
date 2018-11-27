@@ -161,6 +161,10 @@ table.k-editor {
 	border-color: #3498db;
 	box-shadow: none;
 }
+.k-widget.k-window .k-content .k-edit-field #k-editor-link-target,
+.k-widget.k-window .k-content .k-edit-field .k-checkbox-label{
+	display: none;
+}
 .k-widget.k-window .k-content .k-edit-buttons {
 	padding-top: 0;
 	border: none;
