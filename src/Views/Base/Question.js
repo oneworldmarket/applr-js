@@ -80,7 +80,8 @@ applr.Views.Base.Question = Backbone.View.extend({
             var options = this.model.get('options');
             options.ask_text = _strip_html_tags(this.model.get('ask'));
             options.ask_html = this.model.get('ask');
-            this.model.set('ask', (new TurndownService()).turndown(value));
+            options.ask_md = (new TurndownService()).turndown(value);
+            this.model.set('ask', 'Description saved in ask_md option');
             this.model.set('options', options);
 		}
 		this.$el.find('.ask-val').html(this.model.get('ask'));
@@ -135,7 +136,12 @@ applr.Views.Base.Question = Backbone.View.extend({
 		e.preventDefault();
 
 		this.model.attributes = this.modelAttributes;
-		$('#question-form-' + this.model.get('domID') + '.new').find('.remove-question').trigger('click');
+		var $form = $('#question-form-' + this.model.get('domID'));
+
+		if($form.hasClass('new')){
+            $form.find('.remove-question').trigger('click');
+            $('.applr-add-new-field .dropdown').addClass('system-open');
+		}
 
 		this.closeFilter(e);
 	},

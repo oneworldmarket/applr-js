@@ -15,6 +15,14 @@ applr.Views.AddNewField = Backbone.View.extend({
             e.stopPropagation();
             e.preventDefault();
             $(this).next('ul').toggle();
+            $(this).toggleClass('open');
+        });
+        this.$el.on('click', '.dropdown', function(e){
+        	if($(this).hasClass('system-open')){
+        		e.preventDefault();
+        		e.stopPropagation();
+                $(this).removeClass('system-open');
+			}
         });
 		return this;
 	},
@@ -49,6 +57,6 @@ applr.Views.AddNewField = Backbone.View.extend({
 		if(model !== false) {
             $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
         }
-        $('.dropdown').removeClass('open');
+        $('.dropdown').removeClass('open system-open');
 	}
 });
