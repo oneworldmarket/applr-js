@@ -392,30 +392,22 @@
 	      __p += '\n\t</h2>\n\t<div class="question-settings">\n\t\t';
 	      if (type == 'description') {
 	        __p += '\n\t\t\t<textarea name="ask" cols="30" rows="10" class="' + ((__t = (_options.required_class_description)) == null ? '' : __t) + '" id="description-field-' + ((__t = (domID)) == null ? '' : __t) + '">' + ((__t = (options.ask_html)) == null ? '' : __t) + '</textarea>\n\t\t';
+	      } else if (type == 'uploadbutton') {
+	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<label class="goLeft">' + ((__t = (type_title)) == null ? '' : __t) + ' label</label>\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t';
 	      } else {
-	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">\n\t\t\t\t\t';
-	        if (type == 'uploadbutton') {
-	          __p += '\n\t\t\t\t\t\t' + ((__t = (type_title)) == null ? '' : __t) + ' label\n\t\t\t\t\t';
-	        } else {
-	          __p += '\n\t\t\t\t\t\tLabel\n\t\t\t\t\t';
+	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">Label</label>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">\n\t\t\t\t\tLimit\n\t\t\t\t\t';
+	        if (view == 'Textfield') {
+	          __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
 	        }
-	        __p += '\n\t\t\t\t</label>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t\t';
-	        if (type !== 'uploadbutton') {
-	          __p += '\n\t\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t\t\t</div>\n\t\t\t\t\t<label class="goRight">\n\t\t\t\t\t\tLimit\n\t\t\t\t\t\t';
-	          if (view == 'Textfield') {
-	            __p += ' (1-' + ((__t = (_textfieldMaxLimit)) == null ? '' : __t) + ') ';
-	          }
-	          __p += '\n\t\t\t\t\t\t';
-	          if (view == 'Textarea') {
-	            __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
-	          }
-	          __p += '\n\t\t\t\t\t</label>\n\t\t\t\t\t<div class="candidate-custom-fields"></div>\n\t\t\t\t\t<div class="clear"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
-	          if (options.required == true || options.required == "true") {
-	            __p += ' checked="checked" ';
-	          }
-	          __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t\t\t</div>\n\t\t\t\t\t<label class="goRight line-h-normal">\n\t\t\t\t\t\tRequired\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t';
+	        __p += '\n\t\t\t\t\t';
+	        if (view == 'Textarea') {
+	          __p += ' (' + ((__t = ((_textfieldMaxLimit + 1))) == null ? '' : __t) + '-' + ((__t = (_textareaMaxLimit)) == null ? '' : __t) + ') ';
 	        }
-	        __p += '\n\t\t';
+	        __p += '\n\t\t\t\t</label>\n\t\t\t\t<div class="candidate-custom-fields"></div>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="checkbox" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' noMT" name="required" ';
+	        if (options.required == true || options.required == "true") {
+	          __p += ' checked="checked" ';
+	        }
+	        __p += ' value="' + ((__t = (options.required)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight line-h-normal">\n\t\t\t\t\tRequired\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t';
 	      }
 	      __p += '\n\t\t<span class="clearfix"></span>\n\t\t<div class="clear"></div>\n\t</div>\n\n\n\t<button class="' + ((__t = (_options.save_button_class)) == null ? '' : __t) + ' save-candidate-filter goRight">' + ((__t = (_options.text.fld_btn_save)) == null ? '' : __t) + '</button>\n\t<button class="' + ((__t = (_options.cancel_button_class)) == null ? '' : __t) + ' cancel-candidate-filter goLeft">CANCEL</button>\n</div>\n</form>';
 	    }
@@ -678,7 +670,7 @@
 	        view: 'Description',
 	        type_title: 'Description',
 	        options: {
-	            label: 'Please, put your text',
+	            label: 'Description field',
 	            required: false
 	        },
 	        ask: '',
@@ -740,7 +732,7 @@
 	applr.Models.Uploadbutton = applr.Models.Base.OpenQuestion.extend({
 	    defaults: {
 	        view: 'Uploadbutton',
-	        type_title: 'Upload button',
+	        type_title: 'Button',
 	        options: {
 	            disable_label: true,
 	            required: false
@@ -844,7 +836,8 @@
 	            var options = this.model.get('options');
 	            options.ask_text = _strip_html_tags(this.model.get('ask'));
 	            options.ask_html = this.model.get('ask');
-	            this.model.set('ask', (new TurndownService()).turndown(value));
+	            options.ask_md = (new TurndownService()).turndown(value);
+	            this.model.set('ask', 'Description saved in ask_md option');
 	            this.model.set('options', options);
 			}
 			this.$el.find('.ask-val').html(this.model.get('ask'));
@@ -899,7 +892,12 @@
 			e.preventDefault();
 	
 			this.model.attributes = this.modelAttributes;
-			$('#question-form-' + this.model.get('domID') + '.new').find('.remove-question').trigger('click');
+			var $form = $('#question-form-' + this.model.get('domID'));
+	
+			if($form.hasClass('new')){
+	            $form.find('.remove-question').trigger('click');
+	            $('.applr-add-new-field .dropdown').addClass('system-open');
+			}
 	
 			this.closeFilter(e);
 		},
@@ -987,6 +985,14 @@
 	            e.stopPropagation();
 	            e.preventDefault();
 	            $(this).next('ul').toggle();
+	            $(this).toggleClass('open');
+	        });
+	        this.$el.on('click', '.dropdown', function(e){
+	        	if($(this).hasClass('system-open')){
+	        		e.preventDefault();
+	        		e.stopPropagation();
+	                $(this).removeClass('system-open');
+				}
 	        });
 			return this;
 		},
@@ -1021,7 +1027,7 @@
 			if(model !== false) {
 	            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
 	        }
-	        $('.dropdown').removeClass('open');
+	        $('.dropdown').removeClass('open system-open');
 		}
 	});
 	applr.Views.Checkbox = applr.Views.Base.ClosedQuestion.extend({

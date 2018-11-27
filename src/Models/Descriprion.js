@@ -3,7 +3,7 @@ applr.Models.Description = applr.Models.Base.OpenQuestion.extend({
         view: 'Description',
         type_title: 'Description',
         options: {
-            label: 'Please, put your text',
+            label: 'Description field',
             required: false
         },
         ask: '',
