@@ -393,7 +393,7 @@
 	      if (type == 'description') {
 	        __p += '\n\t\t\t<textarea name="ask" cols="30" rows="10" class="' + ((__t = (_options.required_class_description)) == null ? '' : __t) + '" id="description-field-' + ((__t = (domID)) == null ? '' : __t) + '">' + ((__t = (options.ask_html)) == null ? '' : __t) + '</textarea>\n\t\t';
 	      } else if (type == 'uploadbutton') {
-	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<label class="goLeft">' + ((__t = (type_title)) == null ? '' : __t) + ' label</label>\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t';
+	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<label class="goLeft">Button label</label>\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t';
 	      } else {
 	        __p += '\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text"  class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.standart_line_input)) == null ? '' : __t) + ' ' + ((__t = (_options.required_class)) == null ? '' : __t) + '" id="question-label-' + ((__t = (domID)) == null ? '' : __t) + '" name="ask" value="' + ((__t = (ask)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">Label</label>\n\t\t\t\t<div class="clear"></div>\n\t\t\t</div>\n\t\t\t<div class="' + ((__t = (_options.open_quesion_fieild_wrapper)) == null ? '' : __t) + '">\n\t\t\t\t<div class="goRight ' + ((__t = (_options.input_container)) == null ? '' : __t) + '">\n\t\t\t\t\t<input type="text" class="' + ((__t = (_options.input_class)) == null ? '' : __t) + ' ' + ((__t = (_options.small_line_input)) == null ? '' : __t) + '" name="limit" value="' + ((__t = (options.limit)) == null ? '' : __t) + '" />\n\t\t\t\t</div>\n\t\t\t\t<label class="goRight">\n\t\t\t\t\tLimit\n\t\t\t\t\t';
 	        if (view == 'Textfield') {
@@ -732,7 +732,7 @@
 	applr.Models.Uploadbutton = applr.Models.Base.OpenQuestion.extend({
 	    defaults: {
 	        view: 'Uploadbutton',
-	        type_title: 'Button',
+	        type_title: 'Upload button',
 	        options: {
 	            disable_label: true,
 	            required: false
