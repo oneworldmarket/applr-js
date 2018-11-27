@@ -1,7 +1,7 @@
 applr.Models.Uploadbutton = applr.Models.Base.OpenQuestion.extend({
     defaults: {
         view: 'Uploadbutton',
-        type_title: 'Button',
+        type_title: 'Upload button',
         options: {
             disable_label: true,
             required: false

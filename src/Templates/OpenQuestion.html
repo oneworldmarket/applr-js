@@ -13,7 +13,7 @@
 			<textarea name="ask" cols="30" rows="10" class="<%= _options.required_class_description %>" id="description-field-<%= domID %>"><%= options.ask_html %></textarea>
 		<% } else if (type == 'uploadbutton'){ %>
 			<div class="<%= _options.open_quesion_fieild_wrapper %>">
-				<label class="goLeft"><%= type_title %> label</label>
+				<label class="goLeft">Button label</label>
 				<div class="goRight <%= _options.input_container %>">
 					<input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
 				</div>
