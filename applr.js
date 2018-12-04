@@ -14,7 +14,7 @@
 			text_default_class: 'standard-black',
 			input_class: 'input-standart',
 			required_class: 'validate[required,maxSize[255]]',
-			required_class_description: 'validate[required]', 
+			required_class_description: 'validate[required]',
 			title_default_class: 'red-title',
 			filter_questions_title_class: 'key-contacts-list-title',
 			default_questions_class: 'applr-default-questions',
@@ -836,7 +836,7 @@
 	            var options = this.model.get('options');
 	            options.ask_text = _strip_html_tags(this.model.get('ask'));
 	            options.ask_html = this.model.get('ask');
-	            options.ask_md = (new TurndownService()).turndown(value);
+	            options.ask_md = toMarkdown(value);
 	            this.model.set('ask', 'Description saved in ask_md option');
 	            this.model.set('options', options);
 			}
