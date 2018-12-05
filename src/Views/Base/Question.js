@@ -126,9 +126,17 @@ applr.Views.Base.Question = Backbone.View.extend({
 	saveFilter: function(e) {
 		e.preventDefault();
 
-		if ($('#question-form-' + this.model.get('domID')).validationEngine('validate')) {
+        this.model.attributes = this.modelAttributes;
+        var $form = $('#question-form-' + this.model.get('domID'));
+
+		if ($form.validationEngine('validate')) {
 			this.closeFilter(e);
-            $('.question-form').removeClass('new');
+            $form.removeClass('new');
+
+            if($form.hasClass('uploadbutton') || $form.hasClass('description')) {
+                $('.dropdown .dropdown-menu a.item.open').next('.dropdown-menu').hide();
+                $('.dropdown .dropdown-menu a.item').removeClass('open');
+            }
 		}
 	},
 
@@ -140,6 +148,10 @@ applr.Views.Base.Question = Backbone.View.extend({
 
 		if($form.hasClass('new')){
             $form.find('.remove-question').trigger('click');
+            if($form.hasClass('uploadbutton') || $form.hasClass('description')) {
+            	$('.dropdown .dropdown-menu a.item.open').next('.dropdown-menu').hide();
+            	$('.dropdown .dropdown-menu a.item').removeClass('open');
+			}
             $('.applr-add-new-field .dropdown').addClass('system-open');
 		}
 

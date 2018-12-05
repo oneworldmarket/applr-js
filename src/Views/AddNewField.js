@@ -55,7 +55,7 @@ applr.Views.AddNewField = Backbone.View.extend({
 		_initSortable();
 
 		if(model !== false) {
-            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
+            $('#question-form-' + model.get('domID')).addClass('new '+json.type).find('.edit-question').click();
         }
         $('.dropdown').removeClass('open system-open');
 	}

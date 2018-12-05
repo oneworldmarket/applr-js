@@ -882,9 +882,17 @@
 		saveFilter: function(e) {
 			e.preventDefault();
 	
-			if ($('#question-form-' + this.model.get('domID')).validationEngine('validate')) {
+	        this.model.attributes = this.modelAttributes;
+	        var $form = $('#question-form-' + this.model.get('domID'));
+	
+			if ($form.validationEngine('validate')) {
 				this.closeFilter(e);
-	            $('.question-form').removeClass('new');
+	            $form.removeClass('new');
+	
+	            if($form.hasClass('uploadbutton') || $form.hasClass('description')) {
+	                $('.dropdown .dropdown-menu a.item.open').next('.dropdown-menu').hide();
+	                $('.dropdown .dropdown-menu a.item').removeClass('open');
+	            }
 			}
 		},
 	
@@ -896,6 +904,10 @@
 	
 			if($form.hasClass('new')){
 	            $form.find('.remove-question').trigger('click');
+	            if($form.hasClass('uploadbutton') || $form.hasClass('description')) {
+	            	$('.dropdown .dropdown-menu a.item.open').next('.dropdown-menu').hide();
+	            	$('.dropdown .dropdown-menu a.item').removeClass('open');
+				}
 	            $('.applr-add-new-field .dropdown').addClass('system-open');
 			}
 	
@@ -1025,7 +1037,7 @@
 			_initSortable();
 	
 			if(model !== false) {
-	            $('#question-form-' + model.get('domID')).addClass('new').find('.edit-question').click();
+	            $('#question-form-' + model.get('domID')).addClass('new '+json.type).find('.edit-question').click();
 	        }
 	        $('.dropdown').removeClass('open system-open');
 		}
