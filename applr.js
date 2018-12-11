@@ -806,6 +806,8 @@
 		},
 	
 		editQuestion: function(e) {
+	        $('#lps-page-title-form').validationEngine('hide');
+	
 	        $("#description-field-"+this.model.get('domID')).kendoEditor({
 	            encoded: false,
 	            tools: [
@@ -882,7 +884,6 @@
 		saveFilter: function(e) {
 			e.preventDefault();
 	
-	        this.model.attributes = this.modelAttributes;
 	        var $form = $('#question-form-' + this.model.get('domID'));
 	
 			if ($form.validationEngine('validate')) {
@@ -901,6 +902,8 @@
 	
 			this.model.attributes = this.modelAttributes;
 			var $form = $('#question-form-' + this.model.get('domID'));
+	
+			$form.validationEngine('hide');
 	
 			if($form.hasClass('new')){
 	            $form.find('.remove-question').trigger('click');
