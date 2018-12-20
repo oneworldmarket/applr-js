@@ -31,8 +31,16 @@
 }
 
 
-.question-line {
+.question-line.compact{
 	margin-bottom: 5px;
+}
+.question-form .short-text{
+	max-width: calc(100% - 100px);
+}
+.question-form .description-question-wrap:not(.display-none){
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 
@@ -82,4 +90,173 @@
 
 .input-form-container .select2-container {
     width: 150px;
+}
+
+.simple-preloader {
+	min-height: 100px;
+	background: url('/static/images/profile/ajax-loader.gif') no-repeat scroll center center #FFFFFF;
+}
+
+table.k-editor {
+	background: transparent;
+	border: none;
+}
+.k-editor-toolbar .k-button-group {
+	float: right;
+	margin-right: 2px;
+	padding: 0;
+}
+.k-editor-toolbar .k-button-group a{
+	position: relative;
+	border: 1px solid transparent;
+	width: 26px;
+	height: 24px;
+	margin-right: 2px;
+}
+.k-editor-toolbar .k-button-group a:last-child{
+	margin-right: 0;
+}
+.k-editor-toolbar .k-button-group a:hover,
+.k-editor-toolbar .k-button-group a.k-state-selected{
+	color: #333;
+	background-color: #e3e3e3;
+	border-radius: 0;
+	border-color: #ccc;
+}
+.k-editor-toolbar .k-tool-icon.k-icon {
+	width: 26px;
+	height: 24px;
+	left: 0;
+	position: absolute;
+}
+
+.k-widget.k-window,
+.k-widget.k-window .k-content .k-edit-label label,
+.k-widget.k-window .k-content .k-edit-field label {
+	color: #333;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+}
+.k-widget.k-window {
+	top: 150px!important;
+}
+.k-widget.k-window .k-header{
+	background: transparent;
+	border-bottom: 1px solid #c5c5c5;
+	font-weight: 900;
+}
+.k-widget.k-window .k-content .k-edit-label{
+	text-align: left;
+	margin-left: 20px;
+	width: calc(30% - 20px);
+}
+.k-widget.k-window .k-content .k-edit-field input{
+	border: 1px solid #c5c5c5;
+	border-radius: 0;
+	height: 28px;
+	padding: 0;
+}
+.k-widget.k-window .k-content .k-edit-field input:focus{
+	border-color: #3498db;
+	box-shadow: none;
+}
+.k-widget.k-window .k-content .k-edit-field #k-editor-link-target,
+.k-widget.k-window .k-content .k-edit-field .k-checkbox-label{
+	display: none;
+}
+.k-widget.k-window .k-content .k-edit-buttons {
+	padding-top: 0;
+	border: none;
+	background: transparent;
+}
+.k-widget.k-window .k-content .k-edit-buttons button {
+	padding: 4px 8px;
+	border-radius: 0;
+	border: 1px solid transparent;
+	background: #f0f0f0;
+	line-height: 20px;
+	cursor: pointer;
+	color: #333;
+}
+.k-widget.k-window .k-content .k-edit-buttons button:hover {
+	background-color: #e0e0e0;
+	border-color: #ccc;
+}
+.k-widget.k-window .k-content .k-edit-buttons button.k-primary {
+	color: #fff;
+	border: 1px solid transparent;
+	background-color: #2d8ac7;
+}
+.k-widget.k-window .k-content .k-edit-buttons button.k-primary:hover {
+	background-color: #206ea1;
+}
+.dropdown .btn {
+	border-color: #0081B9!important;
+	display: flex!important;
+	justify-content: space-between;
+	align-items: center;
+	color: #444!important;
+	font-weight: 400;
+	font-size: 14px;
+	font-family: OpenSansRegular;
+	background: #FFF!important;
+	text-transform: unset;
+	padding: 6px 12px!important;
+	margin: 0!important;
+	width: 100%!important;
+	text-align: left;
+}
+.dropdown.system-open>.dropdown-menu {
+	box-shadow: none;
+	display: block;
+}
+.dropdown.open .btn,
+.dropdown.system-open .btn {
+	border-bottom: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.dropdown .dropdown-menu {
+	border:1px solid #0081B9;
+	padding: 6px 12px;
+}
+.dropdown .dropdown-menu a{
+	padding: 3px 0;
+}
+.dropdown .dropdown-menu a.item{
+	display: flex!important;
+	justify-content: space-between;
+	align-items: center;
+}
+.dropdown>.dropdown-menu {
+	border-top: none;
+}
+.dropdown.open .item .caret,
+.dropdown.system-open .item .caret{
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+
+	-webkit-transition-property: -webkit-transform;
+	-moz-transition-property: -moz-transform;
+	-o-transition-property: -o-transform;
+	transition-property: transform;
+}
+.dropdown.open .item.open .caret,
+.dropdown.system-open .item.open .caret{
+	transform: rotate(-90deg);
+	-webkit-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-o-transform:rotate(-90deg);
+}
+.dropdown-submenu {
+	position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+	top: 0;
+	left: 100%;
+	margin-top: -1px;
 }

@@ -1,0 +1,1 @@
+applr.Views.Description = applr.Views.Base.OpenQuestion.extend({});
