@@ -174,10 +174,10 @@ table.k-editor {
 	padding: 4px 8px;
 	border-radius: 0;
 	border: 1px solid transparent;
-	background: #f0f0f0;
+	background: #D11F38;
 	line-height: 20px;
 	cursor: pointer;
-	color: #333;
+	color: #FFF;
 }
 .k-widget.k-window .k-content .k-edit-buttons button:hover {
 	background-color: #e0e0e0;
@@ -186,10 +186,11 @@ table.k-editor {
 .k-widget.k-window .k-content .k-edit-buttons button.k-primary {
 	color: #fff;
 	border: 1px solid transparent;
-	background-color: #2d8ac7;
+	background-color: #72BF44;
+	float: right;
 }
 .k-widget.k-window .k-content .k-edit-buttons button.k-primary:hover {
-	background-color: #206ea1;
+	background-color: #72BF44;
 }
 .dropdown .btn {
 	border-color: #0081B9!important;
