@@ -184,18 +184,11 @@ table.k-editor {
 	cursor: pointer;
 	color: #FFF;
 }
-.k-widget.k-window .k-content .k-edit-buttons button:hover {
-	background-color: #e0e0e0;
-	border-color: #ccc;
-}
 .k-widget.k-window .k-content .k-edit-buttons button.k-primary {
 	color: #fff;
 	border: 1px solid transparent;
 	background-color: #72BF44;
 	float: right;
-}
-.k-widget.k-window .k-content .k-edit-buttons button.k-primary:hover {
-	background-color: #72BF44;
 }
 .dropdown .btn {
 	border-color: #0081B9!important;
