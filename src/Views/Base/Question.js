@@ -81,7 +81,7 @@ applr.Views.Base.Question = Backbone.View.extend({
 		if(this.model.attributes.type === 'description') {
             var options = this.model.get('options');
             options.ask_text = _strip_html_tags(this.model.get('ask'));
-            options.ask_html = this.model.get('ask').replace(/<a (.*?)>/g, '<a target="_blank" $1>');
+            options.ask_html = this.model.get('ask');
             options.ask_md = toMarkdown(value);
             this.model.set('ask', 'Description saved in ask_md option');
             this.model.set('options', options);
