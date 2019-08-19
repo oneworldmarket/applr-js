@@ -1,0 +1,1 @@
+applr.Views.Uploadbutton = applr.Views.Base.OpenQuestion.extend({});

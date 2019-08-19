@@ -1,35 +1,53 @@
 <div class="edit-mode display-none <%= _options.edit_mode_wrapper_class %>">
-	<h2 class="bot10"><span class="bot10 ask-val <%= _options.title_default_class %> "><%= ask %></span> <span class="<%= _options.labels_style %>">(edit)</span></h2>
+	<h2 class="bot10">
+		<% if (options.disable_label) { %>
+		<% } else if (options.label) { %>
+			<span class="bot10 <%= _options.title_default_class %> "><%= options.label %></span>
+		<% } else { %>
+			<span class="bot10 ask-val <%= _options.title_default_class %> "><%= ask %></span>
+			<span class="<%= _options.labels_style %>">(edit)</span>
+		<% } %>
+	</h2>
 	<div class="question-settings">
-		<div class="<%= _options.open_quesion_fieild_wrapper %>">
-			<div class="goRight <%= _options.input_container %>">
-				<input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+		<% if (type == 'description') { %>
+			<textarea name="ask" cols="30" rows="10" class="<%= _options.required_class_description %>" id="description-field-<%= domID %>"><%= options.ask_html %></textarea>
+		<% } else if (type == 'uploadbutton'){ %>
+			<div class="<%= _options.open_quesion_fieild_wrapper %>">
+				<label class="goLeft">Button label</label>
+				<div class="goRight <%= _options.input_container %>">
+					<input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+				</div>
+				<div class="clear"></div>
 			</div>
-			<label class="goRight">
-				Label
-			</label>
-			<div class="clear"></div>
-		</div>
-		<div class="<%= _options.open_quesion_fieild_wrapper %>">
-			<div class="goRight <%= _options.input_container %>">
-				<input type="text" class="<%=_options.input_class %> <%= _options.small_line_input %>" name="limit" value="<%= options.limit %>" />
+		<% } else { %>
+			<div class="<%= _options.open_quesion_fieild_wrapper %>">
+				<div class="goRight <%= _options.input_container %>">
+					<input type="text"  class="<%= _options.input_class %> <%= _options.standart_line_input %> <%= _options.required_class %>" id="question-label-<%= domID %>" name="ask" value="<%= ask %>" />
+				</div>
+				<label class="goRight">Label</label>
+				<div class="clear"></div>
 			</div>
-			<label class="goRight">
-				Limit
-				<% if (view == 'Textfield') { %> (1-<%= _textfieldMaxLimit %>) <% } %>
-				<% if (view == 'Textarea') { %> (<%= (_textfieldMaxLimit + 1) %>-<%= _textareaMaxLimit %>) <% } %>
-			</label>
-			<div class="candidate-custom-fields"></div>
-			<div class="clear"></div>
-		</div>
-		<div class="<%= _options.open_quesion_fieild_wrapper %>">
-			<div class="goRight <%= _options.input_container %>">
-				<input type="checkbox" class="<%=_options.input_class %> noMT" name="required" <% if (options.required == true || options.required == "true") { %> checked="checked" <% } %> value="<%= options.required %>" />
+			<div class="<%= _options.open_quesion_fieild_wrapper %>">
+				<div class="goRight <%= _options.input_container %>">
+					<input type="text" class="<%=_options.input_class %> <%= _options.small_line_input %>" name="limit" value="<%= options.limit %>" />
+				</div>
+				<label class="goRight">
+					Limit
+					<% if (view == 'Textfield') { %> (1-<%= _textfieldMaxLimit %>) <% } %>
+					<% if (view == 'Textarea') { %> (<%= (_textfieldMaxLimit + 1) %>-<%= _textareaMaxLimit %>) <% } %>
+				</label>
+				<div class="candidate-custom-fields"></div>
+				<div class="clear"></div>
 			</div>
-			<label class="goRight line-h-normal">
-				Required
-			</label>
-		</div>
+			<div class="<%= _options.open_quesion_fieild_wrapper %>">
+				<div class="goRight <%= _options.input_container %>">
+					<input type="checkbox" class="<%=_options.input_class %> noMT" name="required" <% if (options.required == true || options.required == "true") { %> checked="checked" <% } %> value="<%= options.required %>" />
+				</div>
+				<label class="goRight line-h-normal">
+					Required
+				</label>
+			</div>
+		<% } %>
 		<span class="clearfix"></span>
 		<div class="clear"></div>
 	</div>
